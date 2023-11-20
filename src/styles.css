@@ -30,6 +30,7 @@ body,
   /* <offset-x> | <offset-y> | <blur-radius> | <spread-radius> | <color> */
   box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.1);
   min-width: 180px;
+  max-width: 250px;
 }
 
 .sidebar-panel img {
@@ -42,10 +43,10 @@ body,
   gap: 0.5rem;
 }
 
-.home > div {
+.home > div, .projects > div { /* Set all sidebar-panel tabs with display: flex and align center */
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 5px; /* Helps to space apart icons if relevant */
 }
 
 .count {
