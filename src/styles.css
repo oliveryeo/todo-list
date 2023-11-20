@@ -1,4 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+html,
+body,
+#container {
+  height: 100%;
+}
+
+
 #container {
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
+
+/* Sidebar Panel Styling */
+.sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 2rem;
+  padding-top: 2rem;
+  padding-right: 2rem;
+  background-color: rgba(236, 236, 236, 0.572);
+  /* <offset-x> | <offset-y> | <blur-radius> | <spread-radius> | <color> */
+  box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.home, .projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.home {
+
+}
+
+.projects {
+  border-top-style: solid;
+  padding-top: 1rem;
+}
+
