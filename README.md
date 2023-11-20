@@ -7,6 +7,6 @@ TOP Project on Todo-list
 - Consolidate knowledge on styling design, javascript DOM manipulation, and project planning
 
 # Takeaways from this project
-<u>The conflict between flexbox and justify-self</u>
+<ins>The conflict between flexbox and justify-self</ins>
 - I had an issue of trying to ensure that the todo counts were flushed to the right of the sidebar-panel because flexbox disables justify-self due to the nature of the tool, where it groups and justify all the elements as a whole.
 - To fix this, I had to employ the margin-left: auto strategy to fill the gaps with margins for the todo counts, flushing the counts to the right of the sidebar panel.
