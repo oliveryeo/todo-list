@@ -19,7 +19,7 @@ body,
 }
 
 /* Sidebar Panel Styling */
-.sidebar-panel {
+#sidebar-panel {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -33,28 +33,28 @@ body,
   max-width: 250px;
 }
 
-.sidebar-panel img {
+#sidebar-panel img {
   height: 1.2rem;
 }
 
-.home, .projects {
+#home, #projects {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.home > div, .projects > div { /* Set all sidebar-panel tabs with display: flex and align center */
+#home > div, #projects > div { /* Set all sidebar-panel tabs with display: flex and align center */
   display: flex;
   align-items: center;
   gap: 5px; /* Helps to space apart icons if relevant */
 }
 
-.count {
-  margin-left: auto;
-}
-
-.projects {
+#projects {
   border-top-style: solid;
   padding-top: 1rem;
+}
+
+.count {
+  margin-left: auto;
 }
 
