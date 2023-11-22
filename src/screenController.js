@@ -17,13 +17,13 @@ function initializePage() {
 
   const initializingItems = new Array(allTasks, today, week, newProject);
   initializingItems.forEach(item => {
-    // Add .selected-tab class to current selected tab
     item.addEventListener('click', () => {
       // Remove .selected-tab class from previous selected tab
       const prevSelectedTab = document.querySelector('.selected-tab');
       if (prevSelectedTab) {
         prevSelectedTab.classList.remove('selected-tab');
       }
+      // Add .selected-tab class to current selected tab
       item.classList.add('selected-tab');
     });
   });
