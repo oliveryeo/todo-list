@@ -2,8 +2,7 @@ import './styles.css';
 import todoController from './todoController.js';
 import screenController from './screenController.js';
 
-console.log("Good Morning!");
-
+// Testing todo project creation
 todoController.createProject("Workout");
 todoController.allProjects.forEach((project) => {
   // Sieve out the project name

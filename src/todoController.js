@@ -1,6 +1,6 @@
-// Create a todoController module
+// todoController module
 const todoController = (() => {
-  // Create an array to hold for all todo projects
+  // Array to hold for all todo projects
   const allProjects = [];
 
   const createProject = (name) => {
@@ -15,7 +15,7 @@ const todoController = (() => {
   }
 })();
 
-// Create a factory function that creates a todo project
+// Factory function for new todo Projects
 const newProject = (name) => {
   // Takes in the project name and sets it
   let projectName = name;
@@ -45,7 +45,7 @@ const newProject = (name) => {
   }
 };
 
-// Create a todo factory function
+// Factory function for new Todos
 const newTodo = (title, description, dueDate, priority) => {
   let todoTitle = title;
   let todoDescription = description;
