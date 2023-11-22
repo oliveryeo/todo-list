@@ -61,6 +61,7 @@ button:hover {
 #home, #projects {
   display: flex;
   flex-direction: column;
+  gap: 3px;
 }
 
 #home > button, #projects > div, #projects > button { /* Set all sidebar-panel tabs with display: flex and align center */
