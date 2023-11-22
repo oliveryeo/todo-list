@@ -12,7 +12,7 @@ const todoController = (() => {
       return allProjects;
     },
     createProject
-  }
+  };
 })();
 
 // Factory function for new todo Projects
@@ -42,7 +42,7 @@ const newProject = (name) => {
     },
     // Todo creator
     createTodo
-  }
+  };
 };
 
 // Factory function for new Todos
@@ -80,7 +80,7 @@ const newTodo = (title, description, dueDate, priority) => {
     set priority(newPriority) {
       todoPriority = newPriority;
     }
-  }
+  };
 };
 
 export default todoController;
