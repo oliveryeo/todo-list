@@ -30,5 +30,30 @@ function initializePage() {
   });
 }
 
+/*
+  Can consider making a Count loader Module Pattern 
+*/
+// Function to load todo count for all tasks tab
+function loadAllTasksCount() {
+
+}
+
+// Function to load todo count for today tasks tab (To do once due date function is implemented)
+function loadTodayTasksCount() {
+
+}
+
+// Function to load todo count for week tasks tab (To do once due date function is implemented)
+function loadWeekTasksCount() {
+  
+}
+
+/*
+  Can consider making a new projects loader Module Pattern 
+*/
+// Function to initialize UI for new projects
+function loadNewProject() {
+
+}
 
 export default screenController;
