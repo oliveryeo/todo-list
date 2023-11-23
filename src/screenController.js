@@ -9,14 +9,15 @@ const screenController = (() => {
   }
 })();
 
+// Function to load appropriate eventlisteners for each tab
 function initializePage() {
   const allTasks = document.querySelector('#all-tasks');
   const today = document.querySelector('#today');
   const week = document.querySelector('#week');
-  const newProject = document.querySelector('#new-project');
 
-  const initializingItems = new Array(allTasks, today, week, newProject);
+  const initializingItems = new Array(allTasks, today, week);
   initializingItems.forEach(item => {
+    // Add or remove .selected-tab class on click for each tab
     item.addEventListener('click', () => {
       // Remove .selected-tab class from previous selected tab
       const prevSelectedTab = document.querySelector('.selected-tab');
