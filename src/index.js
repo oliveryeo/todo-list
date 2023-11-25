@@ -1,8 +1,8 @@
 import './styles.css';
-import screenController from './screenController.js'; // Since the module pattern is imported, the code in the module will run immediately.
+import sidebarController from './sidebarController.js'; // Since the module pattern is imported, the code in the module will run immediately.
 
-screenController.initializePage();
+sidebarController.initializePage();
 
 // Adds a mock todo into the todoController
-screenController.addTodoTestUnit();
+sidebarController.addTodoTestUnit();
 
