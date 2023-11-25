@@ -73,8 +73,11 @@ const newProjectsLoader = (() => {
   };
 })();
 
-// screenController Module
-const screenController = (() => {
+/* 
+  sidebarController Module.
+  Required to be declared last in order to use module patterns declared above.
+*/
+const sidebarController = (() => {
   const initializePage = () => {
     tabStyler.styleTabs();
     countLoader.loadAllTasksCount();
@@ -91,4 +94,4 @@ const screenController = (() => {
   }
 })();
 
-export default screenController;
+export default sidebarController;
