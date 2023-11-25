@@ -1,40 +1,50 @@
 import todoController from './todoController.js';
+import todoControllerTestUnit from './todoControllerTestUnit.js';
 
-// screenController Module
-const screenController = (() => {
-  initializePage();
+// Tab styler module pattern
+const tabStyler = (() => {
+  const styleTabs = () => {
+    const allTabs = document.querySelectorAll('#home > button, #projects > button');
+    allTabs.forEach(item => {
+      // Add or remove .selected-tab class on click for each tab
+      item.addEventListener('click', () => {
+        // Remove .selected-tab class from previous selected tab
+        const prevSelectedTab = document.querySelector('.selected-tab');
+        if (prevSelectedTab) {
+          prevSelectedTab.classList.remove('selected-tab');
+        }
+        // Add .selected-tab class to current selected tab
+        item.classList.add('selected-tab');
+      });
+    });
+  };
 
   return {
-
-  }
+    styleTabs
+  };
 })();
-
-// Function to load appropriate eventlisteners for each tab
-function initializePage() {
-  const allTasks = document.querySelector('#all-tasks');
-  const today = document.querySelector('#today');
-  const week = document.querySelector('#week');
-
-  const initializingItems = new Array(allTasks, today, week);
-  initializingItems.forEach(item => {
-    // Add or remove .selected-tab class on click for each tab
-    item.addEventListener('click', () => {
-      // Remove .selected-tab class from previous selected tab
-      const prevSelectedTab = document.querySelector('.selected-tab');
-      if (prevSelectedTab) {
-        prevSelectedTab.classList.remove('selected-tab');
-      }
-      // Add .selected-tab class to current selected tab
-      item.classList.add('selected-tab');
-    });
-  });
-}
 
 // Count loader Module Pattern 
 const countLoader = (() => {
   // Function to load todo count for all tasks tab
   const loadAllTasksCount = () => {
-
+    // Extract count of todos from all projects
+    let allTasksCount = 0;
+    todoController.allProjects.forEach(project => {
+      allTasksCount += project.allTodos.length;
+    });
+    
+    // If count element already exist, change the count
+    const allTasks = document.querySelector('#all-tasks');
+    const existingCountElement = document.querySelector('#all-tasks > .count');
+    if (existingCountElement) {
+      existingCountElement.textContent = allTasksCount;
+    } else { // else, create and append count element to all tasks tab
+      const allTasksCountElement = document.createElement('div');
+      allTasksCountElement.classList.add('count');
+      allTasksCountElement.textContent = allTasksCount;
+      allTasks.appendChild(allTasksCountElement);
+    }
   };
   
   // Function to load todo count for today tasks tab (To do once due date function is implemented)
@@ -48,7 +58,9 @@ const countLoader = (() => {
   };
 
   return {
-
+    loadAllTasksCount,
+    loadTodayTasksCount,
+    loadWeekTasksCount
   }
 })();
 
@@ -57,6 +69,24 @@ const newProjectsLoader = (() => {
   // Function to initialize UI for new projects
   function loadNewProject() {
 
+  }
+})();
+
+// screenController Module
+const screenController = (() => {
+  const initalizePage = () => {
+    tabStyler.styleTabs();
+    countLoader.loadAllTasksCount();
+  }
+
+  const addTodoTestUnit = () => {
+    todoControllerTestUnit();
+    countLoader.loadAllTasksCount();
+  }
+
+  return {
+    initializePage: initalizePage,
+    addTodoTestUnit
   }
 })();
 
