@@ -4,6 +4,7 @@ import todoControllerTestUnit from './todoControllerTestUnit.js';
 // Tab styler module pattern
 const tabStyler = (() => {
   const styleTabs = () => {
+    // Select all the tabs in side bar that requires .selected-tab styling when clicked
     const allTabs = document.querySelectorAll('#home > button, #projects > button');
     allTabs.forEach(item => {
       // Add or remove .selected-tab class on click for each tab
@@ -74,7 +75,7 @@ const newProjectsLoader = (() => {
 
 // screenController Module
 const screenController = (() => {
-  const initalizePage = () => {
+  const initializePage = () => {
     tabStyler.styleTabs();
     countLoader.loadAllTasksCount();
   }
@@ -85,7 +86,7 @@ const screenController = (() => {
   }
 
   return {
-    initializePage: initalizePage,
+    initializePage,
     addTodoTestUnit
   }
 })();
