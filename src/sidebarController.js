@@ -1,7 +1,9 @@
 import todoController from './todoController.js';
 import todoControllerTestUnit from './todoControllerTestUnit.js';
 
-// Tab styler module pattern
+/* 
+  Tab styler module pattern 
+*/
 const tabStyler = (() => {
   const styleTabs = () => {
     // Select all the tabs in side bar that requires .selected-tab styling when clicked
@@ -25,7 +27,9 @@ const tabStyler = (() => {
   };
 })();
 
-// Count loader Module Pattern 
+/* 
+  Count loader Module Pattern 
+*/
 const countLoader = (() => {
   // Function to load todo count for all tasks tab
   const loadAllTasksCount = () => {
@@ -48,29 +52,47 @@ const countLoader = (() => {
     }
   };
   
-  // Function to load todo count for today tasks tab (To do once due date function is implemented)
+  // TODO: Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
 
   };
 
-  // Function to load todo count for week tasks tab (To do once due date function is implemented)
+  // TODO: Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
 
+  };
+
+  // TODO: Function to load task count for a specific project. Can be re-used to update task count.
+  const loadProjectTasksCount = (projectName) => {
+    // Loop through all projects -> Use projectName to sieve out the specific project
+
+    // Get the length of the todos array and create a count element similar to loadAllTasksCount()
   };
 
   return {
     loadAllTasksCount,
     loadTodayTasksCount,
-    loadWeekTasksCount
+    loadWeekTasksCount,
+    loadProjectTasksCount
   }
 })();
 
-// New project controller Module Pattern 
+/* 
+  TODO: New project controller Module Pattern 
+*/
 const newProjectController = (() => {
-  // Function to initialize UI for new projects when button is clicked
-  const loadNewProject = () => {
+  /* Function to text input UI for new projects when button is clicked */
+  // Upon submission of the text input, create a new project via todoController
+  const loadNewProjectUI = () => {
+    // Text input value will be passed into todoController.createProject({ text input })
+
+    // Based on project's name, create a new button project under #projects with its name and todo count
     
   };
+
+  return {
+    loadNewProjectUI
+  }
 })();
 
 /* 
