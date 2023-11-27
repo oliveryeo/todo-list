@@ -65,9 +65,9 @@ const countLoader = (() => {
   }
 })();
 
-// New projects loader Module Pattern 
-const newProjectsLoader = (() => {
-  // Function to initialize UI for new projects
+// New project controller Module Pattern 
+const newProjectController = (() => {
+  // Function to initialize UI for new projects when button is clicked
   const loadNewProject = () => {
     
   };
