@@ -27,6 +27,14 @@ const newProject = (name) => {
     allTodos.push(newTodo(title, description, dueDate, priority));
   }
 
+  const deleteTodo = (todoTitle) => {
+    allTodos.forEach((todo, index) => {
+      if (todoTitle == todo) {
+        allTodos.splice(index, 1);
+      }
+    });
+  };
+
   return {
     // Project name getter
     get projectName() {
@@ -40,8 +48,9 @@ const newProject = (name) => {
     get allTodos() {
       return allTodos;
     },
-    // Todo creator
-    createTodo
+    // Todo creator and deletor
+    createTodo,
+    deleteTodo
   };
 };
 

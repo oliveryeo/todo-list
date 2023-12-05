@@ -65,6 +65,11 @@ const countLoader = (() => {
   // TODO: Function to load task count for a specific project. Can be re-used to update task count.
   const loadProjectTasksCount = (projectName) => {
     // Loop through all projects -> Use projectName to sieve out the specific project
+    todoController.allProjects.forEach(project => {
+      if (project.projectName == projectName) {
+        let projectTasksCount = 0;
+      }
+    });
 
     // Get the length of the todos array and create a count element similar to loadAllTasksCount()
   };
