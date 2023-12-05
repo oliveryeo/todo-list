@@ -45,10 +45,10 @@ const countLoader = (() => {
     if (existingCountElement) {
       existingCountElement.textContent = allTasksCount;
     } else { // else, create and append count element to all tasks tab
-      const allTasksCountElement = document.createElement('div');
-      allTasksCountElement.classList.add('count');
-      allTasksCountElement.textContent = allTasksCount;
-      allTasks.appendChild(allTasksCountElement);
+      const countElement = document.createElement('div');
+      countElement.classList.add('count');
+      countElement.textContent = allTasksCount;
+      allTasks.appendChild(countElement);
     }
   };
   
@@ -67,7 +67,20 @@ const countLoader = (() => {
     // Loop through all projects -> Use projectName to sieve out the specific project
     todoController.allProjects.forEach(project => {
       if (project.projectName == projectName) {
-        let projectTasksCount = 0;
+        let projectTasksCount = project.allTodos.length;
+
+        // If count element already exist, change the count
+        console.log('#' + projectName);
+        const selectedProject = document.querySelector('#' + projectName);
+        const existingCountElement = document.querySelector('#' + projectName + ' > .count');
+        if (existingCountElement) {
+          existingCountElement.textContent = projectTasksCount;
+        } else { // else, create and append count element to all tasks tab
+          const countElement = document.createElement('div');
+          countElement.classList.add('count');
+          countElement.textContent = projectTasksCount;
+          selectedProject.appendChild(countElement);
+        }
       }
     });
 
@@ -112,7 +125,12 @@ const sidebarController = (() => {
 
   const addTodoTestUnit = () => {
     todoControllerTestUnit();
+
     countLoader.loadAllTasksCount();
+    console.log("If this is printed, allTasksCount is loaded");
+
+    countLoader.loadProjectTasksCount('Project-X');
+    console.log("If this is printed, Project-X tasks count is loaded");
   }
 
   return {
