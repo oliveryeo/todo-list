@@ -105,6 +105,7 @@ const newProjectController = (() => {
     // Text input value will be passed into todoController.createProject({ text input })
 
     // Based on project's name, create a new button project under #projects with its name and todo count
+      // Create an id for the button that matches the exact project's name
     
   };
 
