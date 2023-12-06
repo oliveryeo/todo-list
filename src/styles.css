@@ -92,10 +92,21 @@ button:hover {
   margin-top: auto;
   border-top: solid;
   border-color: lightgrey;
+  position: relative;
 }
 
 #new-project:active { /* new-project is a button itself */
   background-color: rgb(187, 187, 187);
+}
+
+.new-project-input {
+  position: absolute;
+  margin-left: -1rem; /* negative margins to remove the parent padding to help with positioning */
+  margin-top: -1rem; /* negative margins to remove the parent padding to help with positioning */
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  font-size: 1rem;
+  padding: 10px;
 }
 
 .selected-tab {
