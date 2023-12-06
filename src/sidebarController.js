@@ -102,7 +102,9 @@ const newProjectController = (() => {
   /* Function to text input UI for new projects when button is clicked */
   // Upon submission of the text input, create a new project via todoController
   const loadNewProjectUI = () => {
-    // Text input value will be passed into todoController.createProject({ text input })
+    // Upon clicking the newproject, create a new input box and add class .new-project.input, which will overlap the new project button
+    
+    // Upon submission, text input value will be passed into todoController.createProject({ text input })
 
     // Based on project's name, create a new button project under #projects with its name and todo count
       // Create an id for the button that matches the exact project's name
