@@ -107,6 +107,7 @@ button:hover {
   width: calc(100% - 20px);
   font-size: 1rem;
   padding: 10px;
+  color: black;
 }
 
 .selected-tab {

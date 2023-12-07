@@ -44,7 +44,7 @@ const countLoader = (() => {
     const existingCountElement = document.querySelector('#all-tasks > .count');
     if (existingCountElement) {
       existingCountElement.textContent = allTasksCount;
-    } else { // else, create and append count element to all tasks tab
+    } else { // else, create and append count element to the tab
       const countElement = document.createElement('div');
       countElement.classList.add('count');
       countElement.textContent = allTasksCount;
@@ -75,7 +75,7 @@ const countLoader = (() => {
         const existingCountElement = document.querySelector('#' + projectName + ' > .count');
         if (existingCountElement) {
           existingCountElement.textContent = projectTasksCount;
-        } else { // else, create and append count element to all tasks tab
+        } else { // else, create and append count element to the tab
           const countElement = document.createElement('div');
           countElement.classList.add('count');
           countElement.textContent = projectTasksCount;
@@ -103,7 +103,36 @@ const newProjectController = (() => {
   // Upon submission of the text input, create a new project via todoController
   const loadNewProjectUI = () => {
     // Upon clicking the newproject, create a new input box and add class .new-project.input, which will overlap the new project button
-    
+    const newProjectButton = document.querySelector('#new-project');
+    newProjectButton.addEventListener('click', createInputField);
+
+    function createInputField() {
+      // Remove click event listener to prevent double input field pop up
+      newProjectButton.removeEventListener('click', createInputField);
+
+      // Create new input box and add class .new-project.input
+      const inputField = document.createElement('input');
+      inputField.classList.add('new-project-input');
+      inputField.setAttribute("type", "text");
+      
+      // Add event listener to inputField -> when enter key is lifted, use that value to create a new project and remove the whole input box from the DOM
+      inputField.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+          // Create new project
+          const newProjectName = inputField.value; // Project name
+          todoController.createProject(newProjectName);
+
+          // Remove the input field from the DOM
+          inputField.remove();
+
+          // Add back the click event listener to newProjectButton by recursion
+          newProjectButton.addEventListener('click', createInputField);
+        }
+      });
+
+      newProjectButton.appendChild(inputField);
+    };
+
     // Upon submission, text input value will be passed into todoController.createProject({ text input })
 
     // Based on project's name, create a new button project under #projects with its name and todo count
@@ -124,6 +153,7 @@ const sidebarController = (() => {
   const initializePage = () => {
     tabStyler.styleTabs();
     countLoader.loadAllTasksCount();
+    newProjectController.loadNewProjectUI();
   }
 
   const addTodoTestUnit = () => {
