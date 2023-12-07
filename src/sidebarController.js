@@ -114,7 +114,7 @@ const projectController = (() => {
       const inputField = document.createElement('input');
       inputField.classList.add('new-project-input');
       inputField.setAttribute("type", "text");
-      inputField.setAttribute("placeholder", "Project Name");
+      inputField.setAttribute("placeholder", "Project Name ('enter' to add)");
       
       // Add event listener to inputField -> when enter key is lifted, use that value to create a new project and remove the whole input box from the DOM
       inputField.addEventListener('keyup', (e) => {
