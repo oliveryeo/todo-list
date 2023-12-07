@@ -96,9 +96,9 @@ const countLoader = (() => {
 })();
 
 /* 
-  TODO: New project controller Module Pattern 
+  Project controller Module Pattern 
 */
-const newProjectController = (() => {
+const projectController = (() => {
   /* Function to text input UI for new projects when button is clicked */
   // Upon submission of the text input, create a new project via todoController
   const loadNewProjectUI = () => {
@@ -133,12 +133,18 @@ const newProjectController = (() => {
 
       newProjectButton.appendChild(inputField);
     };
+  };
 
-    // Upon submission, text input value will be passed into todoController.createProject({ text input })
+  // Function that helps to load all the current projects onto the DOM
+  const projectDisplayLoader = () => {
+    // Remove all currently displayed projects
+    const currentProjects = document.querySelectorAll('#projects > button');
 
-    // Based on project's name, create a new button project under #projects with its name and todo count
-      // Create an id for the button that matches the exact project's name
-    
+    // Loop through the updated projects
+      // Create a button with a div child (for project name), and a div child for todos count (with the class of "count")
+      // Ensure that the button has an id of the project's name as well
+      // Append child to #projects
+
   };
 
   return {
@@ -154,7 +160,7 @@ const sidebarController = (() => {
   const initializePage = () => {
     tabStyler.styleTabs();
     countLoader.loadAllTasksCount();
-    newProjectController.loadNewProjectUI();
+    projectController.loadNewProjectUI();
   }
 
   const addTodoTestUnit = () => {
