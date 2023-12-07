@@ -100,8 +100,8 @@ const countLoader = (() => {
 */
 const projectController = (() => {
   /* Function to handle UI for new projects */
-  // Upon submission of the text input, create a new project via todoController, and update the DOM of the new project
   const loadNewProjectUI = () => {
+    // Upon submission of the text input, create a new project via todoController, and update the DOM of the new project
     // Upon clicking the newproject, create a new input box and add class .new-project.input, which will overlap the new project button
     const newProjectButton = document.querySelector('#new-project');
     newProjectButton.addEventListener('click', createInputField);
@@ -130,7 +130,7 @@ const projectController = (() => {
           newProjectButton.addEventListener('click', createInputField);
 
           // Update displayed projects
-          projectDisplayLoader();
+          _projectDisplayLoader();
         }
       });
 
@@ -138,8 +138,8 @@ const projectController = (() => {
     };
   };
 
-  // Function that helps to load all the current projects onto the DOM
-  function projectDisplayLoader() {
+  // Helper function that helps to load all the current projects onto the DOM
+  function _projectDisplayLoader() {
     // Remove all currently displayed projects
     const currentDisplayedProjects = document.querySelectorAll('#projects > button');
     currentDisplayedProjects.forEach((displayedProject) => displayedProject.remove());
