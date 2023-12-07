@@ -99,8 +99,8 @@ const countLoader = (() => {
   Project controller Module Pattern 
 */
 const projectController = (() => {
-  /* Function to text input UI for new projects when button is clicked */
-  // Upon submission of the text input, create a new project via todoController
+  /* Function to handle UI for new projects */
+  // Upon submission of the text input, create a new project via todoController, and update the DOM of the new project
   const loadNewProjectUI = () => {
     // Upon clicking the newproject, create a new input box and add class .new-project.input, which will overlap the new project button
     const newProjectButton = document.querySelector('#new-project');
@@ -128,6 +128,9 @@ const projectController = (() => {
 
           // Add back the click event listener to newProjectButton by recursion
           newProjectButton.addEventListener('click', createInputField);
+
+          // Update displayed projects
+          projectDisplayLoader();
         }
       });
 
@@ -136,15 +139,36 @@ const projectController = (() => {
   };
 
   // Function that helps to load all the current projects onto the DOM
-  const projectDisplayLoader = () => {
+  function projectDisplayLoader() {
     // Remove all currently displayed projects
-    const currentProjects = document.querySelectorAll('#projects > button');
+    const currentDisplayedProjects = document.querySelectorAll('#projects > button');
+    currentDisplayedProjects.forEach((displayedProject) => displayedProject.remove());
 
     // Loop through the updated projects
+    const updatedProjects = todoController.allProjects;
+    updatedProjects.forEach((project) => {
+      const projectName = project.projectName;
+      const todoCount = project.allTodos.length;
+
       // Create a button with a div child (for project name), and a div child for todos count (with the class of "count")
       // Ensure that the button has an id of the project's name as well
       // Append child to #projects
+      const projectButton = document.createElement('button');
+      projectButton.setAttribute('id', projectName);
 
+      const projectNameDisplay = document.createElement('div');
+      projectNameDisplay.textContent = projectName;
+
+      const projectTodoCount = document.createElement('div');
+      projectTodoCount.classList.add('count');
+      projectTodoCount.textContent = todoCount;
+
+      projectButton.appendChild(projectNameDisplay);
+      projectButton.appendChild(projectTodoCount);
+
+      const projectContainer = document.querySelector('#projects');
+      projectContainer.appendChild(projectButton);
+    });
   };
 
   return {
