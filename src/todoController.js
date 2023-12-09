@@ -3,15 +3,41 @@ const todoController = (() => {
   // Array to hold for all todo projects
   const allProjects = [];
 
+  // Create a project
   const createProject = (name) => {
     allProjects.push(newProject(name));
   }
+
+  // TODO: Function to extract all todos from all projects
+  const extractAllTodos = () => {
+    const allProjectTodos = [];
+    // In each project's todo, push todo to allProjectTodos
+    allProjects.forEach((project) => {
+      project.allTodos.forEach((todo) => {
+        allProjectTodos.push(todo);
+      });
+    });
+    return allProjectTodos;
+  };
+
+  // TODO: Function to extract week todos from all projects
+  const extractWeekTodos = () => {
+
+  };
+
+  // TODO: Function to extract today todos from all projects
+  const extractTodayTodos = () => {
+
+  };
   
   return {
     get allProjects() {
       return allProjects;
     },
-    createProject
+    createProject,
+    extractAllTodos,
+    extractWeekTodos,
+    extractTodayTodos
   };
 })();
 
