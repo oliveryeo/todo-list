@@ -22,12 +22,17 @@ const todoController = (() => {
 
   // TODO: Function to extract week todos from all projects
   const extractWeekTodos = () => {
-    
+    // Create an array that holds all the week's todos
+    // Create a variable that holds Monday's date for the current week
+    // Create a variable that holds the Sunday's date for the current week
+    // Extract all the todos that fall between the Monday and Sunday date and push them into the array
   };
 
   // TODO: Function to extract today todos from all projects
   const extractTodayTodos = () => {
-
+    // Create an array that holds all the today's todos
+    // Create a variable that holds today's date
+    // Extract all todos that fall within today's date and push them into the array
   };
   
   return {
@@ -84,7 +89,7 @@ const newProject = (name) => {
 const newTodo = (title, description, dueDate, priority) => {
   let todoTitle = title;
   let todoDescription = description;
-  let todoDueDate = dueDate;
+  let todoDueDate = new Date(dueDate);
   let todoPriority = priority;
 
   return {
