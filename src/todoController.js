@@ -22,7 +22,7 @@ const todoController = (() => {
 
   // TODO: Function to extract week todos from all projects
   const extractWeekTodos = () => {
-
+    
   };
 
   // TODO: Function to extract today todos from all projects
