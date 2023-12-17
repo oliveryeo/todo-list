@@ -10,7 +10,7 @@ const todoControllerTestUnit = () => {
       console.log("Creating a Project-X exercise todo now for testing!");
       let title = "Controlled push-ups";
       let description = "Control the descent of the push-ups for each repetition";
-      let dueDate = "2023-12-25";
+      let dueDate = "2023-12-17";
       let priority = "high";
       project.createTodo(title, description, dueDate, priority);
     }

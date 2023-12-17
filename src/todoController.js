@@ -1,3 +1,5 @@
+import { isWithinInterval } from 'date-fns';
+
 // todoController module
 const todoController = (() => {
   // Array to hold for all todo projects
@@ -8,31 +10,72 @@ const todoController = (() => {
     allProjects.push(newProject(name));
   }
 
-  // TODO: Function to extract all todos from all projects
+  // Function to extract all todos from all projects
   const extractAllTodos = () => {
-    const allProjectTodos = [];
+    const allProjectsTodos = [];
     // In each project's todo, push todo to allProjectTodos
     allProjects.forEach((project) => {
       project.allTodos.forEach((todo) => {
-        allProjectTodos.push(todo);
+        allProjectsTodos.push(todo);
       });
     });
-    return allProjectTodos;
+    return allProjectsTodos;
   };
-
-  // TODO: Function to extract week todos from all projects
-  const extractWeekTodos = () => {
-    // Create an array that holds all the week's todos
-    // Create a variable that holds Monday's date for the current week
-    // Create a variable that holds the Sunday's date for the current week
-    // Extract all the todos that fall between the Monday and Sunday date and push them into the array
-  };
-
-  // TODO: Function to extract today todos from all projects
+  
+  // Function to extract today todos from all projects
   const extractTodayTodos = () => {
     // Create an array that holds all the today's todos
+    const allTodayTodos = [];
     // Create a variable that holds today's date
+    const todayDate = new Date();
     // Extract all todos that fall within today's date and push them into the array
+    allProjects.forEach((project) => {
+      project.allTodos.forEach((todo) => {
+        if (todo.dueDate.toDateString() == todayDate.toDateString()) {
+          allTodayTodos.push(todo);
+        }
+      })
+    })
+
+    return allTodayTodos;
+  };
+
+
+  // Function to extract week todos from all projects
+  const extractWeekTodos = () => {
+    // Create an array that holds all the week's todos
+    const allWeekTodos = [];
+    const todayDate = new Date();
+    // Create a variable that holds Monday's and Sunday's date for the current week
+    const mondayDate = getMonday(todayDate);
+    const sundayDate = getSunday(todayDate);
+
+    // Extract all the todos that fall between the Monday and Sunday date and push them into the array. .toDateString() is used to extract date without timestamp.
+    allProjects.forEach((project) => {
+      project.allTodos.forEach((todo) => {
+        console.log("test");
+        console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
+        if (isWithinInterval(todo.dueDate,
+          {start: mondayDate, end: sundayDate})) {
+          allWeekTodos.push(todo);
+        }
+      })
+    });
+
+    return allWeekTodos;
+
+    // Functions
+    function getMonday(d) {
+      let day = d.getDay();
+      let diff = d.getDate() - day + (day == 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
+
+    function getSunday(d) {
+      let day = d.getDay();
+      let diff = d.getDate() - day + (day == 0 ? 0 : 7);
+      return new Date(d.setDate(diff));
+    }
   };
   
   return {
@@ -41,8 +84,8 @@ const todoController = (() => {
     },
     createProject,
     extractAllTodos,
-    extractWeekTodos,
-    extractTodayTodos
+    extractTodayTodos,
+    extractWeekTodos
   };
 })();
 
@@ -69,7 +112,7 @@ const newProject = (name) => {
   return {
     // Project name getter
     get projectName() {
-      return name;
+      return projectName;
     },
     // Project name setter
     set projectName(newName) {
@@ -89,7 +132,7 @@ const newProject = (name) => {
 const newTodo = (title, description, dueDate, priority) => {
   let todoTitle = title;
   let todoDescription = description;
-  let todoDueDate = new Date(dueDate);
+  let todoDueDate = new Date(dueDate); // "YYYY-MM-DD"
   let todoPriority = priority;
 
   return {
@@ -110,8 +153,8 @@ const newTodo = (title, description, dueDate, priority) => {
     get dueDate() {
       return todoDueDate;
     },
-    set dueDate(newDate) {
-      todoDueDate = newDate;
+    set dueDate(newDueDate) {
+      todoDueDate = newDueDate;
     },
 
     get priority() {
