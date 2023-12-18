@@ -77,6 +77,17 @@ const todoController = (() => {
       return new Date(d.setDate(diff));
     }
   };
+
+  const extractProjectTodos = (projectName) => {
+    // .forEach() cannot be used here because the loop will continue running even after the todos array is returned.
+    for (let i = 0; i < allProjects.length; i++) {
+      if (allProjects[i].projectName == projectName) {
+        // console.log("Below is the array extracted");
+        // console.log(allProjects[i].allTodos);
+        return allProjects[i].allTodos;
+      }
+    }
+  };
   
   return {
     get allProjects() {
@@ -85,7 +96,8 @@ const todoController = (() => {
     createProject,
     extractAllTodos,
     extractTodayTodos,
-    extractWeekTodos
+    extractWeekTodos,
+    extractProjectTodos
   };
 })();
 

@@ -49,7 +49,7 @@ const countLoader = (() => {
     }
   };
   
-  // TODO: Function to load todo count for today tasks tab (To do once due date function is implemented)
+  // Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
     let todayTasksCount = todoController.extractTodayTodos().length;
     
@@ -66,7 +66,7 @@ const countLoader = (() => {
     }
   };
 
-  // TODO: Function to load todo count for week tasks tab (To do once due date function is implemented)
+  // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractWeekTodos().length;
     
@@ -83,27 +83,27 @@ const countLoader = (() => {
     }
   };
 
-  // TODO: Function to load task count for a specific project. Can be re-used to update task count.
+  // Function to load task count for a specific project. Can be re-used to update task count.
   const loadProjectTasksCount = (projectName) => {
-    // Loop through all projects -> Use projectName to sieve out the specific project
-    todoController.allProjects.forEach(project => {
-      if (project.projectName == projectName) {
-        let projectTasksCount = project.allTodos.length;
+    let projectTodoArray = todoController.extractProjectTodos(projectName);
+    // console.log("Below is the extracted array in sidebar controller");
+    // console.log(projectTodoArray);
+    if (projectTodoArray) {
+      let projectTasksCount = projectTodoArray.length;
 
-        // If count element already exist, change the count
-        console.log('#' + projectName);
-        const selectedProject = document.querySelector('#' + projectName);
-        const existingCountElement = document.querySelector('#' + projectName + ' > .count');
-        if (existingCountElement) {
-          existingCountElement.textContent = projectTasksCount;
-        } else { // else, create and append count element to the tab
-          const countElement = document.createElement('div');
-          countElement.classList.add('count');
-          countElement.textContent = projectTasksCount;
-          selectedProject.appendChild(countElement);
-        }
+      // If count element already exist, change the count
+      console.log('#' + projectName);
+      const selectedProject = document.querySelector('#' + projectName);
+      const existingCountElement = document.querySelector('#' + projectName + ' > .count');
+      if (existingCountElement) {
+        existingCountElement.textContent = projectTasksCount;
+      } else { // else, create and append count element to the tab
+        const countElement = document.createElement('div');
+        countElement.classList.add('count');
+        countElement.textContent = projectTasksCount;
+        selectedProject.appendChild(countElement);
       }
-    });
+    }
 
     // Get the length of the todos array and create a count element similar to loadAllTasksCount()
   };
