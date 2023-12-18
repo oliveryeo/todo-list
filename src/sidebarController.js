@@ -51,62 +51,79 @@ const countLoader = (() => {
   
   // Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
+    // Extract count of todos due today
     let todayTasksCount = todoController.extractTodayTodos().length;
+    modifyCountDisplay('#', 'today', todayTasksCount);
     
-    // If count element already exist, change the count
-    const todayTasks = document.querySelector('#today');
-    const existingCountElement = document.querySelector('#today > .count');
-    if (existingCountElement) {
-      existingCountElement.textContent = todayTasksCount;
-    } else { // else, create and append count element to the tab
-      const countElement = document.createElement('div');
-      countElement.classList.add('count');
-      countElement.textContent = todayTasksCount;
-      todayTasks.appendChild(countElement);
-    }
+    // // If count element already exist, change the count
+    // const todayTasks = document.querySelector('#today');
+    // const existingCountElement = document.querySelector('#today > .count');
+    // if (existingCountElement) {
+    //   existingCountElement.textContent = todayTasksCount;
+    // } else { // else, create and append count element to the tab
+    //   const countElement = document.createElement('div');
+    //   countElement.classList.add('count');
+    //   countElement.textContent = todayTasksCount;
+    //   todayTasks.appendChild(countElement);
   };
 
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractWeekTodos().length;
+    modifyCountDisplay('#', 'week', weekTasksCount);
+
     
-    // If count element already exist, change the count
-    const weekTasks = document.querySelector('#week');
-    const existingCountElement = document.querySelector('#week > .count');
-    if (existingCountElement) {
-      existingCountElement.textContent = weekTasksCount;
-    } else { // else, create and append count element to the tab
-      const countElement = document.createElement('div');
-      countElement.classList.add('count');
-      countElement.textContent = weekTasksCount;
-      weekTasks.appendChild(countElement);
-    }
+    // // If count element already exist, change the count
+    // const weekTasks = document.querySelector('#week');
+    // const existingCountElement = document.querySelector('#week > .count');
+    // if (existingCountElement) {
+    //   existingCountElement.textContent = weekTasksCount;
+    // } else { // else, create and append count element to the tab
+    //   const countElement = document.createElement('div');
+    //   countElement.classList.add('count');
+    //   countElement.textContent = weekTasksCount;
+    //   weekTasks.appendChild(countElement);
+    // }
   };
 
   // Function to load task count for a specific project. Can be re-used to update task count.
   const loadProjectTasksCount = (projectName) => {
+    // Extract count of todos for a specific project
     let projectTodoArray = todoController.extractProjectTodos(projectName);
     // console.log("Below is the extracted array in sidebar controller");
     // console.log(projectTodoArray);
     if (projectTodoArray) {
       let projectTasksCount = projectTodoArray.length;
 
-      // If count element already exist, change the count
-      console.log('#' + projectName);
-      const selectedProject = document.querySelector('#' + projectName);
-      const existingCountElement = document.querySelector('#' + projectName + ' > .count');
-      if (existingCountElement) {
-        existingCountElement.textContent = projectTasksCount;
-      } else { // else, create and append count element to the tab
-        const countElement = document.createElement('div');
-        countElement.classList.add('count');
-        countElement.textContent = projectTasksCount;
-        selectedProject.appendChild(countElement);
-      }
+      modifyCountDisplay('#', projectName, projectTasksCount);
+      // // If count element already exist, change the count
+      // console.log('#' + projectName);
+      // const selectedProject = document.querySelector('#' + projectName);
+      // const existingCountElement = document.querySelector('#' + projectName + ' > .count');
+      // if (existingCountElement) {
+      //   existingCountElement.textContent = projectTasksCount;
+      // } else { // else, create and append count element to the tab
+      //   const countElement = document.createElement('div');
+      //   countElement.classList.add('count');
+      //   countElement.textContent = projectTasksCount;
+      //   selectedProject.appendChild(countElement);
+      // }
     }
-
-    // Get the length of the todos array and create a count element similar to loadAllTasksCount()
   };
+
+  function modifyCountDisplay(selectorType, selectorName, tasksCountNumber) {
+    const selectedElement = document.querySelector(selectorType + selectorName);
+    const existingCountElement = document.querySelector(selectorType + selectorName + ' > .count');
+    // If count element already exist, change the count
+    if (existingCountElement) {
+      existingCountElement.textContent = tasksCountNumber;
+    } else { // else, create and append count element to the tab
+      const countElement = document.createElement('div');
+      countElement.classList.add('count');
+      countElement.textContent = tasksCountNumber;
+      selectedElement.appendChild(countElement);
+    }
+  }
 
   return {
     loadAllTasksCount,
