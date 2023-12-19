@@ -12,7 +12,7 @@ body,
   height: 100%;
 }
 
-button {
+button { /* Reset the button */
   background: none;
   color: inherit;
   border: none;
@@ -134,7 +134,33 @@ button:hover {
 }
 
 #main-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   font-size: 1rem;
+}
+
+#main-panel-content > button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 40px;
+}
+
+.todo-due-date {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-left: auto;
+  font-size: 0.8rem;
+}
+
+.todo-due-date > img {
+  height: 1rem;
 }
 
 /* Footer Styling */
