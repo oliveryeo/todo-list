@@ -128,9 +128,24 @@ button:hover {
 }
 
 #main-panel-title {
+  display: flex;
   font-size: 2rem;
   border-bottom: solid;
   min-width: 500px;
+}
+
+.main-panel-title-editor {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.main-panel-title-editor > img {
+  height: 2rem;
+}
+
+.main-panel-title-editor > img:hover {
+  cursor: pointer;
 }
 
 #main-panel-content {
