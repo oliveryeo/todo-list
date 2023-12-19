@@ -132,6 +132,7 @@ button:hover {
   font-size: 2rem;
   border-bottom: solid;
   min-width: 500px;
+  margin-top: 5%;
 }
 
 .main-panel-title-editor {

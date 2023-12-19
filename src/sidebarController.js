@@ -28,9 +28,9 @@ const tabStyler = (() => {
 })();
 
 /* 
-  Count loader Module Pattern 
+  Todo Count loader Module Pattern 
 */
-const countLoader = (() => {
+const todoCountLoader = (() => {
   // Function to load todo count for all tasks tab
   const loadAllTasksCount = () => {
     // Extract count of todos from all projects
@@ -55,16 +55,6 @@ const countLoader = (() => {
     let todayTasksCount = todoController.extractTodayTodos().length;
     modifyCountDisplay('#', 'today', todayTasksCount);
     
-    // // If count element already exist, change the count
-    // const todayTasks = document.querySelector('#today');
-    // const existingCountElement = document.querySelector('#today > .count');
-    // if (existingCountElement) {
-    //   existingCountElement.textContent = todayTasksCount;
-    // } else { // else, create and append count element to the tab
-    //   const countElement = document.createElement('div');
-    //   countElement.classList.add('count');
-    //   countElement.textContent = todayTasksCount;
-    //   todayTasks.appendChild(countElement);
   };
 
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
@@ -72,42 +62,17 @@ const countLoader = (() => {
     let weekTasksCount = todoController.extractWeekTodos().length;
     modifyCountDisplay('#', 'week', weekTasksCount);
 
-    
-    // // If count element already exist, change the count
-    // const weekTasks = document.querySelector('#week');
-    // const existingCountElement = document.querySelector('#week > .count');
-    // if (existingCountElement) {
-    //   existingCountElement.textContent = weekTasksCount;
-    // } else { // else, create and append count element to the tab
-    //   const countElement = document.createElement('div');
-    //   countElement.classList.add('count');
-    //   countElement.textContent = weekTasksCount;
-    //   weekTasks.appendChild(countElement);
-    // }
   };
 
   // Function to load task count for a specific project. Can be re-used to update task count.
   const loadProjectTasksCount = (projectName) => {
-    // Extract count of todos for a specific project
+    // Extract todo array for a specific project → If array exists, then extract count and modify count display
     let projectTodoArray = todoController.extractProjectTodos(projectName);
     // console.log("Below is the extracted array in sidebar controller");
     // console.log(projectTodoArray);
     if (projectTodoArray) {
       let projectTasksCount = projectTodoArray.length;
-
       modifyCountDisplay('#', projectName, projectTasksCount);
-      // // If count element already exist, change the count
-      // console.log('#' + projectName);
-      // const selectedProject = document.querySelector('#' + projectName);
-      // const existingCountElement = document.querySelector('#' + projectName + ' > .count');
-      // if (existingCountElement) {
-      //   existingCountElement.textContent = projectTasksCount;
-      // } else { // else, create and append count element to the tab
-      //   const countElement = document.createElement('div');
-      //   countElement.classList.add('count');
-      //   countElement.textContent = projectTasksCount;
-      //   selectedProject.appendChild(countElement);
-      // }
     }
   };
 
@@ -188,12 +153,7 @@ const projectController = (() => {
       const projectName = project.projectName;
       const todoCount = project.allTodos.length;
 
-      // Create a button with a div child (for project name), and a div child for todos count (with the class of "count")
-      // Ensure that the button has an id of the project's name as well
-      // Append child to #projects
-      const projectButton = document.createElement('button');
-      projectButton.setAttribute('id', projectName);
-
+      // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
       const projectNameDisplay = document.createElement('div');
       projectNameDisplay.textContent = projectName;
 
@@ -201,9 +161,12 @@ const projectController = (() => {
       projectTodoCount.classList.add('count');
       projectTodoCount.textContent = todoCount;
 
+      const projectButton = document.createElement('button');
+      projectButton.setAttribute('id', projectName);
       projectButton.appendChild(projectNameDisplay);
       projectButton.appendChild(projectTodoCount);
 
+      // Append child to #projects
       const projectContainer = document.querySelector('#projects');
       projectContainer.appendChild(projectButton);
     });
@@ -221,23 +184,23 @@ const projectController = (() => {
 const sidebarController = (() => {
   const initializePage = () => {
     tabStyler.styleTabs();
-    countLoader.loadAllTasksCount();
-    countLoader.loadTodayTasksCount();
-    countLoader.loadWeekTasksCount();
+    todoCountLoader.loadAllTasksCount();
+    todoCountLoader.loadTodayTasksCount();
+    todoCountLoader.loadWeekTasksCount();
     projectController.loadNewProjectUI();
   }
 
   const addTodoTestUnit = () => {
     todoControllerTestUnit();
 
-    countLoader.loadAllTasksCount();
+    todoCountLoader.loadAllTasksCount();
     console.log("If this is printed, allTasksCount is loaded");
-    countLoader.loadTodayTasksCount();
+    todoCountLoader.loadTodayTasksCount();
     console.log("If this is printed, todayTasksCount is loaded");
-    countLoader.loadWeekTasksCount();
+    todoCountLoader.loadWeekTasksCount();
     console.log("If this is printed, weekTasksCount is loaded");
 
-    countLoader.loadProjectTasksCount('Project-X');
+    todoCountLoader.loadProjectTasksCount('Project-X');
     console.log("If this is printed, Project-X tasks count is loaded");
   }
 
