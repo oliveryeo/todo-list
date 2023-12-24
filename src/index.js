@@ -1,8 +1,8 @@
 import './styles.css';
-import DOMController from './DOMController.js'; // Since the module pattern is imported, the code in the module will run immediately.
+import DOMControllerModule from './DOMController.js'; // Since the module pattern is imported, the code in the module will run immediately.
 
-DOMController.initializePage();
+DOMControllerModule.initializePage();
 
 // Adds a mock todo into the todoController
-DOMController.addTodoTestUnit();
+DOMControllerModule.addTodoTestUnit();
 

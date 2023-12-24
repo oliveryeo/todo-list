@@ -127,7 +127,7 @@ button:hover {
   padding: 1rem max(1.5rem, calc(15% - 3.5rem));
 }
 
-#main-panel-title {
+#main-panel-title-container {
   display: flex;
   font-size: 2rem;
   border-bottom: solid;

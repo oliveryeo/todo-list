@@ -98,7 +98,7 @@ const todoCountLoader = (() => {
 })();
 
 /* 
-  Project controller Module Pattern 
+  Project controller Module Pattern responsible for adding new projects
 */
 const projectController = (() => {
   /* Function to handle UI for new projects */
@@ -132,7 +132,7 @@ const projectController = (() => {
           newProjectButton.addEventListener('click', createInputField);
 
           // Update displayed projects
-          _projectDisplayLoader();
+          _updateProjectDisplay();
         }
       });
 
@@ -141,7 +141,7 @@ const projectController = (() => {
   };
 
   // Helper function that helps to load all the current projects onto the DOM
-  function _projectDisplayLoader() {
+  function _updateProjectDisplay() {
     // Remove all currently displayed projects
     const currentDisplayedProjects = document.querySelectorAll('#projects > button');
     currentDisplayedProjects.forEach((displayedProject) => displayedProject.remove());
@@ -177,16 +177,34 @@ const projectController = (() => {
 })();
 
 
-const mainbarController = (() => {
-  // Create function that takes in the sidebar tab title and todo array
-  const loadMainBar = (tabTitle, todoArray) => {
 
+/* 
+  Module pattern that takes in the sidebar tab title and todo array
+  and load into main bar view.
+*/
+const mainbarController = (() => {
+  const loadMainbar = () => {
+    const allTabButtons = document.querySelectorAll("#home > button, #projects > button");
+  };
+  
+  function _loadMainbarUI(tabTitle, todoArray) {
+    // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
+    // Select #main-panel-content id:
+      // Clear out ALL the todos on the page
+      // Using the todoArray -> Create a button with:
+        // data-todo attribute of the todo title
+        // An input of checkbox type
+        // A div containing the todo title as the content
+        // A div with a class .todo-due-date, inside which contains:
+          // An img with the triangle flag
+          // A div containing the todo due date as the content
+        
   };
 })();
 
 
 
-const DOMController = (() => {
+const DOMControllerModule = (() => {
   const initializePage = () => {
     tabStyler.styleTabs();
     todoCountLoader.loadAllTasksCount();
@@ -215,4 +233,4 @@ const DOMController = (() => {
   }
 })();
 
-export default DOMController;
+export default DOMControllerModule;
