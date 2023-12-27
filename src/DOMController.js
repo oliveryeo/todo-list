@@ -36,30 +36,21 @@ const todoCountLoader = (() => {
     let allTasksCount = todoController.extractAllTodos().length;
     
     // If count element already exist, change the count
-    const allTasks = document.querySelector('#all-tasks');
-    const existingCountElement = document.querySelector('#all-tasks > .count');
-    if (existingCountElement) {
-      existingCountElement.textContent = allTasksCount;
-    } else { // else, create and append count element to the tab
-      const countElement = document.createElement('div');
-      countElement.classList.add('count');
-      countElement.textContent = allTasksCount;
-      allTasks.appendChild(countElement);
-    }
+    modifyCountDisplay('All tasks', allTasksCount);
   };
   
   // Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
     let todayTasksCount = todoController.extractTodayTodos().length;
-    modifyCountDisplay('#', 'today', todayTasksCount);
+    modifyCountDisplay('Today', todayTasksCount);
     
   };
 
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractWeekTodos().length;
-    modifyCountDisplay('#', 'week', weekTasksCount);
+    modifyCountDisplay('Week', weekTasksCount);
 
   };
 
@@ -71,13 +62,14 @@ const todoCountLoader = (() => {
     // console.log(projectTodoArray);
     if (projectTodoArray) {
       let projectTasksCount = projectTodoArray.length;
-      modifyCountDisplay('#', projectName, projectTasksCount);
+      modifyCountDisplay(projectName, projectTasksCount);
     }
   };
 
-  function modifyCountDisplay(selectorType, selectorName, tasksCountNumber) {
-    const selectedElement = document.querySelector(selectorType + selectorName);
-    const existingCountElement = document.querySelector(selectorType + selectorName + ' > .count');
+  function modifyCountDisplay(dataTitle, tasksCountNumber) {
+    const elementDataTitle = '[' + 'data-title=' + '"' + dataTitle + '"' + ']';
+    const selectedElement = document.querySelector(elementDataTitle);
+    const existingCountElement = document.querySelector(elementDataTitle + ' > .count');
     // If count element already exist, change the count
     if (existingCountElement) {
       existingCountElement.textContent = tasksCountNumber;
@@ -161,7 +153,7 @@ const projectController = (() => {
       projectTodoCount.textContent = todoCount;
 
       const projectButton = document.createElement('button');
-      projectButton.setAttribute('id', projectName);
+      projectButton.dataset.title = projectName;
       projectButton.appendChild(projectNameDisplay);
       projectButton.appendChild(projectTodoCount);
 
@@ -175,8 +167,6 @@ const projectController = (() => {
     loadNewProjectUI
   }
 })();
-
-
 
 /* 
   Module pattern that takes in the sidebar tab title and todo array
