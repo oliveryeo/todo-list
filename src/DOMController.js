@@ -174,20 +174,50 @@ const projectController = (() => {
 */
 const mainbarController = (() => {
   const loadMainbar = () => {
+    // TODO: Extract the sidebar title and todoArray upon clicking
     const allTabButtons = document.querySelectorAll("#home > button, #projects > button");
   };
-  
+
   function _loadMainbarUI(tabTitle, todoArray) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
+    const mainPanelTitle = document.querySelector("#main-panel-title-content");
+    mainPanelTitle.textContent = tabTitle;
     // Select #main-panel-content id:
+    const mainPanelContent = document.querySelector("#main-panel-content");
       // Clear out ALL the todos on the page
-      // Using the todoArray -> Create a button with:
-        // data-todo attribute of the todo title
+      mainPanelContent.textContent = "";
+      // Using the todoArray, create:
+        
+      todoArray.forEach(todo => {
+        // A button with data-todo attribute of the todo title
+        const todoButton = document.createElement('button');
+        todoButton.dataset.title = todo.title;
+
         // An input of checkbox type
+        const checkbox = document.createElement('input');
+        checkbox.setAttribute('type', 'input');
+
         // A div containing the todo title as the content
+        const todoTitle = document.createElement('div');
+        todoTitle.textContent = todo.title;
         // A div with a class .todo-due-date, inside which contains:
           // An img with the triangle flag
           // A div containing the todo due date as the content
+        const todoDueDateContainer = document.createElement('div');
+        todoDueDateContainer.classList.add(".todo-due-date");
+        const dueFlagImg = document.createElement('img');
+        dueFlagImg.setAttribute("src", "./icons/flag-triangle.svg");
+        const todoDueDate = document.createElement('div');
+        todoDueDate.textContent = todo.dueDate;
+        todoDueDateContainer.appendChild(dueFlagImg);
+        todoDueDateContainer.appendChild(todoDueDate);
+
+        // Joining everything together
+        todoButton.appendChild(checkbox);
+        todoButton.appendChild(todoTitle);
+        todoButton.appendChild(todoDueDateContainer);
+      })
+        
         
   };
 })();

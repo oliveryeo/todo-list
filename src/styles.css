@@ -135,17 +135,17 @@ button:hover {
   margin-top: 5%;
 }
 
-.main-panel-title-editor {
+#main-panel-title-editor {
   display: flex;
   gap: 4px;
   margin-left: auto;
 }
 
-.main-panel-title-editor > img {
+#main-panel-title-editor > img {
   height: 2rem;
 }
 
-.main-panel-title-editor > img:hover {
+#main-panel-title-editor > img:hover {
   cursor: pointer;
 }
 
