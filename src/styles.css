@@ -179,6 +179,10 @@ button:hover {
   height: 1rem;
 }
 
+.todo-due-date > div {
+  width: 40px;
+}
+
 /* Dialog Styling */
 dialog {
   margin-left: auto;
