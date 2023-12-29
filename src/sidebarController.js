@@ -127,11 +127,13 @@ const projectController = (() => {
 
           // Update displayed projects
           _updateProjectDisplay();
+
+          // Reload mainbar loader
+          mainbarController.loadMainbar();
         }
       });
 
       newProjectButton.appendChild(inputField);
-      mainbarController.loadMainbar();
     }
   };
 
