@@ -52,7 +52,7 @@ const todoCountLoader = (() => {
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractWeekTodos().length;
-    modifyCountDisplay('Week', weekTasksCount);
+    modifyCountDisplay('Next 7 days', weekTasksCount);
 
   };
 
@@ -188,19 +188,19 @@ const mainbarController = (() => {
           todoArray = todoController.extractAllTodos();
         } else if (tabDataTitle == 'Today') {
           todoArray = todoController.extractTodayTodos();
-        } else if (tabDataTitle == 'Week') {
+        } else if (tabDataTitle == 'Next 7 days') {
           todoArray = todoController.extractWeekTodos();
         } else {
           todoArray = todoController.extractProjectTodos(tabDataTitle);
         };
 
-        _loadMainbarUI(tabDataTitle, todoArray);
+        _mainbarUIHandler(tabDataTitle, todoArray);
 
       });
     })
   };
 
-  function _loadMainbarUI(tabDataTitle, todoArray) {
+  function _mainbarUIHandler(tabDataTitle, todoArray) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
     mainPanelTitle.textContent = tabDataTitle;
