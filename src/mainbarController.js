@@ -29,6 +29,11 @@ const mainbarController = (() => {
 
       });
     })
+
+    // Load default mainbar page upon page initialization
+    const allTasksTodoArray = todoController.extractAllTodos();
+    _mainbarUIHandler('All tasks', allTasksTodoArray);
+
   };
 
   function _mainbarUIHandler(tabDataTitle, todoArray) {
