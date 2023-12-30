@@ -10,7 +10,7 @@ const DOMControllerModule = (() => {
     sidebarController.todoCountLoader.loadTodayTasksCount();
     sidebarController.todoCountLoader.loadWeekTasksCount();
     sidebarController.projectController.loadNewProjectUI();
-    mainbarController.loadMainbar();
+    mainbarController.mainbarDisplayHandler.loadMainbar();
   };
 
   const addTodoTestUnit = () => {

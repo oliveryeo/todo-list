@@ -129,7 +129,7 @@ const projectController = (() => {
           _updateProjectDisplay();
 
           // Reload mainbar loader
-          mainbarController.loadMainbar();
+          mainbarController.mainbarDisplayHandler.loadMainbar();
         }
       });
 
