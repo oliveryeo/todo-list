@@ -53,8 +53,8 @@ const todoController = (() => {
     // Extract all the todos that fall between the Monday and Sunday date and push them into the array. .toDateString() is used to extract date without timestamp.
     allProjects.forEach((project) => {
       project.allTodos.forEach((todo) => {
-        console.log("test");
-        console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
+        // console.log("test");
+        // console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
         if (isWithinInterval(todo.dueDate,
           {start: mondayDate, end: sundayDate})) {
           allWeekTodos.push(todo);

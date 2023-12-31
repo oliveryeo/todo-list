@@ -86,6 +86,19 @@ const mainbarDisplayHandler = (() => {
   Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
 */
 const mainbarEventHandler = (() => {
+  const handleTodoEvent = () => {
+    const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
+
+    todoCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', (e) => {
+        console.log(e);
+      })
+    })
+  };
+  
+  return {
+    handleTodoEvent
+  }
 
 })();
 
@@ -93,8 +106,13 @@ const mainbarEventHandler = (() => {
   Main Module Pattern for export
 */
 const mainbarController = (() => {
+  const reloadMainbar = () => {
+    mainbarDisplayHandler.loadMainbar();
+    mainbarEventHandler.handleTodoEvent();
+  }
+
   return {
-    mainbarDisplayHandler
+    reloadMainbar
   }
 })();
 

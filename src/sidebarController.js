@@ -37,20 +37,20 @@ const todoCountLoader = (() => {
     let allTasksCount = todoController.extractAllTodos().length;
 
     // If count element already exist, change the count
-    modifyCountDisplay("All tasks", allTasksCount);
+    _modifyCountDisplay("All tasks", allTasksCount);
   };
 
   // Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
     let todayTasksCount = todoController.extractTodayTodos().length;
-    modifyCountDisplay("Today", todayTasksCount);
+    _modifyCountDisplay("Today", todayTasksCount);
   };
 
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractWeekTodos().length;
-    modifyCountDisplay("Next 7 days", weekTasksCount);
+    _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
 
   // Function to load task count for a specific project. Can be re-used to update task count.
@@ -61,11 +61,12 @@ const todoCountLoader = (() => {
     // console.log(projectTodoArray);
     if (projectTodoArray) {
       let projectTasksCount = projectTodoArray.length;
-      modifyCountDisplay(projectName, projectTasksCount);
+      _modifyCountDisplay(projectName, projectTasksCount);
     }
   };
 
-  function modifyCountDisplay(dataTitle, tasksCountNumber) {
+  // Helper function to handle DOM loading
+  function _modifyCountDisplay(dataTitle, tasksCountNumber) {
     const elementDataTitle = "[" + "data-title=" + '"' + dataTitle + '"' + "]";
     const selectedElement = document.querySelector(elementDataTitle);
     const existingCountElement = document.querySelector(
@@ -128,8 +129,8 @@ const projectController = (() => {
           // Update displayed projects
           _updateProjectDisplay();
 
-          // Reload mainbar loader
-          mainbarController.mainbarDisplayHandler.loadMainbar();
+          // Reload mainbar loader - may be a bad idea to have a dependency here, but no choice
+          mainbarController.reloadMainbar();
         }
       });
 
@@ -177,10 +178,29 @@ const projectController = (() => {
 })();
 
 const sidebarController = (() => {
+  const loadInitialSidebarEvents = () => {
+    tabStyler.styleTabs();
+    todoCountLoader.loadAllTasksCount();
+    todoCountLoader.loadTodayTasksCount();
+    todoCountLoader.loadWeekTasksCount();
+    projectController.loadNewProjectUI();
+  };
+
+  const todoCountLoaderTestUnit = () => {
+    todoCountLoader.loadAllTasksCount();
+    console.log("If this is printed, allTasksCount is loaded");
+    todoCountLoader.loadTodayTasksCount();
+    console.log("If this is printed, todayTasksCount is loaded");
+    todoCountLoader.loadWeekTasksCount();
+    console.log("If this is printed, weekTasksCount is loaded");
+
+    todoCountLoader.loadProjectTasksCount('Project-X');
+    console.log("If this is printed, Project-X tasks count is loaded");
+  };
+
   return {
-    tabStyler,
-    todoCountLoader,
-    projectController
+    loadInitialSidebarEvents,
+    todoCountLoaderTestUnit
   }
 })();
 
