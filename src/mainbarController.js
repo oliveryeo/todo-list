@@ -86,18 +86,43 @@ const mainbarDisplayHandler = (() => {
   Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
 */
 const mainbarEventHandler = (() => {
-  const handleTodoEvent = () => {
+  const handleTodoCheckboxEvent = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
     todoCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('click', (e) => {
         console.log(e);
+
+        // If the checkbox is checked, handle all the logic for updating the total tasks for the project
+        // Figure out how to refresh all the tasks on the DOM when this is run
+        if (e.target.checked == true) {
+          console.log("hell yeah");
+
+          // TODO: Have to find out how to get the specific button information (e.g. data title) -> then get the project name -> then access the project array database
+
+          // TODO: Helper function to handle todo DOM changes (e.g. strikethrough)
+          function _handleCheckedDOM() {
+
+          }
+
+          // TODO: Extract the related project's array
+          function _extractProjectArray() {
+
+          }
+
+          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project array)
+          function _handleCheckedBackend(projectArray) {
+
+          }
+        } else {
+          // TODO: Have to find out how to return the todo back into the project's array, if it is already not in the array.
+        }
       })
     })
   };
   
   return {
-    handleTodoEvent
+    handleTodoEvent: handleTodoCheckboxEvent
   }
 
 })();
