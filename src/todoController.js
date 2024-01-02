@@ -150,11 +150,12 @@ const newProject = (name) => {
 };
 
 // Factory function for new Todos
-const newTodo = (title, description, dueDate, priority) => {
+const newTodo = (title, description, dueDate, priority, parentProject) => {
   let todoTitle = title;
   let todoDescription = description;
   let todoDueDate = new Date(dueDate); // "YYYY-MM-DD"
   let todoPriority = priority;
+  let todoParentProject = parentProject;
 
   return {
     get title() {
@@ -183,6 +184,13 @@ const newTodo = (title, description, dueDate, priority) => {
     },
     set priority(newPriority) {
       todoPriority = newPriority;
+    },
+
+    get parentProject() {
+      return todoParentProject;
+    },
+    set parentProject(newParentProject) {
+      todoParentProject = newParentProject;
     }
   };
 };

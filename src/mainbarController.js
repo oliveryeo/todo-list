@@ -101,8 +101,8 @@ const mainbarEventHandler = (() => {
           // TODO: Have to find out how to get the specific button information (e.g. data title) -> then get the project name -> then access the project's todoArray database via todoController.extractTodos
           const projectTitle = document.querySelector("#main-panel-title-content");
           const projectTitleContent = projectTitle.textContent;
-
-          // Issue here is I need to determine if its "All tasks", "Today", or "Next 7 days" because they all have different extraction code. I may need to refactor the todo extraction.
+          
+          // The issue now is: How do I ensure that the tasks in All Tasks, Today and Next 7 days are tagged to the specific respective projects? Because if I check one off, it has to also update the other project's todo count.
           const todoArray = todoController.extractTodos(projectTitleContent);
           const todoButton = checkbox.parentNode;
           const todoTitle = todoButton.dataset.title;
