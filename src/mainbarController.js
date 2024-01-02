@@ -49,6 +49,7 @@ const mainbarDisplayHandler = (() => {
       // A button with data-todo attribute of the todo title
       const todoButton = document.createElement("button");
       todoButton.dataset.title = todo.title;
+      todoButton.dataset.parentProject = todo.parentProject;
 
       // An input of checkbox type
       const checkbox = document.createElement("input");
@@ -102,11 +103,12 @@ const mainbarEventHandler = (() => {
           const projectTitle = document.querySelector("#main-panel-title-content");
           const projectTitleContent = projectTitle.textContent;
           
-          // The issue now is: How do I ensure that the tasks in All Tasks, Today and Next 7 days are tagged to the specific respective projects? Because if I check one off, it has to also update the other project's todo count.
           const todoArray = todoController.extractTodos(projectTitleContent);
           const todoButton = checkbox.parentNode;
           const todoTitle = todoButton.dataset.title;
           console.log(todoArray);
+
+          // Using the parentProject attribute in a todo factory function object, whenever a task is checked in a home tab, update the todoArray in the specific parentProject as well as the task count.
 
 
           // TODO: Helper function to handle todo DOM changes (e.g. strikethrough)
@@ -114,10 +116,11 @@ const mainbarEventHandler = (() => {
 
           }
 
-          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's  todoArray)
+          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
           function _handleCheckedBackend(todoArray) {
 
           }
+
         } else if (e.target.checked == false) {
           console.log("hell nah");
 
