@@ -34,7 +34,7 @@ const todoCountLoader = (() => {
   // Function to load todo count for all tasks tab
   const loadAllTasksCount = () => {
     // Extract count of todos from all projects
-    let allTasksCount = todoController.extractAllTodos().length;
+    let allTasksCount = todoController.extractTodos("All tasks").length;
 
     // If count element already exist, change the count
     _modifyCountDisplay("All tasks", allTasksCount);
@@ -43,20 +43,20 @@ const todoCountLoader = (() => {
   // Function to load todo count for today tasks tab (To do once due date function is implemented)
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
-    let todayTasksCount = todoController.extractTodayTodos().length;
+    let todayTasksCount = todoController.extractTodos("Today").length;
     _modifyCountDisplay("Today", todayTasksCount);
   };
 
   // Function to load todo count for week tasks tab (To do once due date function is implemented)
   const loadWeekTasksCount = () => {
-    let weekTasksCount = todoController.extractWeekTodos().length;
+    let weekTasksCount = todoController.extractTodos("Next 7 days").length;
     _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
 
   // Function to load task count for a specific project. Can be re-used to update task count.
   const loadProjectTasksCount = (projectName) => {
     // Extract todo array for a specific project → If array exists, then extract count and modify count display
-    let projectTodoArray = todoController.extractProjectTodos(projectName);
+    let projectTodoArray = todoController.extractTodos(projectName);
     // console.log("Below is the extracted array in sidebar controller");
     // console.log(projectTodoArray);
     if (projectTodoArray) {

@@ -10,83 +10,95 @@ const todoController = (() => {
     allProjects.push(newProject(name));
   }
 
-  // Function to extract all todos from all projects
-  const extractAllTodos = () => {
-    const allProjectsTodos = [];
-    // In each project's todo, push todo to allProjectTodos
-    allProjects.forEach((project) => {
-      project.allTodos.forEach((todo) => {
-        allProjectsTodos.push(todo);
-      });
-    });
-    return allProjectsTodos;
-  };
-  
-  // Function to extract today todos from all projects
-  const extractTodayTodos = () => {
-    // Create an array that holds all the today's todos
-    const allTodayTodos = [];
-    // Create a variable that holds today's date
-    const todayDate = new Date();
-    // Extract all todos that fall within today's date and push them into the array
-    allProjects.forEach((project) => {
-      project.allTodos.forEach((todo) => {
-        if (todo.dueDate.toDateString() == todayDate.toDateString()) {
-          allTodayTodos.push(todo);
-        }
-      })
-    })
-
-    return allTodayTodos;
-  };
-
-
-  // Function to extract week todos from all projects
-  const extractWeekTodos = () => {
-    // Create an array that holds all the week's todos
-    const allWeekTodos = [];
-    const todayDate = new Date();
-    // Create a variable that holds Monday's and Sunday's date for the current week
-    const mondayDate = getMonday(todayDate);
-    const sundayDate = getSunday(todayDate);
-
-    // Extract all the todos that fall between the Monday and Sunday date and push them into the array. .toDateString() is used to extract date without timestamp.
-    allProjects.forEach((project) => {
-      project.allTodos.forEach((todo) => {
-        // console.log("test");
-        // console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
-        if (isWithinInterval(todo.dueDate,
-          {start: mondayDate, end: sundayDate})) {
-          allWeekTodos.push(todo);
-        }
-      })
-    });
-
-    return allWeekTodos;
-
-    // Functions
-    function getMonday(d) {
-      let day = d.getDay();
-      let diff = d.getDate() - day + (day == 0 ? -6 : 1);
-      return new Date(d.setDate(diff));
+  const extractTodos = (tabTitle) => {
+    if (tabTitle == "All tasks") {
+      return extractAllTodos();
+    } else if (tabTitle == "Today") {
+      return extractTodayTodos();
+    } else if (tabTitle == "Next 7 days") {
+      return extractWeekTodos();
+    } else {
+      return extractProjectTodos(tabTitle);
     }
 
-    function getSunday(d) {
-      let day = d.getDay();
-      let diff = d.getDate() - day + (day == 0 ? 0 : 7);
-      return new Date(d.setDate(diff));
-    }
-  };
-
-  const extractProjectTodos = (projectName) => {
-    // .forEach() cannot be used here because the loop will continue running even after the todos array is returned.
-    for (let i = 0; i < allProjects.length; i++) {
-      if (allProjects[i].projectName == projectName) {
-        // console.log("Below is the array extracted");
-        // console.log(allProjects[i].allTodos);
-        return allProjects[i].allTodos;
+    function extractProjectTodos(projectName) {
+        // .forEach() cannot be used here because the loop will continue running even after the todos array is returned.
+      for (let i = 0; i < allProjects.length; i++) {
+        if (allProjects[i].projectName == projectName) {
+          // console.log("Below is the array extracted");
+          // console.log(allProjects[i].allTodos);
+          return allProjects[i].allTodos;
+        }
       }
     }
+
+        // Function to extract all todos from all projects
+    function extractAllTodos() {
+      const allProjectsTodos = [];
+      // In each project's todo, push todo to allProjectTodos
+      allProjects.forEach((project) => {
+        project.allTodos.forEach((todo) => {
+          allProjectsTodos.push(todo);
+        });
+      });
+      return allProjectsTodos;
+    };
+    
+    // Function to extract today todos from all projects
+    function extractTodayTodos() {
+      // Create an array that holds all the today's todos
+      const allTodayTodos = [];
+      // Create a variable that holds today's date
+      const todayDate = new Date();
+      // Extract all todos that fall within today's date and push them into the array
+      allProjects.forEach((project) => {
+        project.allTodos.forEach((todo) => {
+          if (todo.dueDate.toDateString() == todayDate.toDateString()) {
+            allTodayTodos.push(todo);
+          }
+        })
+      })
+
+      return allTodayTodos;
+    };
+
+
+    // Function to extract week todos from all projects
+    function extractWeekTodos() {
+      // Create an array that holds all the week's todos
+      const allWeekTodos = [];
+      const todayDate = new Date();
+      // Create a variable that holds Monday's and Sunday's date for the current week
+      const mondayDate = getMonday(todayDate);
+      const sundayDate = getSunday(todayDate);
+
+      // Extract all the todos that fall between the Monday and Sunday date and push them into the array. .toDateString() is used to extract date without timestamp.
+      allProjects.forEach((project) => {
+        project.allTodos.forEach((todo) => {
+          // console.log("test");
+          // console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
+          if (isWithinInterval(todo.dueDate,
+            {start: mondayDate, end: sundayDate})) {
+            allWeekTodos.push(todo);
+          }
+        })
+      });
+
+      return allWeekTodos;
+
+      // Functions
+      function getMonday(d) {
+        let day = d.getDay();
+        let diff = d.getDate() - day + (day == 0 ? -6 : 1);
+        return new Date(d.setDate(diff));
+      }
+
+      function getSunday(d) {
+        let day = d.getDay();
+        let diff = d.getDate() - day + (day == 0 ? 0 : 7);
+        return new Date(d.setDate(diff));
+      }
+    };
   };
   
   return {
@@ -94,10 +106,7 @@ const todoController = (() => {
       return allProjects;
     },
     createProject,
-    extractAllTodos,
-    extractTodayTodos,
-    extractWeekTodos,
-    extractProjectTodos
+    extractTodos
   };
 })();
 

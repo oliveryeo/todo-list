@@ -18,13 +18,13 @@ const mainbarDisplayHandler = (() => {
         let todoArray;
         // Conditions to sieve out todoArray from all tasks, today, next 7 days, or projects
         if (tabDataTitle == "All tasks") {
-          todoArray = todoController.extractAllTodos();
+          todoArray = todoController.extractTodos("All tasks");
         } else if (tabDataTitle == "Today") {
-          todoArray = todoController.extractTodayTodos();
+          todoArray = todoController.extractTodos("Today");
         } else if (tabDataTitle == "Next 7 days") {
-          todoArray = todoController.extractWeekTodos();
+          todoArray = todoController.extractTodos("Next 7 days");
         } else {
-          todoArray = todoController.extractProjectTodos(tabDataTitle);
+          todoArray = todoController.extractTodos(tabDataTitle);
         }
 
         _mainbarUIHandler(tabDataTitle, todoArray);
@@ -32,7 +32,7 @@ const mainbarDisplayHandler = (() => {
     });
 
     // Load default mainbar page upon page initialization
-    const allTasksTodoArray = todoController.extractAllTodos();
+    const allTasksTodoArray = todoController.extractTodos("All tasks");
     _mainbarUIHandler("All tasks", allTasksTodoArray);
   };
 
@@ -98,23 +98,29 @@ const mainbarEventHandler = (() => {
         if (e.target.checked == true) {
           console.log("hell yeah");
 
-          // TODO: Have to find out how to get the specific button information (e.g. data title) -> then get the project name -> then access the project array database
+          // TODO: Have to find out how to get the specific button information (e.g. data title) -> then get the project name -> then access the project's todoArray database via todoController.extractTodos
+          const projectTitle = document.querySelector("#main-panel-title-content");
+          const projectTitleContent = projectTitle.textContent;
+
+          // Issue here is I need to determine if its "All tasks", "Today", or "Next 7 days" because they all have different extraction code. I may need to refactor the todo extraction.
+          const todoArray = todoController.extractTodos(projectTitleContent);
+          const todoButton = checkbox.parentNode;
+          const todoTitle = todoButton.dataset.title;
+          console.log(todoArray);
+
 
           // TODO: Helper function to handle todo DOM changes (e.g. strikethrough)
           function _handleCheckedDOM() {
 
           }
 
-          // TODO: Extract the related project's array
-          function _extractProjectArray() {
+          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's  todoArray)
+          function _handleCheckedBackend(todoArray) {
 
           }
+        } else if (e.target.checked == false) {
+          console.log("hell nah");
 
-          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project array)
-          function _handleCheckedBackend(projectArray) {
-
-          }
-        } else {
           // TODO: Have to find out how to return the todo back into the project's array, if it is already not in the array.
         }
       })
