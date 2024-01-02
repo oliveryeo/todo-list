@@ -183,6 +183,12 @@ button:hover {
   width: 40px;
 }
 
+#add-task {
+  margin-top: auto;
+  margin-left: auto;
+  border: solid;
+}
+
 /* Dialog Styling */
 dialog {
   margin-left: auto;
