@@ -99,32 +99,32 @@ const mainbarEventHandler = (() => {
         if (e.target.checked == true) {
           console.log("hell yeah");
 
-          // TODO: Have to find out how to get the specific button information (e.g. data title) -> then get the project name -> then access the project's todoArray database via todoController.extractTodos
-          const projectTitle = document.querySelector("#main-panel-title-content");
-          const projectTitleContent = projectTitle.textContent;
-          
-          const todoArray = todoController.extractTodos(projectTitleContent);
+          // Get the todo's parentProject name and todoTitle → Extract the todoArray → handle the DOM (e.g. strikethrough, grayed out) and the backend todoArray modification (e.g. deletion)
           const todoButton = checkbox.parentNode;
           const todoTitle = todoButton.dataset.title;
+          const todoParentProject = todoButton.dataset.parentProject;
+          const todoArray = todoController.extractTodos(todoParentProject);
           console.log(todoArray);
+          console.log(todoParentProject);
 
-          // Using the parentProject attribute in a todo factory function object, whenever a task is checked in a home tab, update the todoArray in the specific parentProject as well as the task count.
-
-
-          // TODO: Helper function to handle todo DOM changes (e.g. strikethrough)
-          function _handleCheckedDOM() {
-
-          }
-
-          // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
-          function _handleCheckedBackend(todoArray) {
-
-          }
+          // NOTE: These functions are not completed yet, but they are to be invoked over here
+          _handleCheckedDOM();
+          _handleCheckedBackend(todoArray);
 
         } else if (e.target.checked == false) {
           console.log("hell nah");
 
           // TODO: Have to find out how to return the todo back into the project's array, if it is already not in the array.
+        }
+
+        // TODO: Helper function to handle todo DOM changes (e.g. strikethrough)
+        function _handleCheckedDOM() {
+
+        }
+
+        // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
+        function _handleCheckedBackend(todoArray) {
+
         }
       })
     })
