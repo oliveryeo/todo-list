@@ -10,6 +10,7 @@ const todoController = (() => {
     allProjects.push(newProject(name));
   }
 
+  // Extract todos from All tasks, Today, Next 7 days or a specific project
   const extractTodos = (tabTitle) => {
     if (tabTitle == "All tasks") {
       return extractAllTodos();
@@ -32,7 +33,7 @@ const todoController = (() => {
       }
     }
 
-        // Function to extract all todos from all projects
+    // Function to extract all todos from all projects
     function extractAllTodos() {
       const allProjectsTodos = [];
       // In each project's todo, push todo to allProjectTodos
@@ -61,7 +62,6 @@ const todoController = (() => {
 
       return allTodayTodos;
     };
-
 
     // Function to extract week todos from all projects
     function extractWeekTodos() {

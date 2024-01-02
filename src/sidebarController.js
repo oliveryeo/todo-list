@@ -35,25 +35,23 @@ const todoCountLoader = (() => {
   const loadAllTasksCount = () => {
     // Extract count of todos from all projects
     let allTasksCount = todoController.extractTodos("All tasks").length;
-
-    // If count element already exist, change the count
     _modifyCountDisplay("All tasks", allTasksCount);
   };
 
-  // Function to load todo count for today tasks tab (To do once due date function is implemented)
+  // Function to load todo count for today tasks tab
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
     let todayTasksCount = todoController.extractTodos("Today").length;
     _modifyCountDisplay("Today", todayTasksCount);
   };
 
-  // Function to load todo count for week tasks tab (To do once due date function is implemented)
+  // Function to load todo count for week tasks tab
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractTodos("Next 7 days").length;
     _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
 
-  // Function to load task count for a specific project. Can be re-used to update task count.
+  // Function to load task count for a specific project.
   const loadProjectTasksCount = (projectName) => {
     // Extract todo array for a specific project → If array exists, then extract count and modify count display
     let projectTodoArray = todoController.extractTodos(projectName);
@@ -136,41 +134,41 @@ const projectController = (() => {
 
       newProjectButton.appendChild(inputField);
     }
+
+    // Helper function that helps to load all the current projects onto the DOM
+    function _updateProjectDisplay() {
+      // Remove all currently displayed projects
+      const currentDisplayedProjects =
+        document.querySelectorAll("#projects > button");
+      currentDisplayedProjects.forEach((displayedProject) =>
+        displayedProject.remove()
+      );
+
+      // Loop through the updated projects
+      const updatedProjects = todoController.allProjects;
+      updatedProjects.forEach((project) => {
+        const projectName = project.projectName;
+        const todoCount = project.allTodos.length;
+
+        // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
+        const projectNameDisplay = document.createElement("div");
+        projectNameDisplay.textContent = projectName;
+
+        const projectTodoCount = document.createElement("div");
+        projectTodoCount.classList.add("count");
+        projectTodoCount.textContent = todoCount;
+
+        const projectButton = document.createElement("button");
+        projectButton.dataset.title = projectName;
+        projectButton.appendChild(projectNameDisplay);
+        projectButton.appendChild(projectTodoCount);
+
+        // Append child to #projects
+        const projectContainer = document.querySelector("#projects");
+        projectContainer.appendChild(projectButton);
+      });
+    }
   };
-
-  // Helper function that helps to load all the current projects onto the DOM
-  function _updateProjectDisplay() {
-    // Remove all currently displayed projects
-    const currentDisplayedProjects =
-      document.querySelectorAll("#projects > button");
-    currentDisplayedProjects.forEach((displayedProject) =>
-      displayedProject.remove()
-    );
-
-    // Loop through the updated projects
-    const updatedProjects = todoController.allProjects;
-    updatedProjects.forEach((project) => {
-      const projectName = project.projectName;
-      const todoCount = project.allTodos.length;
-
-      // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
-      const projectNameDisplay = document.createElement("div");
-      projectNameDisplay.textContent = projectName;
-
-      const projectTodoCount = document.createElement("div");
-      projectTodoCount.classList.add("count");
-      projectTodoCount.textContent = todoCount;
-
-      const projectButton = document.createElement("button");
-      projectButton.dataset.title = projectName;
-      projectButton.appendChild(projectNameDisplay);
-      projectButton.appendChild(projectTodoCount);
-
-      // Append child to #projects
-      const projectContainer = document.querySelector("#projects");
-      projectContainer.appendChild(projectButton);
-    });
-  }
 
   return {
     loadNewProjectUI,
