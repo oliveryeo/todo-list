@@ -118,8 +118,8 @@ const newProject = (name) => {
   // An array that stores all the todos related to this project
   const allTodos = [];
 
-  const createTodo = (title, description, dueDate, priority) => {
-    allTodos.push(newTodo(title, description, dueDate, priority));
+  const createTodo = (title, description, dueDate, priority, parentProject) => {
+    allTodos.push(newTodo(title, description, dueDate, priority, parentProject));
   }
 
   const deleteTodo = (todoTitle) => {

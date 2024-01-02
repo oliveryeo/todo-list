@@ -14,13 +14,13 @@ const todoControllerTestUnit = () => {
       let description = "Control the descent of the push-ups for each repetition";
       let dueDate = "2023-12-27";
       let priority = "high";
-      project.createTodo(title, description, dueDate, priority);
+      project.createTodo(title, description, dueDate, priority, project.projectName);
 
       let titleTwo = "Controlled dips";
       let descriptionTwo = "Control the descent of the dips, then push all the way up, look straight ahead";
       let dueDateTwo = "2023-12-28";
       let priorityTwo = "high";
-      project.createTodo(titleTwo, descriptionTwo, dueDateTwo, priorityTwo);
+      project.createTodo(titleTwo, descriptionTwo, dueDateTwo, priorityTwo, project.projectName);
     }
   });
 
