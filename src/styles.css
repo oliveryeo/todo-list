@@ -183,6 +183,15 @@ button:hover {
   width: 40px;
 }
 
+.todo-checked {
+  color: gray;
+  text-decoration: line-through;
+}
+
+.todo-checked > img {
+  opacity: 0.4;
+}
+
 #add-task {
   margin-top: auto;
   margin-left: auto;
