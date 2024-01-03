@@ -6,6 +6,14 @@ TOP Project on Todo-list
 - Demonstrate the use of webpack in this project
 - Consolidate knowledge on styling design, javascript DOM manipulation, and project planning
 
+# Technologies used
+- HTML
+- CSS
+- JavaScript (ES6 Modules)
+- Webpack
+- Date-fns library
+- Git
+
 # Takeaways from this project
 <ins>The conflict between flexbox and justify-self</ins>
 - I had an issue of trying to ensure that the todo counts were flushed to the right of the sidebar-panel because flexbox disables justify-self due to the nature of the tool, where it groups and justify all the elements as a whole.
