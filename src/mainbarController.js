@@ -6,6 +6,7 @@ import { format } from "date-fns";
   and load into main bar view.
 */
 const mainbarDisplayHandler = (() => {
+  // Whenever a side tab is clicked, load the mainbar display. Also set the default intitial mainbar page load to "All tasks"
   const loadMainbar = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const allTabButtons = document.querySelectorAll(
@@ -36,6 +37,7 @@ const mainbarDisplayHandler = (() => {
     _mainbarUIHandler("All tasks", allTasksTodoArray);
   };
 
+  // Helper function for DOM loading of project title and todo loading in the mainbar display
   function _mainbarUIHandler(tabDataTitle, todoArray) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
@@ -88,7 +90,7 @@ const mainbarDisplayHandler = (() => {
   Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
 */
 const mainbarEventHandler = (() => {
-  // Handles what happens if the todo checkbox is checked in the mainbar
+  // Handles the mainbar DOM changes (e.g. todo strikethrough) and the backend todoController changes (changing the isChecked boolean) when a todo checkbox is checked.
   const handleTodoCheckboxEvent = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -155,13 +157,18 @@ const mainbarEventHandler = (() => {
   Main Module Pattern for export
 */
 const mainbarController = (() => {
-  const reloadMainbar = () => {
+  const loadInitialMainbar = () => {
     mainbarDisplayHandler.loadMainbar();
     mainbarEventHandler.handleTodoCheckboxEvent();
-  }
+  };
+
+  const reloadTodoCheckboxEventHandler = () => {
+    mainbarEventHandler.handleTodoCheckboxEvent();
+  };
 
   return {
-    reloadMainbar
+    loadInitialMainbar,
+    reloadTodoCheckboxEventHandler
   }
 })();
 

@@ -213,7 +213,6 @@ const sidebarController = (() => {
     console.log("If this is printed, todayTasksCount is loaded");
     todoCountLoader.loadWeekTasksCount();
     console.log("If this is printed, weekTasksCount is loaded");
-
     todoCountLoader.loadProjectTasksCount('Project-X');
     console.log("If this is printed, Project-X tasks count is loaded");
   };

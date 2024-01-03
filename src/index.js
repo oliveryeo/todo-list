@@ -4,7 +4,9 @@ import DOMControllerModule from './DOMController.js'; // Since the module patter
 // Adds a mock todo into the todoController
 DOMControllerModule.testUnitHandler.addTodoTestUnit();
 
-// Initialize 
+// Initialize initial page load
 DOMControllerModule.pageInitializationHandler.initializePage();
 
+// Initialize dynamic page handler
+DOMControllerModule.pageDynamicHandler.handleDOMReloading();
 
