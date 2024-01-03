@@ -8,5 +8,5 @@ DOMControllerModule.testUnitHandler.addTodoTestUnit();
 DOMControllerModule.pageInitializationHandler.initializePage();
 
 // Initialize dynamic page handler
-DOMControllerModule.pageDynamicHandler.handleDOMReloading();
+DOMControllerModule.dynamicDOMHandler.handleDOMReloading();
 

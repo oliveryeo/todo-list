@@ -17,9 +17,10 @@ const pageInitializationHandler = (() => {
 })();
 
 /*
-  Module Pattern that handles dynamic changes on the page
+  Module Pattern that handles dynamic changes on the page (e.g. todo count changes and strikethrough when a checkbox is checked)
 */
-const pageDynamicHandler = (() => {
+const dynamicDOMHandler = (() => {
+  // Handle DOM changes when a new sidebar tab is selected. Whenever a new sidetab is selected → mainbar UI from mainbarController will reload → dynamic todo count from sidebarController will also need to be reloaded.
   const handleDOMReloading = () => {
     // Get all the sidebar tabs
     const sidebarTabs = document.querySelectorAll(
@@ -56,7 +57,7 @@ const DOMControllerModule = (() => {
   return {
     pageInitializationHandler,
     testUnitHandler,
-    pageDynamicHandler,
+    dynamicDOMHandler,
   };
 })();
 
