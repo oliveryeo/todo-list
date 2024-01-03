@@ -3,21 +3,45 @@ import todoControllerTestUnit from './todoControllerTestUnit.js';
 import sidebarController from './sidebarController.js';
 import mainbarController from './mainbarController.js';
 
-const DOMControllerModule = (() => {
+/* 
+  Module Pattern that handles anything regarding page initialization
+*/
+const pageInitializationHandler = (() => {
   const initializePage = () => {
     sidebarController.loadInitialSidebarEvents();
     mainbarController.reloadMainbar();
     sidebarController.handlePostMainbarLoading();
   };
 
+  return { initializePage }
+})();
+
+/*
+  Module Pattern that handles dynamic changes on the page
+*/
+
+const pageDynamicHandler = (() => {
+
+})();
+
+/* 
+  Module Pattern that handles anything with testing
+*/
+const testUnitHandler = (() => {
   const addTodoTestUnit = () => {
     todoControllerTestUnit();
     sidebarController.todoCountLoaderTestUnit();
   };
 
+  return { addTodoTestUnit }
+})();
+
+
+const DOMControllerModule = (() => {
+
   return {
-    initializePage,
-    addTodoTestUnit
+    pageInitializationHandler,
+    testUnitHandler
   }
 })();
 
