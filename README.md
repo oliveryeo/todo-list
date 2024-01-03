@@ -15,3 +15,8 @@ TOP Project on Todo-list
 - An issue arose when I was trying to extract the number of todos for a specific project in order to update the todo count in the sidebar. A conditional logic was put in place to match the correct project name to extract the todos. <b>Undefined</b> was returned when .forEach() was used to extract the todo array for the specific project.
 - Later, I found out that .forEach() does not terminate the loop even after the "return" keyword is invoked. https://medium.com/front-end-weekly/3-things-you-didnt-know-about-the-foreach-loop-in-js-ff02cec465b1
 - .forEach() is replaced with a normal for loop for the specific portion on extracted the array of todos for a specific project.
+
+<ins>Practicing the principle of Single Responsibility</ins>
+- I had a dilemma on whether I should combine what happens in the sidebar and mainbar in an overarching Module Pattern called the DOMController.
+- However, I decided that I should separate the sidebar DOM logic from the mainbar DOM logic, and is an intermediary DOMController logic to bring together the sidebar and mainbar DOM logic.
+- This way, the sidebar logic is hidden from the mainbar logic.
