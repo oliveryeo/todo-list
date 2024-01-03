@@ -88,6 +88,7 @@ const mainbarDisplayHandler = (() => {
   Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
 */
 const mainbarEventHandler = (() => {
+  // Handles what happens if the todo checkbox is checked in the mainbar
   const handleTodoCheckboxEvent = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -98,22 +99,22 @@ const mainbarEventHandler = (() => {
         const todoTitle = todoButton.dataset.title;
         const todoParentProject = todoButton.dataset.parentProject;
         const todoArray = todoController.extractTodos(todoParentProject);
-        let isChecked = e.target.checked;
-        console.log(todoArray);
-        console.log(todoParentProject);
+        let isCheckboxChecked = e.target.checked;
+          // console.log(todoArray);
+          // console.log(todoParentProject);
 
         // If the checkbox is checked, handle all the logic for updating the total tasks for the project
         // Figure out how to refresh all the tasks on the DOM when this is run
-        _handleCheckboxDOM(isChecked);
-        _handleCheckboxBackend(isChecked, todoArray);
+        _handleCheckboxDOM(isCheckboxChecked);
+        _handleCheckboxBackend(isCheckboxChecked, todoArray);
 
         // Helper function to handle todo DOM changes (e.g. strikethrough)
-        function _handleCheckboxDOM(isChecked) {
+        function _handleCheckboxDOM(isCheckboxChecked) {
           // Select all the children nodes of the todoButton
           const buttonElements = todoButton.childNodes;
 
           // Condition to check if checkbox is checked or not
-          if (isChecked) {
+          if (isCheckboxChecked) {
             buttonElements.forEach(element => {
               // Strikethrough + gray out
               element.classList.add("todo-checked");
@@ -127,30 +128,25 @@ const mainbarEventHandler = (() => {
           }
         }
 
-        // TODO: Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
-        function _handleCheckboxBackend(isChecked) {
-          // If checked, remove the todo from the project todoArray
-          if (isChecked) {
-            // Find the associated todo and update the todoIsChecked boolean
-            todoArray.forEach(todo => {
-              if (todo.title == todoTitle) {
+        // Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
+        function _handleCheckboxBackend(isCheckboxChecked) {
+          // Find the associated todo and update the todoIsChecked boolean. Change todo's isChecked status depending if the checkbox is checked.
+          todoArray.forEach(todo => {
+            if (todo.title == todoTitle) {
+              if (isCheckboxChecked) {
                 todo.isChecked = true;
+              } else {
+                todo.isChecked = false;
               }
-              console.log(todo);
-            })
-            
-            // TODO: Update the todo Count displayed 
-
-          } else {
-
-          }
+            }
+          })
         }
       })
     })
   };
   
   return {
-    handleTodoEvent: handleTodoCheckboxEvent
+    handleTodoCheckboxEvent
   }
 
 })();
@@ -161,7 +157,7 @@ const mainbarEventHandler = (() => {
 const mainbarController = (() => {
   const reloadMainbar = () => {
     mainbarDisplayHandler.loadMainbar();
-    mainbarEventHandler.handleTodoEvent();
+    mainbarEventHandler.handleTodoCheckboxEvent();
   }
 
   return {

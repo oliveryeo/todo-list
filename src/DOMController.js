@@ -7,6 +7,7 @@ const DOMControllerModule = (() => {
   const initializePage = () => {
     sidebarController.loadInitialSidebarEvents();
     mainbarController.reloadMainbar();
+    sidebarController.handlePostMainbarLoading();
   };
 
   const addTodoTestUnit = () => {

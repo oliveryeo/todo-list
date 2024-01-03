@@ -63,6 +63,24 @@ const todoCountLoader = (() => {
     }
   };
 
+  // When a checkbox is clicked, handle how the todocount display is changed
+  const handleMainbarCheckboxEvents = () => {
+    const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
+
+    todoCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        const todoButton = checkbox.parentNode;
+        const todoParentProject = todoButton.dataset.parentProject;
+
+        // Reload ALL the tasks count
+        loadAllTasksCount();
+        loadTodayTasksCount();
+        loadWeekTasksCount();
+        loadProjectTasksCount(todoParentProject);
+      })
+    })
+  }
+
   // Helper function to handle DOM loading
   function _modifyCountDisplay(dataTitle, tasksCountNumber) {
     const elementDataTitle = "[" + "data-title=" + '"' + dataTitle + '"' + "]";
@@ -87,6 +105,7 @@ const todoCountLoader = (() => {
     loadTodayTasksCount,
     loadWeekTasksCount,
     loadProjectTasksCount,
+    handleMainbarCheckboxEvents
   };
 })();
 
@@ -175,6 +194,9 @@ const projectController = (() => {
   };
 })();
 
+/*
+  Overall sidebarController Module Pattern for export
+*/
 const sidebarController = (() => {
   const loadInitialSidebarEvents = () => {
     tabStyler.styleTabs();
@@ -196,9 +218,14 @@ const sidebarController = (() => {
     console.log("If this is printed, Project-X tasks count is loaded");
   };
 
+  const handlePostMainbarLoading = () => {
+    todoCountLoader.handleMainbarCheckboxEvents();
+  }
+
   return {
     loadInitialSidebarEvents,
-    todoCountLoaderTestUnit
+    todoCountLoaderTestUnit,
+    handlePostMainbarLoading
   }
 })();
 

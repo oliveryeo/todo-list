@@ -4,7 +4,7 @@ import DOMControllerModule from './DOMController.js'; // Since the module patter
 // Adds a mock todo into the todoController
 DOMControllerModule.addTodoTestUnit();
 
+// Initialize 
 DOMControllerModule.initializePage();
-
 
 
