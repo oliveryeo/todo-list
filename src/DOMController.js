@@ -26,7 +26,7 @@ const pageDynamicHandler = (() => {
       "#home > button, #projects > button"
     );
 
-    // Every time a new tab is clicked, reloadMainbar() for the mainbar and handlePostMainbarLoading() for sidebar
+    // Every time a new tab is clicked, reloadTodoCheckboxEventHandler() for the mainbar and handlePostMainbarLoading() for sidebar
     sidebarTabs.forEach((tab) => {
       tab.addEventListener("click", () => {
         mainbarController.reloadTodoCheckboxEventHandler();

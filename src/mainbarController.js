@@ -9,10 +9,10 @@ const mainbarDisplayHandler = (() => {
   // Whenever a side tab is clicked, load the mainbar display. Also set the default intitial mainbar page load to "All tasks"
   const loadMainbar = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
-    const allTabButtons = document.querySelectorAll(
+    const sidebarTabs = document.querySelectorAll(
       "#home > button, #projects > button"
     );
-    allTabButtons.forEach((tabButton) => {
+    sidebarTabs.forEach((tabButton) => {
       tabButton.addEventListener("click", () => {
         // Initiate relevant variables
         const tabDataTitle = tabButton.dataset.title;
@@ -157,11 +157,13 @@ const mainbarEventHandler = (() => {
   Main Module Pattern for export
 */
 const mainbarController = (() => {
+  // Load initial mainbar DOM and dynamic events in the first page load
   const loadInitialMainbar = () => {
     mainbarDisplayHandler.loadMainbar();
     mainbarEventHandler.handleTodoCheckboxEvent();
   };
 
+  // Reload the checkbox event handler function
   const reloadTodoCheckboxEventHandler = () => {
     mainbarEventHandler.handleTodoCheckboxEvent();
   };

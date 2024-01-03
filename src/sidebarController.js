@@ -63,7 +63,7 @@ const todoCountLoader = (() => {
     }
   };
 
-  // When a checkbox is clicked, handle how the todocount display is changed
+  // When a checkbox is clicked, RELOAD all the tasks count in the sidebar
   const handleDynamicTodoCount = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
