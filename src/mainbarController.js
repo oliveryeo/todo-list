@@ -147,6 +147,26 @@ const mainbarEventHandler = (() => {
     })
   };
   
+  // TODO: Handle logic for project title editing
+  const handleProjectTitleEdit = () => {
+
+  };
+
+  // TODO: Handle logic for deleting a project
+  const handleProjectDeletionEvent = () => {
+
+  }
+  
+  // TODO: Handle logic for todo information editing
+  const handleTodoInfoEdit = () => {
+
+  };
+
+  // TODO: Handle logic for deleting a todo
+  const handleTodoDeletionEvent = () => {
+
+  }
+
   return {
     handleTodoCheckboxEvent
   }
