@@ -115,6 +115,9 @@ const newProject = (name) => {
   // Takes in the project name and sets it
   let projectName = name;
 
+  // Keeps count of the number of checked todos
+  let checkedTodos = 0;
+
   // An array that stores all the todos related to this project
   const allTodos = [];
 
@@ -156,6 +159,7 @@ const newTodo = (title, description, dueDate, priority, parentProject) => {
   let todoDueDate = new Date(dueDate); // "YYYY-MM-DD"
   let todoPriority = priority;
   let todoParentProject = parentProject;
+  let todoIsChecked = false;
 
   return {
     get title() {
@@ -191,6 +195,13 @@ const newTodo = (title, description, dueDate, priority, parentProject) => {
     },
     set parentProject(newParentProject) {
       todoParentProject = newParentProject;
+    },
+
+    get isChecked() {
+      return todoIsChecked;
+    },
+    set isChecked(bool) {
+      todoIsChecked = bool;
     }
   };
 };
