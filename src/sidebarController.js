@@ -64,7 +64,7 @@ const todoCountLoader = (() => {
   };
 
   // When a checkbox is clicked, handle how the todocount display is changed
-  const handleMainbarCheckboxEvents = () => {
+  const handleDynamicTodoCount = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
     todoCheckboxes.forEach(checkbox => {
@@ -105,7 +105,7 @@ const todoCountLoader = (() => {
     loadTodayTasksCount,
     loadWeekTasksCount,
     loadProjectTasksCount,
-    handleMainbarCheckboxEvents
+    handleDynamicTodoCount
   };
 })();
 
@@ -218,7 +218,7 @@ const sidebarController = (() => {
   };
 
   const handlePostMainbarLoading = () => {
-    todoCountLoader.handleMainbarCheckboxEvents();
+    todoCountLoader.handleDynamicTodoCount();
   }
 
   return {
