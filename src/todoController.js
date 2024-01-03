@@ -22,17 +22,6 @@ const todoController = (() => {
       return extractProjectTodos(tabTitle);
     }
 
-    function extractProjectTodos(projectName) {
-        // .forEach() cannot be used here because the loop will continue running even after the todos array is returned.
-      for (let i = 0; i < allProjects.length; i++) {
-        if (allProjects[i].projectName == projectName) {
-          // console.log("Below is the array extracted");
-          // console.log(allProjects[i].allTodos);
-          return allProjects[i].allTodos;
-        }
-      }
-    }
-
     // Function to extract all todos from all projects
     function extractAllTodos() {
       const allProjectsTodos = [];
@@ -99,14 +88,42 @@ const todoController = (() => {
         return new Date(d.setDate(diff));
       }
     };
+
+    // Function to extract todoArray from a specific project
+    function extractProjectTodos(projectName) {
+      // .forEach() cannot be used here because the loop will continue running even after the todos array is returned.
+    for (let i = 0; i < allProjects.length; i++) {
+      if (allProjects[i].projectName == projectName) {
+        // console.log("Below is the array extracted");
+        // console.log(allProjects[i].allTodos);
+        return allProjects[i].allTodos;
+      }
+    }
+  }
   };
+
+  const extractTodoCount = (tabTitle) => {
+    const todoArray = extractTodos(tabTitle);
+    const numberOfTodos = todoArray.length;
+    let checkedTodos = 0;
+
+    // Count number of checkedTodos
+    todoArray.forEach(todo => {
+      if (todo.isChecked) {
+        checkedTodos++;
+      }
+    })
+
+    return numberOfTodos - checkedTodos;
+  }
   
   return {
     get allProjects() {
       return allProjects;
     },
     createProject,
-    extractTodos
+    extractTodos,
+    extractTodoCount
   };
 })();
 

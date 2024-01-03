@@ -34,20 +34,20 @@ const todoCountLoader = (() => {
   // Function to load todo count for all tasks tab
   const loadAllTasksCount = () => {
     // Extract count of todos from all projects
-    let allTasksCount = todoController.extractTodos("All tasks").length;
+    let allTasksCount = todoController.extractTodoCount("All tasks");
     _modifyCountDisplay("All tasks", allTasksCount);
   };
 
   // Function to load todo count for today tasks tab
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
-    let todayTasksCount = todoController.extractTodos("Today").length;
+    let todayTasksCount = todoController.extractTodoCount("Today");
     _modifyCountDisplay("Today", todayTasksCount);
   };
 
   // Function to load todo count for week tasks tab
   const loadWeekTasksCount = () => {
-    let weekTasksCount = todoController.extractTodos("Next 7 days").length;
+    let weekTasksCount = todoController.extractTodoCount("Next 7 days");
     _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
 
@@ -58,7 +58,7 @@ const todoCountLoader = (() => {
     // console.log("Below is the extracted array in sidebar controller");
     // console.log(projectTodoArray);
     if (projectTodoArray) {
-      let projectTasksCount = projectTodoArray.length;
+      let projectTasksCount = todoController.extractTodoCount(projectName);
       _modifyCountDisplay(projectName, projectTasksCount);
     }
   };

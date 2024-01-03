@@ -97,6 +97,7 @@ const mainbarEventHandler = (() => {
         const todoButton = checkbox.parentNode;
         const todoTitle = todoButton.dataset.title;
         const todoParentProject = todoButton.dataset.parentProject;
+        const todoArray = todoController.extractTodos(todoParentProject);
         let isChecked = e.target.checked;
         console.log(todoArray);
         console.log(todoParentProject);
@@ -130,7 +131,16 @@ const mainbarEventHandler = (() => {
         function _handleCheckboxBackend(isChecked) {
           // If checked, remove the todo from the project todoArray
           if (isChecked) {
+            // Find the associated todo and update the todoIsChecked boolean
+            todoArray.forEach(todo => {
+              if (todo.title == todoTitle) {
+                todo.isChecked = true;
+              }
+              console.log(todo);
+            })
             
+            // TODO: Update the todo Count displayed 
+
           } else {
 
           }
