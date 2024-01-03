@@ -1,5 +1,5 @@
 import todoController from './todoController.js';
-import todoControllerTestUnit from './todoControllerTestUnit.js';
+import testUnitModule from './testUnitModule.js';
 import sidebarController from './sidebarController.js';
 import mainbarController from './mainbarController.js';
 
@@ -19,7 +19,6 @@ const pageInitializationHandler = (() => {
 /*
   Module Pattern that handles dynamic changes on the page
 */
-
 const pageDynamicHandler = (() => {
 
 })();
@@ -29,7 +28,7 @@ const pageDynamicHandler = (() => {
 */
 const testUnitHandler = (() => {
   const addTodoTestUnit = () => {
-    todoControllerTestUnit();
+    testUnitModule.runProjectCreationTestUnit();
     sidebarController.todoCountLoaderTestUnit();
   };
 
