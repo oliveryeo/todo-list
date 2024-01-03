@@ -1,1 +1,0 @@
-console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
