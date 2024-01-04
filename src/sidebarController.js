@@ -144,8 +144,7 @@ const projectController = (() => {
           newProjectButton.addEventListener("click", createInputField);
 
           // Update displayed projects and tab events
-          _updateProjectDisplay();
-          _updateTabEvents();
+          projectDisplayReloader();
         }
       });
 
@@ -153,40 +152,43 @@ const projectController = (() => {
       // Focus on the inputField when its newly created
       inputField.focus();
     }
+  };
+  
+  /* Function to reload project display - can be used externally */
+  function projectDisplayReloader() {
+    // Remove all currently displayed projects
+    const currentDisplayedProjects =
+      document.querySelectorAll("#projects > button");
+    currentDisplayedProjects.forEach((displayedProject) =>
+      displayedProject.remove()
+    );
 
-    // Helper function that helps to load all the current projects onto the DOM
-    function _updateProjectDisplay() {
-      // Remove all currently displayed projects
-      const currentDisplayedProjects =
-        document.querySelectorAll("#projects > button");
-      currentDisplayedProjects.forEach((displayedProject) =>
-        displayedProject.remove()
-      );
+    // Loop through the updated projects
+    const updatedProjects = todoController.allProjects;
+    updatedProjects.forEach((project) => {
+      const projectName = project.projectName;
+      const todoCount = todoController.extractTodoCount(projectName);
 
-      // Loop through the updated projects
-      const updatedProjects = todoController.allProjects;
-      updatedProjects.forEach((project) => {
-        const projectName = project.projectName;
-        const todoCount = todoController.extractTodoCount(projectName);
+      // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
+      const projectNameDisplay = document.createElement("div");
+      projectNameDisplay.textContent = projectName;
 
-        // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
-        const projectNameDisplay = document.createElement("div");
-        projectNameDisplay.textContent = projectName;
+      const projectTodoCount = document.createElement("div");
+      projectTodoCount.classList.add("count");
+      projectTodoCount.textContent = todoCount;
 
-        const projectTodoCount = document.createElement("div");
-        projectTodoCount.classList.add("count");
-        projectTodoCount.textContent = todoCount;
+      const projectButton = document.createElement("button");
+      projectButton.dataset.title = projectName;
+      projectButton.appendChild(projectNameDisplay);
+      projectButton.appendChild(projectTodoCount);
 
-        const projectButton = document.createElement("button");
-        projectButton.dataset.title = projectName;
-        projectButton.appendChild(projectNameDisplay);
-        projectButton.appendChild(projectTodoCount);
+      // Append child to #projects
+      const projectContainer = document.querySelector("#projects");
+      projectContainer.appendChild(projectButton);
+    });
 
-        // Append child to #projects
-        const projectContainer = document.querySelector("#projects");
-        projectContainer.appendChild(projectButton);
-      });
-    }
+    // Update tab events for the project tabs
+    _updateTabEvents();
 
     function _updateTabEvents() {
       // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
@@ -205,10 +207,11 @@ const projectController = (() => {
         });
       });
     }
-  };
+  }
 
   return {
     loadNewProjectUI,
+    projectDisplayReloader
   };
 })();
 
