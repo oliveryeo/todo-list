@@ -28,3 +28,10 @@ TOP Project on Todo-list
 - I had a dilemma on whether I should combine what happens in the sidebar and mainbar in an overarching Module Pattern called the DOMController.
 - However, I decided that I should separate the sidebar DOM logic from the mainbar DOM logic, and is an intermediary DOMController logic to bring together the sidebar and mainbar DOM logic.
 - This way, the sidebar logic is hidden from the mainbar logic.
+
+# Things that can be improved
+<ins>sidebarController.js's projectController Module Pattern</ins>
+- A big issue I had with the projectController Module Pattern was that the dynamic creation of inputField requires an entire re-initiation of event listeners for the "My Projects" section of the webpage in the createInputField function itself.
+- This was because whenever a new project was created, the whole "My Projects" section will be wiped out and replaced with the updated list of projects as invoked by the _updateProjectDisplay() helper function. Therefore, the re-initiation of event listeners are required.
+- However, based on the logic of the new project creation, the inputField is created and dissolved on its own, which means that it can't be selected whenever it dynamically pops out. This also means that we can't add an event listener externally to track whenever a new project is created, which also means we can't run the re-initiation of event listeners externally (outside of the loadNewProjectUI() code).
+- Therefore, all the re-initiation of event listeners had to be done INTERNALLY in the loadNewProjectUI()'s createInputField() code, which means that there will be a LOT of dependencies going on in this code between the sidebarController() and mainbarController().

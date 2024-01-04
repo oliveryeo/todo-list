@@ -159,11 +159,10 @@ const projectController = (() => {
         // Mainbar loader
       mainbarController.mainbarDisplayHandler.loadMainbar();
 
+      // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
       const sidebarTabs = document.querySelectorAll(
         "#home > button, #projects > button"
       );
-  
-      // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
       sidebarTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           // Reload todo checkbox event handler
