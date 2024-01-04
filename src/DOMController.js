@@ -8,9 +8,19 @@ import mainbarController from "./mainbarController.js";
 */
 const pageInitializationHandler = (() => {
   const initializePage = () => {
-    sidebarController.loadInitialSidebarEvents();
-    mainbarController.loadInitialMainbar();
-    sidebarController.handlePostMainbarLoading();
+    // Load initial sidebar events
+    sidebarController.tabStyler.styleTabs();
+    sidebarController.todoCountLoader.loadAllTasksCount();
+    sidebarController.todoCountLoader.loadTodayTasksCount();
+    sidebarController.todoCountLoader.loadWeekTasksCount();
+    sidebarController.projectController.loadNewProjectUI();
+
+    // Load initial mainbar events
+    mainbarController.mainbarDisplayHandler.loadMainbar();
+    mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
+
+    // Handle todo count dynamics after mainbar loading (e.g. todo count update after checking a checkbox)
+    sidebarController.todoCountLoader.handleDynamicTodoCount();
   };
 
   return { initializePage };
@@ -27,11 +37,12 @@ const dynamicDOMHandler = (() => {
       "#home > button, #projects > button"
     );
 
-    // Every time a new tab is clicked, reloadTodoCheckboxEventHandler() for the mainbar and handlePostMainbarLoading() for sidebar
+    // Every time a new tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
     sidebarTabs.forEach((tab) => {
       tab.addEventListener("click", () => {
-        mainbarController.reloadTodoCheckboxEventHandler();
-        sidebarController.handlePostMainbarLoading();
+        // Reload todo checkbox event handler
+        mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
+        sidebarController.todoCountLoader.handleDynamicTodoCount();
       });
     });
   };
@@ -46,8 +57,19 @@ const dynamicDOMHandler = (() => {
 */
 const testUnitHandler = (() => {
   const addTodoTestUnit = () => {
-    testUnitModule.runProjectCreationTestUnit();
-    sidebarController.todoCountLoaderTestUnit();
+    // Create Project and Todo
+    testUnitModule.projectCreationTestUnit.createProjectX();
+    testUnitModule.projectCreationTestUnit.createProjectXTodo();
+
+    // Load task count for each sidebar tab
+    sidebarController.todoCountLoader.loadAllTasksCount();
+    console.log("If this is printed, allTasksCount is loaded");
+    sidebarController.todoCountLoader.loadTodayTasksCount();
+    console.log("If this is printed, todayTasksCount is loaded");
+    sidebarController.todoCountLoader.loadWeekTasksCount();
+    console.log("If this is printed, weekTasksCount is loaded");
+    sidebarController.todoCountLoader.loadProjectTasksCount('Project-X');
+    console.log("If this is printed, Project-X tasks count is loaded");
   };
 
   return { addTodoTestUnit };

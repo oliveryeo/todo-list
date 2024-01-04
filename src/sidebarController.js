@@ -146,8 +146,13 @@ const projectController = (() => {
           // Update displayed projects
           _updateProjectDisplay();
 
-          // Reload mainbar loader - may be a bad idea to have a dependency here, but no choice
-          mainbarController.reloadMainbar();
+          // Reload sidebar dynamic todo count AND mainbar loader - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
+            // Mainbar Loader
+          mainbarController.mainbarDisplayHandler.loadMainbar();
+          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
+            // Dynamic sidebar todo count handler
+          todoCountLoader.handleDynamicTodoCount();
+          
         }
       });
 
@@ -198,33 +203,10 @@ const projectController = (() => {
   Overall sidebarController Module Pattern for export
 */
 const sidebarController = (() => {
-  const loadInitialSidebarEvents = () => {
-    tabStyler.styleTabs();
-    todoCountLoader.loadAllTasksCount();
-    todoCountLoader.loadTodayTasksCount();
-    todoCountLoader.loadWeekTasksCount();
-    projectController.loadNewProjectUI();
-  };
-
-  const todoCountLoaderTestUnit = () => {
-    todoCountLoader.loadAllTasksCount();
-    console.log("If this is printed, allTasksCount is loaded");
-    todoCountLoader.loadTodayTasksCount();
-    console.log("If this is printed, todayTasksCount is loaded");
-    todoCountLoader.loadWeekTasksCount();
-    console.log("If this is printed, weekTasksCount is loaded");
-    todoCountLoader.loadProjectTasksCount('Project-X');
-    console.log("If this is printed, Project-X tasks count is loaded");
-  };
-
-  const handlePostMainbarLoading = () => {
-    todoCountLoader.handleDynamicTodoCount();
-  }
-
   return {
-    loadInitialSidebarEvents,
-    todoCountLoaderTestUnit,
-    handlePostMainbarLoading
+    tabStyler,
+    todoCountLoader,
+    projectController
   }
 })();
 

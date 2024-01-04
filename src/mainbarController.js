@@ -149,7 +149,12 @@ const mainbarEventHandler = (() => {
   
   // TODO: Handle logic for project title editing
   const handleProjectTitleEdit = () => {
-
+    // Select the edit icon
+    const projectEditIcon = document.querySelector("#edit-icon");
+    // Listen for clicks
+    projectEditIcon.addEventListener('click', () => {
+      
+    });
   };
 
   // TODO: Handle logic for deleting a project
@@ -178,7 +183,7 @@ const mainbarEventHandler = (() => {
 */
 const mainbarController = (() => {
   // Load initial mainbar DOM and dynamic events in the first page load
-  const loadInitialMainbar = () => {
+  const loadInitialMainbarEvents = () => {
     mainbarDisplayHandler.loadMainbar();
     mainbarEventHandler.handleTodoCheckboxEvent();
   };
@@ -189,8 +194,8 @@ const mainbarController = (() => {
   };
 
   return {
-    loadInitialMainbar,
-    reloadTodoCheckboxEventHandler
+    mainbarDisplayHandler,
+    mainbarEventHandler
   }
 })();
 

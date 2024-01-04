@@ -45,12 +45,7 @@ const projectCreationTestUnit = (() => {
 })();
 
 const testUnitModule = (() => {
-  const runProjectCreationTestUnit = () => {
-    projectCreationTestUnit.createProjectX();
-    projectCreationTestUnit.createProjectXTodo();
-  };
-
-  return { runProjectCreationTestUnit };
+  return { projectCreationTestUnit };
 })();
 
 export default testUnitModule;
