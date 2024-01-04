@@ -1,4 +1,4 @@
-import { isWithinInterval } from 'date-fns';
+import { isWithinInterval, isToday, isThisWeek } from 'date-fns';
 
 // todoController module
 const todoController = (() => {
@@ -38,12 +38,10 @@ const todoController = (() => {
     function extractTodayTodos() {
       // Create an array that holds all the today's todos
       const allTodayTodos = [];
-      // Create a variable that holds today's date
-      const todayDate = new Date();
       // Extract all todos that fall within today's date and push them into the array
       allProjects.forEach((project) => {
         project.allTodos.forEach((todo) => {
-          if (todo.dueDate.toDateString() == todayDate.toDateString()) {
+          if (isToday(todo.dueDate)) {
             allTodayTodos.push(todo);
           }
         })
@@ -56,37 +54,17 @@ const todoController = (() => {
     function extractWeekTodos() {
       // Create an array that holds all the week's todos
       const allWeekTodos = [];
-      const todayDate = new Date();
-      // Create a variable that holds Monday's and Sunday's date for the current week
-      const mondayDate = getMonday(todayDate);
-      const sundayDate = getSunday(todayDate);
 
       // Extract all the todos that fall between the Monday and Sunday date and push them into the array. .toDateString() is used to extract date without timestamp.
       allProjects.forEach((project) => {
         project.allTodos.forEach((todo) => {
-          // console.log("test");
-          // console.log(isWithinInterval(todayDate, {start: mondayDate, end: sundayDate}));
-          if (isWithinInterval(todo.dueDate,
-            {start: mondayDate, end: sundayDate})) {
+          if (isThisWeek(todo.dueDate)) {
             allWeekTodos.push(todo);
           }
         })
       });
 
       return allWeekTodos;
-
-      // Functions
-      function getMonday(d) {
-        let day = d.getDay();
-        let diff = d.getDate() - day + (day == 0 ? -6 : 1);
-        return new Date(d.setDate(diff));
-      }
-
-      function getSunday(d) {
-        let day = d.getDay();
-        let diff = d.getDate() - day + (day == 0 ? 0 : 7);
-        return new Date(d.setDate(diff));
-      }
     };
 
     // Function to extract todoArray from a specific project
