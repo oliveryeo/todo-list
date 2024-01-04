@@ -1,4 +1,4 @@
-import { isWithinInterval, isToday, isThisWeek } from 'date-fns';
+import { isToday, isThisWeek } from 'date-fns';
 
 // todoController module
 const todoController = (() => {
