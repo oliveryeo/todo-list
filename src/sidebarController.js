@@ -147,6 +147,8 @@ const projectController = (() => {
       });
 
       newProjectButton.appendChild(inputField);
+      // Focus on the inputField when its newly created
+      inputField.focus();
     }
 
     function _updateTabEvents() {
