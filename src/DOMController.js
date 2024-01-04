@@ -1,4 +1,3 @@
-import todoController from "./todoController.js";
 import testUnitModule from "./testUnitModule.js";
 import sidebarController from "./sidebarController.js";
 import mainbarController from "./mainbarController.js";
@@ -34,9 +33,7 @@ const dynamicDOMHandler = (() => {
   // Handle DOM changes when a new sidebar tab is selected. Whenever a new sidetab is selected → mainbar UI from mainbarController will reload → dynamic todo count from sidebarController will also need to be reloaded.
   const handleDOMReloading = () => {
     // Get all the sidebar tabs
-    const sidebarTabs = document.querySelectorAll(
-      "#home > button, #projects > button"
-    );
+    const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");
 
     // Every time a new tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
     sidebarTabs.forEach((tab) => {

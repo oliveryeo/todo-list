@@ -142,6 +142,9 @@ const projectController = (() => {
 
           // Add back the click event listener to newProjectButton by recursion
           newProjectButton.addEventListener("click", createInputField);
+
+          // Update displayed projects and tab events
+          _updateProjectDisplay();
           _updateTabEvents();
         }
       });
@@ -149,29 +152,6 @@ const projectController = (() => {
       newProjectButton.appendChild(inputField);
       // Focus on the inputField when its newly created
       inputField.focus();
-    }
-
-    function _updateTabEvents() {
-      // Update displayed projects
-      _updateProjectDisplay();
-
-      // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
-        // Sidebar loader
-      tabStyler.styleTabs();
-        // Mainbar loader
-      mainbarController.mainbarDisplayHandler.loadMainbar();
-
-      // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
-      const sidebarTabs = document.querySelectorAll(
-        "#home > button, #projects > button"
-      );
-      sidebarTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          // Reload todo checkbox event handler
-          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-          sidebarController.todoCountLoader.handleDynamicTodoCount();
-        });
-      });
     }
 
     // Helper function that helps to load all the current projects onto the DOM
@@ -205,6 +185,24 @@ const projectController = (() => {
         // Append child to #projects
         const projectContainer = document.querySelector("#projects");
         projectContainer.appendChild(projectButton);
+      });
+    }
+
+    function _updateTabEvents() {
+      // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
+        // Sidebar loader
+      tabStyler.styleTabs();
+        // Mainbar loader
+      mainbarController.mainbarDisplayHandler.loadMainbar();
+
+      // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
+      const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");
+      sidebarTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Reload todo checkbox event handler
+          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
+          sidebarController.todoCountLoader.handleDynamicTodoCount();
+        });
       });
     }
   };
