@@ -142,21 +142,35 @@ const projectController = (() => {
 
           // Add back the click event listener to newProjectButton by recursion
           newProjectButton.addEventListener("click", createInputField);
-
-          // Update displayed projects
-          _updateProjectDisplay();
-
-          // Reload sidebar dynamic todo count AND mainbar loader - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
-            // Mainbar Loader
-          mainbarController.mainbarDisplayHandler.loadMainbar();
-          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-            // Dynamic sidebar todo count handler
-          todoCountLoader.handleDynamicTodoCount();
-          
+          _updateTabEvents();
         }
       });
 
       newProjectButton.appendChild(inputField);
+    }
+
+    function _updateTabEvents() {
+      // Update displayed projects
+      _updateProjectDisplay();
+
+      // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
+        // Sidebar loader
+      tabStyler.styleTabs();
+        // Mainbar loader
+      mainbarController.mainbarDisplayHandler.loadMainbar();
+
+      const sidebarTabs = document.querySelectorAll(
+        "#home > button, #projects > button"
+      );
+  
+      // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
+      sidebarTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Reload todo checkbox event handler
+          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
+          sidebarController.todoCountLoader.handleDynamicTodoCount();
+        });
+      });
     }
 
     // Helper function that helps to load all the current projects onto the DOM
@@ -172,7 +186,7 @@ const projectController = (() => {
       const updatedProjects = todoController.allProjects;
       updatedProjects.forEach((project) => {
         const projectName = project.projectName;
-        const todoCount = project.allTodos.length;
+        const todoCount = todoController.extractTodoCount(projectName);
 
         // Create a button with a div child (for project name), and a div child for todos count (with the class of "count"). Ensure that the button has an id of the project's name as well.
         const projectNameDisplay = document.createElement("div");

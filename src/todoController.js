@@ -132,9 +132,6 @@ const newProject = (name) => {
   // Takes in the project name and sets it
   let projectName = name;
 
-  // Keeps count of the number of checked todos
-  let checkedTodos = 0;
-
   // An array that stores all the todos related to this project
   const allTodos = [];
 

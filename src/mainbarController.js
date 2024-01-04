@@ -6,7 +6,13 @@ import { format } from "date-fns";
   and load into main bar view.
 */
 const mainbarDisplayHandler = (() => {
-  // Whenever a side tab is clicked, load the mainbar display. Also set the default intitial mainbar page load to "All tasks"
+  // Set the default intitial mainbar page load to "All tasks"
+  const loadDefaultMainbar = () => {
+    const allTasksTodoArray = todoController.extractTodos("All tasks");
+    _mainbarUIHandler("All tasks", allTasksTodoArray);
+  };
+
+  // Whenever a side tab is clicked, load the mainbar display.
   const loadMainbar = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const sidebarTabs = document.querySelectorAll(
@@ -31,10 +37,6 @@ const mainbarDisplayHandler = (() => {
         _mainbarUIHandler(tabDataTitle, todoArray);
       });
     });
-
-    // Load default mainbar page upon page initialization
-    const allTasksTodoArray = todoController.extractTodos("All tasks");
-    _mainbarUIHandler("All tasks", allTasksTodoArray);
   };
 
   // Helper function for DOM loading of project title and todo loading in the mainbar display
@@ -83,6 +85,7 @@ const mainbarDisplayHandler = (() => {
 
   return {
     loadMainbar,
+    loadDefaultMainbar
   };
 })();
 
@@ -182,17 +185,6 @@ const mainbarEventHandler = (() => {
   Main Module Pattern for export
 */
 const mainbarController = (() => {
-  // Load initial mainbar DOM and dynamic events in the first page load
-  const loadInitialMainbarEvents = () => {
-    mainbarDisplayHandler.loadMainbar();
-    mainbarEventHandler.handleTodoCheckboxEvent();
-  };
-
-  // Reload the checkbox event handler function
-  const reloadTodoCheckboxEventHandler = () => {
-    mainbarEventHandler.handleTodoCheckboxEvent();
-  };
-
   return {
     mainbarDisplayHandler,
     mainbarEventHandler

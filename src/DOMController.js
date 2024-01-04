@@ -16,6 +16,7 @@ const pageInitializationHandler = (() => {
     sidebarController.projectController.loadNewProjectUI();
 
     // Load initial mainbar events
+    mainbarController.mainbarDisplayHandler.loadDefaultMainbar();
     mainbarController.mainbarDisplayHandler.loadMainbar();
     mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
 
