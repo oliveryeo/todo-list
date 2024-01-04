@@ -51,6 +51,8 @@ const testUnitHandler = (() => {
     // Create Project and Todo
     testUnitModule.projectCreationTestUnit.createProjectX();
     testUnitModule.projectCreationTestUnit.createProjectXTodo();
+    testUnitModule.projectCreationTestUnit.createProjectY();
+    testUnitModule.projectCreationTestUnit.createProjectYTodo();
 
     // Load task count for each sidebar tab
     sidebarController.todoCountLoader.loadAllTasksCount();
@@ -61,6 +63,8 @@ const testUnitHandler = (() => {
     console.log("If this is printed, weekTasksCount is loaded");
     sidebarController.todoCountLoader.loadProjectTasksCount('Project-X');
     console.log("If this is printed, Project-X tasks count is loaded");
+    sidebarController.todoCountLoader.loadProjectTasksCount('Project-Y');
+    console.log("If this is printed, Project-Y tasks count is loaded");
   };
 
   return { addTodoTestUnit };
