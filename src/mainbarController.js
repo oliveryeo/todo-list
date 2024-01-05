@@ -175,6 +175,8 @@ const mainbarEventHandler = (() => {
         if (e.key == "Enter") {
           _handleNewProjectTitleDOM;
           _handleNewProjectTitleBackend;
+          inputField.remove();
+          projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
         }
       });
 
@@ -188,13 +190,17 @@ const mainbarEventHandler = (() => {
           console.log("update!");
           _handleNewProjectTitleDOM;
           _handleNewProjectTitleBackend;
+          inputField.remove();
+          projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
         }
         
       });
 
       projectTitleContainer.appendChild(inputField);
-      // TODO: Figure out how to focus on the END of the input default value content instead of the start
+      // Focus the input at the END of the input default value content (a.k.a the projectTitle)
       inputField.focus();
+      const inputFieldLength = projectTitleContent.textContent.length;
+      inputField.setSelectionRange(inputFieldLength, inputFieldLength);
 
       function _handleNewProjectTitleDOM() {
 
