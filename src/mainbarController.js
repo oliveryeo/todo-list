@@ -1,4 +1,5 @@
 import todoController from "./todoController.js";
+import sidebarController from "./sidebarController.js";
 import { format } from "date-fns";
 
 /* 
@@ -153,11 +154,56 @@ const mainbarEventHandler = (() => {
   // TODO: Handle logic for project title editing
   const handleProjectTitleEdit = () => {
     // Select the edit icon
-    const projectEditIcon = document.querySelector("#edit-icon");
-    // Listen for clicks
-    projectEditIcon.addEventListener('click', () => {
+    const projectTitleEditIcon = document.querySelector("#edit-icon");
+    // Listen for clicks and create the Input
+    projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+
+    function createProjectTitleEditInput() {
+      const projectTitleContainer = document.querySelector("#main-panel-title-container");
+      const projectTitleContent = document.querySelector("#main-panel-title-content");
       
-    });
+      // Remove event listener on edit icon
+      projectTitleEditIcon.removeEventListener('click', createProjectTitleEditInput);
+      // Create and add an input field (similar to new projects) for title edit
+      const inputField = document.createElement("input");
+      inputField.classList.add("main-panel-edit-title-input");
+      inputField.setAttribute("type", "text");
+      inputField.setAttribute("value", projectTitleContent.textContent); // Show default title name for editing
+
+      // TODO: After input submission, handle the logic for DOM dynamics and todoController backend changes
+      inputField.addEventListener('keyup', (e) => {
+        if (e.key == "Enter") {
+          _handleNewProjectTitleDOM;
+          _handleNewProjectTitleBackend;
+        }
+      });
+
+      // TODO: Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle is updated immediately
+      window.addEventListener('click', (e) => {
+        // Testing code
+        //// console.log(e.target != inputField);
+        //// console.log(e.target != projectTitleEditIcon);
+        // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
+        if (e.target != inputField && e.target != projectTitleEditIcon) {
+          console.log("update!");
+          _handleNewProjectTitleDOM;
+          _handleNewProjectTitleBackend;
+        }
+        
+      });
+
+      projectTitleContainer.appendChild(inputField);
+      // TODO: Figure out how to focus on the END of the input default value content instead of the start
+      inputField.focus();
+
+      function _handleNewProjectTitleDOM() {
+
+      }
+
+      function _handleNewProjectTitleBackend() {
+
+      }
+    }
   };
 
   // TODO: Handle logic for deleting a project
@@ -176,7 +222,8 @@ const mainbarEventHandler = (() => {
   }
 
   return {
-    handleTodoCheckboxEvent
+    handleTodoCheckboxEvent,
+    handleProjectTitleEdit
   }
 
 })();

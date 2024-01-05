@@ -25,6 +25,7 @@ const pageInitializationHandler = (() => {
       // Do an initial loading of the event dynamics on page load
       mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
       sidebarController.todoCountLoader.handleDynamicTodoCount();
+      mainbarController.mainbarEventHandler.handleProjectTitleEdit();
 
       // Do the loading of event dynamics whenever a new side tab is selected
       const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");

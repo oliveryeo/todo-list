@@ -133,6 +133,7 @@ button:hover {
   border-bottom: solid;
   min-width: 500px;
   margin-top: 5%;
+  position: relative;
 }
 
 #main-panel-title-editor {
@@ -147,6 +148,15 @@ button:hover {
 
 #main-panel-title-editor > img:hover {
   cursor: pointer;
+}
+
+.main-panel-edit-title-input {
+  height: 2rem;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  /* border: none; */
+  font-size: 2rem;
 }
 
 #main-panel-content {
