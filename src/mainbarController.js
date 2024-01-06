@@ -152,7 +152,7 @@ const mainbarEventHandler = (() => {
     })
   };
   
-  // TODO: Handle logic for project title editing
+  // Handle logic for project title editing
   const handleProjectTitleEdit = () => {
     // Select the edit icon
     const projectTitleEditIcon = document.querySelector("#edit-icon");
@@ -178,7 +178,12 @@ const mainbarEventHandler = (() => {
       inputField.setSelectionRange(inputFieldLength, inputFieldLength);
 
       // Create a condition where if the user enters "Enter", update the projectTitle and backend immediately. Also remove window eventListener to prevent duplicate action.
-      inputField.addEventListener('keyup', (e) => {
+      inputField.addEventListener('keyup', inputFieldEventHandler);
+
+      // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
+      window.addEventListener('click', windowEventHandler);
+
+      function inputFieldEventHandler(e) {
         if (e.key == "Enter") {
           // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
           _handleNewProjectTitleBackend();
@@ -187,10 +192,7 @@ const mainbarEventHandler = (() => {
           projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
           window.removeEventListener('click', windowEventHandler);
         }
-      });
-
-      // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
-      window.addEventListener('click', windowEventHandler);
+      }
 
       function windowEventHandler(e) {
         // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
