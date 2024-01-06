@@ -36,6 +36,7 @@ const pageInitializationHandler = (() => {
           // Reload todo checkbox event handler
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
           sidebarController.todoCountLoader.handleDynamicTodoCount();
+          mainbarController.mainbarEventHandler.handleProjectTitleEdit();
         });
       });
     }

@@ -46,6 +46,28 @@ const mainbarDisplayHandler = (() => {
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
     mainPanelTitle.textContent = tabDataTitle;
     mainPanelTitle.dataset.title = tabDataTitle;
+
+    // Display the editor only if a project is selected
+    if (tabDataTitle != "All tasks" && tabDataTitle != "Today" && tabDataTitle != "Next 7 days") {
+      const mainPanelEditorContainer = document.querySelector("#main-panel-title-editor");
+      mainPanelEditorContainer.textContent = "";
+
+      const mainPanelEditIcon = document.createElement("img");
+      mainPanelEditIcon.src = "./icons/square-edit-outline.svg";
+      mainPanelEditIcon.setAttribute("id", "edit-icon");
+
+      const mainPanelTrashIcon = document.createElement("img");
+      mainPanelTrashIcon.src = "./icons/trash-can-outline.svg";
+      mainPanelTrashIcon.setAttribute("id", "trash-icon");
+
+      mainPanelEditorContainer.appendChild(mainPanelEditIcon);
+      mainPanelEditorContainer.appendChild(mainPanelTrashIcon);
+    } else {
+      // Do not display any editor for the "All tasks", "Today" and "Next 7 days"
+      const mainPanelEditorContainer = document.querySelector("#main-panel-title-editor");
+      mainPanelEditorContainer.textContent = "";
+    }
+
     // Select #main-panel-content id:
     const mainPanelContent = document.querySelector("#main-panel-content");
     // Clear out ALL the todos on the page
@@ -156,82 +178,86 @@ const mainbarEventHandler = (() => {
   const handleProjectTitleEdit = () => {
     // Select the edit icon
     const projectTitleEditIcon = document.querySelector("#edit-icon");
-    // Listen for clicks and create the Input
-    projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+    
+    // Listen for clicks and create the Input IF the icon exists
+    if (projectTitleEditIcon) {
+      projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
 
-    function createProjectTitleEditInput() {
-      const projectTitleContainerDiv = document.querySelector("#main-panel-title-container");
-      const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
-      
-      // Remove event listener on edit icon
-      projectTitleEditIcon.removeEventListener('click', createProjectTitleEditInput);
-      // Create and add an input field (similar to new projects) for title edit
-      const inputField = document.createElement("input");
-      inputField.classList.add("main-panel-edit-title-input");
-      inputField.setAttribute("type", "text");
-      inputField.setAttribute("value", projectTitleContentDiv.textContent); // Show default title name for editing
-      
-      // Append the inputField and Focus the input at the END of the input default value content (a.k.a the end of projectTitle)
-      projectTitleContainerDiv.appendChild(inputField);
-      inputField.focus();
-      const inputFieldLength = projectTitleContentDiv.textContent.length;
-      inputField.setSelectionRange(inputFieldLength, inputFieldLength);
-
-      // Create a condition where if the user enters "Enter", update the projectTitle and backend immediately. Also remove window eventListener to prevent duplicate action.
-      inputField.addEventListener('keyup', inputFieldEventHandler);
-
-      // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
-      window.addEventListener('click', windowEventHandler);
-
-      function inputFieldEventHandler(e) {
-        if (e.key == "Enter") {
-          // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
-          _handleNewProjectTitleBackend();
-          _handleNewProjectTitleDOM();
-          inputField.remove();
-          projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
-          window.removeEventListener('click', windowEventHandler);
-        }
-      }
-
-      function windowEventHandler(e) {
-        // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
-        if (e.target != inputField && e.target != projectTitleEditIcon) {
-          console.log("update!");
-          // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
-          _handleNewProjectTitleBackend();
-          _handleNewProjectTitleDOM();
-          inputField.remove();
-          projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
-          window.removeEventListener('click', windowEventHandler);
-        }
-      }
-
-      // Change the project title
-      function _handleNewProjectTitleDOM() {
-        // Change mainbar title name and data-title
-        const newProjectTitle = inputField.value;
-        projectTitleContentDiv.textContent = newProjectTitle;
-        projectTitleContentDiv.dataset.title = newProjectTitle;
+      function createProjectTitleEditInput() {
+        const projectTitleContainerDiv = document.querySelector("#main-panel-title-container");
+        const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
         
-        // Refresh the sidebar
-        sidebarController.projectController.projectDisplayReloader();
-      }
-
-      // Change the project title in todoController
-      function _handleNewProjectTitleBackend() {
-        const oldProjectTitle = projectTitleContentDiv.dataset.title;
-        const newProjectTitle = inputField.value;
-        const allProjects = todoController.allProjects;
-
-        for (let i = 0; i < allProjects.length; i++) {
-          if (allProjects[i].projectName == oldProjectTitle) {
-            allProjects[i].projectName = newProjectTitle;
+        // Remove event listener on edit icon
+        projectTitleEditIcon.removeEventListener('click', createProjectTitleEditInput);
+        // Create and add an input field (similar to new projects) for title edit
+        const inputField = document.createElement("input");
+        inputField.classList.add("main-panel-edit-title-input");
+        inputField.setAttribute("type", "text");
+        inputField.setAttribute("value", projectTitleContentDiv.textContent); // Show default title name for editing
+        
+        // Append the inputField and Focus the input at the END of the input default value content (a.k.a the end of projectTitle)
+        projectTitleContainerDiv.appendChild(inputField);
+        inputField.focus();
+        const inputFieldLength = projectTitleContentDiv.textContent.length;
+        inputField.setSelectionRange(inputFieldLength, inputFieldLength);
+  
+        // Create a condition where if the user enters "Enter", update the projectTitle and backend immediately. Also remove window eventListener to prevent duplicate action.
+        inputField.addEventListener('keyup', inputFieldEventHandler);
+  
+        // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
+        window.addEventListener('click', windowEventHandler);
+  
+        function inputFieldEventHandler(e) {
+          if (e.key == "Enter") {
+            // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
+            _handleNewProjectTitleBackend();
+            _handleNewProjectTitleDOM();
+            inputField.remove();
+            projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+            window.removeEventListener('click', windowEventHandler);
+          }
+        }
+  
+        function windowEventHandler(e) {
+          // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
+          if (e.target != inputField && e.target != projectTitleEditIcon) {
+            console.log("update!");
+            // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
+            _handleNewProjectTitleBackend();
+            _handleNewProjectTitleDOM();
+            inputField.remove();
+            projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+            window.removeEventListener('click', windowEventHandler);
+          }
+        }
+  
+        // Change the project title
+        function _handleNewProjectTitleDOM() {
+          // Change mainbar title name and data-title
+          const newProjectTitle = inputField.value;
+          projectTitleContentDiv.textContent = newProjectTitle;
+          projectTitleContentDiv.dataset.title = newProjectTitle;
+          
+          // Refresh the sidebar
+          sidebarController.projectController.projectDisplayReloader();
+        }
+  
+        // Change the project title in todoController
+        function _handleNewProjectTitleBackend() {
+          const oldProjectTitle = projectTitleContentDiv.dataset.title;
+          const newProjectTitle = inputField.value;
+          const allProjects = todoController.allProjects;
+  
+          for (let i = 0; i < allProjects.length; i++) {
+            if (allProjects[i].projectName == oldProjectTitle) {
+              allProjects[i].projectName = newProjectTitle;
+            }
           }
         }
       }
     }
   };
+
 
   // TODO: Handle logic for deleting a project
   const handleProjectDeletionEvent = () => {
@@ -252,7 +278,6 @@ const mainbarEventHandler = (() => {
     handleTodoCheckboxEvent,
     handleProjectTitleEdit
   }
-
 })();
 
 /*
