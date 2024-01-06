@@ -233,14 +233,20 @@ const mainbarEventHandler = (() => {
   
         // Change the project title
         function _handleNewProjectTitleDOM() {
+          const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
 
-          // Error handling for same project name
+          // Error handling for same project name - if same name, do nothing. 
+          if (oldProjectTitle == newProjectTitle) {
+            return;
+          }
+          
+          // Error handling for same project name - if already exist, alert and do nothing
           const allProjects = todoController.allProjects;
           for (let i = 0; i < allProjects.length; i++) {
             if (allProjects[i].projectName == newProjectTitle) {
               alert(`${newProjectTitle} already exists`);
-              break;
+              return;
             } else {
               // Change mainbar title name and data-title
               projectTitleContentDiv.textContent = newProjectTitle;
@@ -258,14 +264,21 @@ const mainbarEventHandler = (() => {
           const newProjectTitle = inputField.value;
           const allProjects = todoController.allProjects;
           
-          // Error handling for same project name - do nothing if its the same name
+          // Error handling for same project name - if same name, do nothing.
           if (oldProjectTitle == newProjectTitle) {
             return;
           }
-
+          
+          // Error handling for same project name - if already exist, do nothing
           for (let i = 0; i < allProjects.length; i++) {
-            if (allProjects[i].projectName == oldProjectTitle) {
-              allProjects[i].projectName = newProjectTitle;
+            if (allProjects[i].projectName == newProjectTitle) {
+              return;
+            } else {
+              for (let i = 0; i < allProjects.length; i++) {
+                if (allProjects[i].projectName == oldProjectTitle) {
+                  allProjects[i].projectName = newProjectTitle;
+                }
+              }
             }
           }
         }
