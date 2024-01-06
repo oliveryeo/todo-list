@@ -233,13 +233,23 @@ const mainbarEventHandler = (() => {
   
         // Change the project title
         function _handleNewProjectTitleDOM() {
-          // Change mainbar title name and data-title
           const newProjectTitle = inputField.value;
-          projectTitleContentDiv.textContent = newProjectTitle;
-          projectTitleContentDiv.dataset.title = newProjectTitle;
-          
-          // Refresh the sidebar
-          sidebarController.projectController.projectDisplayReloader();
+
+          // Error handling for same project name
+          const allProjects = todoController.allProjects;
+          for (let i = 0; i < allProjects.length; i++) {
+            if (allProjects[i].projectName == newProjectTitle) {
+              alert(`${newProjectTitle} already exists`);
+              break;
+            } else {
+              // Change mainbar title name and data-title
+              projectTitleContentDiv.textContent = newProjectTitle;
+              projectTitleContentDiv.dataset.title = newProjectTitle;
+              
+              // Refresh the sidebar
+              sidebarController.projectController.projectDisplayReloader();
+            }
+          }
         }
   
         // Change the project title in todoController
@@ -247,7 +257,12 @@ const mainbarEventHandler = (() => {
           const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
           const allProjects = todoController.allProjects;
-  
+          
+          // Error handling for same project name - do nothing if its the same name
+          if (oldProjectTitle == newProjectTitle) {
+            return;
+          }
+
           for (let i = 0; i < allProjects.length; i++) {
             if (allProjects[i].projectName == oldProjectTitle) {
               allProjects[i].projectName = newProjectTitle;
