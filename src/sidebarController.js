@@ -143,7 +143,7 @@ const projectController = (() => {
           // Add back the click event listener to newProjectButton by recursion
           newProjectButton.addEventListener("click", createInputField);
 
-          // Update displayed projects and tab events
+          // Refresh displayed projects and side tab events
           projectDisplayReloader();
         }
       });

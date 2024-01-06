@@ -45,6 +45,7 @@ const mainbarDisplayHandler = (() => {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
     mainPanelTitle.textContent = tabDataTitle;
+    mainPanelTitle.dataset.title = tabDataTitle;
     // Select #main-panel-content id:
     const mainPanelContent = document.querySelector("#main-panel-content");
     // Clear out ALL the todos on the page
@@ -159,8 +160,8 @@ const mainbarEventHandler = (() => {
     projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
 
     function createProjectTitleEditInput() {
-      const projectTitleContainer = document.querySelector("#main-panel-title-container");
-      const projectTitleContent = document.querySelector("#main-panel-title-content");
+      const projectTitleContainerDiv = document.querySelector("#main-panel-title-container");
+      const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
       
       // Remove event listener on edit icon
       projectTitleEditIcon.removeEventListener('click', createProjectTitleEditInput);
@@ -168,46 +169,64 @@ const mainbarEventHandler = (() => {
       const inputField = document.createElement("input");
       inputField.classList.add("main-panel-edit-title-input");
       inputField.setAttribute("type", "text");
-      inputField.setAttribute("value", projectTitleContent.textContent); // Show default title name for editing
+      inputField.setAttribute("value", projectTitleContentDiv.textContent); // Show default title name for editing
+      
+      // Append the inputField and Focus the input at the END of the input default value content (a.k.a the end of projectTitle)
+      projectTitleContainerDiv.appendChild(inputField);
+      inputField.focus();
+      const inputFieldLength = projectTitleContentDiv.textContent.length;
+      inputField.setSelectionRange(inputFieldLength, inputFieldLength);
 
-      // TODO: After input submission, handle the logic for DOM dynamics and todoController backend changes
+      // Create a condition where if the user enters "Enter", update the projectTitle and backend immediately. Also remove window eventListener to prevent duplicate action.
       inputField.addEventListener('keyup', (e) => {
         if (e.key == "Enter") {
-          _handleNewProjectTitleDOM;
-          _handleNewProjectTitleBackend;
+          // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
+          _handleNewProjectTitleBackend();
+          _handleNewProjectTitleDOM();
           inputField.remove();
           projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+          window.removeEventListener('click', windowEventHandler);
         }
       });
 
-      // TODO: Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle is updated immediately
-      window.addEventListener('click', (e) => {
-        // Testing code
-        //// console.log(e.target != inputField);
-        //// console.log(e.target != projectTitleEditIcon);
+      // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
+      window.addEventListener('click', windowEventHandler);
+
+      function windowEventHandler(e) {
         // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
         if (e.target != inputField && e.target != projectTitleEditIcon) {
           console.log("update!");
-          _handleNewProjectTitleDOM;
-          _handleNewProjectTitleBackend;
+          // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
+          _handleNewProjectTitleBackend();
+          _handleNewProjectTitleDOM();
           inputField.remove();
           projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
+          window.removeEventListener('click', windowEventHandler);
         }
-        
-      });
-
-      projectTitleContainer.appendChild(inputField);
-      // Focus the input at the END of the input default value content (a.k.a the projectTitle)
-      inputField.focus();
-      const inputFieldLength = projectTitleContent.textContent.length;
-      inputField.setSelectionRange(inputFieldLength, inputFieldLength);
-
-      function _handleNewProjectTitleDOM() {
-
       }
 
-      function _handleNewProjectTitleBackend() {
+      // Change the project title
+      function _handleNewProjectTitleDOM() {
+        // Change mainbar title name and data-title
+        const newProjectTitle = inputField.value;
+        projectTitleContentDiv.textContent = newProjectTitle;
+        projectTitleContentDiv.dataset.title = newProjectTitle;
+        
+        // Refresh the sidebar
+        sidebarController.projectController.projectDisplayReloader();
+      }
 
+      // Change the project title in todoController
+      function _handleNewProjectTitleBackend() {
+        const oldProjectTitle = projectTitleContentDiv.dataset.title;
+        const newProjectTitle = inputField.value;
+        const allProjects = todoController.allProjects;
+
+        for (let i = 0; i < allProjects.length; i++) {
+          if (allProjects[i].projectName == oldProjectTitle) {
+            allProjects[i].projectName = newProjectTitle;
+          }
+        }
       }
     }
   };
