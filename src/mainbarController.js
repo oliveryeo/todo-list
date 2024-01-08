@@ -289,7 +289,19 @@ const mainbarEventHandler = (() => {
 
   // TODO: Handle logic for deleting a project
   const handleProjectDeletionEvent = () => {
+    // Click the delete icon
 
+    // Alert a confirmatory message (yes or no)
+
+    // Handle backend changes
+      // Use a delete project function from todoController (not yet created)
+
+    // Handle DOM changes
+      // Project in sidebar is removed
+      // Project in mainbar is removed
+      // Return mainbar view to "All tasks"
+    
+    // In DOMController, load this event listener on initialization, and whenever a sidebar is clicked
   }
   
   // TODO: Handle logic for todo information editing
