@@ -26,6 +26,7 @@ const pageInitializationHandler = (() => {
       mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
       sidebarController.todoCountLoader.handleDynamicTodoCount();
       mainbarController.mainbarEventHandler.handleProjectTitleEdit();
+      mainbarController.mainbarEventHandler.handleProjectDeletion();
 
       // Do the loading of event dynamics whenever a new side tab is selected
       const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");
@@ -37,6 +38,7 @@ const pageInitializationHandler = (() => {
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
           sidebarController.todoCountLoader.handleDynamicTodoCount();
           mainbarController.mainbarEventHandler.handleProjectTitleEdit();
+          mainbarController.mainbarEventHandler.handleProjectDeletion();
         });
       });
     }

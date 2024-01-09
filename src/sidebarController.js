@@ -205,6 +205,7 @@ const projectController = (() => {
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
           sidebarController.todoCountLoader.handleDynamicTodoCount();
           mainbarController.mainbarEventHandler.handleProjectTitleEdit();
+          mainbarController.mainbarEventHandler.handleProjectDeletion();
         });
       });
     }

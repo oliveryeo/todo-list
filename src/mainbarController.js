@@ -11,6 +11,10 @@ const mainbarDisplayHandler = (() => {
   const loadDefaultMainbar = () => {
     const allTasksTodoArray = todoController.extractTodos("All tasks");
     _mainbarUIHandler("All tasks", allTasksTodoArray);
+
+    // Style the button as "selected"
+    const allTasksButton = document.querySelector("button[data-title='All tasks']");
+    allTasksButton.classList.add("selected-tab");
   };
 
   // Whenever a side tab is clicked, load the mainbar display.
@@ -47,7 +51,7 @@ const mainbarDisplayHandler = (() => {
     mainPanelTitle.textContent = tabDataTitle;
     mainPanelTitle.dataset.title = tabDataTitle;
 
-    // Display the editor only if a project is selected
+    // Display the editor icons only if a project is selected
     if (tabDataTitle != "All tasks" && tabDataTitle != "Today" && tabDataTitle != "Next 7 days") {
       const mainPanelEditorContainer = document.querySelector("#main-panel-title-editor");
       mainPanelEditorContainer.textContent = "";
@@ -289,18 +293,54 @@ const mainbarEventHandler = (() => {
 
 
   // TODO: Handle logic for deleting a project
-  const handleProjectDeletionEvent = () => {
-    // Click the delete icon
+  const handleProjectDeletion = () => {
+    // Run event handler if trash icon exists
+    const projectTrashIcon = document.querySelector("#trash-icon");
 
-    // Alert a confirmatory message (yes or no)
+    if (projectTrashIcon) {
+      projectTrashIcon.addEventListener('click', handleProjectDeletion);
+    }
 
-    // Handle backend changes
-      // Use a delete project function from todoController (not yet created)
+    function handleProjectDeletion() {
+      // Alert a confirmatory message (yes or no)
+      const confirmDelete = confirm("Are you sure you want to delete this project?");
+      
+      if (confirmDelete) {
+        // Handle backend changes
+        _handleProjectDeletionBackend();
+        
+          
 
-    // Handle DOM changes
-      // Project in sidebar is removed
-      // Project in mainbar is removed
-      // Return mainbar view to "All tasks"
+        // Handle DOM changes
+        _handleProjectDeletionDOM();
+      }
+      
+
+        function _handleProjectDeletionBackend() {
+          const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
+          const projectTitle = projectTitleContentDiv.dataset.title;
+          // Use a delete project function from todoController
+          todoController.deleteProject(projectTitle);
+        }
+
+        function _handleProjectDeletionDOM() {
+          // Reload all the tasks in the sidebar home tab
+          sidebarController.todoCountLoader.loadAllTasksCount();
+          sidebarController.todoCountLoader.loadTodayTasksCount();
+          sidebarController.todoCountLoader.loadWeekTasksCount();
+          
+          // Reload sidebar project displays
+          sidebarController.projectController.projectDisplayReloader();
+
+          // Load mainbar to all tasks
+          mainbarDisplayHandler.loadDefaultMainbar();
+
+
+      }
+
+      
+    }
+    
     
     // In DOMController, load this event listener on initialization, and whenever a sidebar is clicked
   }
@@ -317,7 +357,8 @@ const mainbarEventHandler = (() => {
 
   return {
     handleTodoCheckboxEvent,
-    handleProjectTitleEdit
+    handleProjectTitleEdit,
+    handleProjectDeletion
   }
 })();
 

@@ -10,6 +10,15 @@ const todoController = (() => {
     allProjects.push(newProject(name));
   }
 
+  // Delete a project
+  const deleteProject = (name) => {
+    for (let i = 0; i < allProjects.length; i++) {
+      if (allProjects[i].projectName == name) {
+        allProjects.splice(i, 1);
+      }
+    }
+  }
+
   // Extract todos from All tasks, Today, Next 7 days or a specific project
   const extractTodos = (tabTitle) => {
     if (tabTitle == "All tasks") {
@@ -100,6 +109,7 @@ const todoController = (() => {
       return allProjects;
     },
     createProject,
+    deleteProject,
     extractTodos,
     extractTodoCount
   };
