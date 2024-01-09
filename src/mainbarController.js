@@ -209,9 +209,12 @@ const mainbarEventHandler = (() => {
   
         function inputFieldEventHandler(e) {
           if (e.key == "Enter") {
-            // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
-            _handleNewProjectTitleBackend();
-            _handleNewProjectTitleDOM();
+            // If the project does not exist AND its not the same project name, update DOM and backend.
+            if (projectAlreadyExists() == false) {
+              _handleNewProjectTitleBackend();
+              _handleNewProjectTitleDOM();
+            }
+            
             inputField.remove();
             projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
             window.removeEventListener('click', windowEventHandler);
@@ -222,65 +225,63 @@ const mainbarEventHandler = (() => {
           // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
           if (e.target != inputField && e.target != projectTitleEditIcon) {
             console.log("update!");
-            // Handle backend first, then DOM because sidebarcontroller.refreshProjectDisplay() is used
-            _handleNewProjectTitleBackend();
-            _handleNewProjectTitleDOM();
+            // If the project does not exist AND its not the same project name, update DOM and backend.
+            if (projectAlreadyExists() == false) {
+              _handleNewProjectTitleBackend();
+              _handleNewProjectTitleDOM();
+            }
+
             inputField.remove();
             projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
             window.removeEventListener('click', windowEventHandler);
           }
         }
-  
-        // Change the project title
-        function _handleNewProjectTitleDOM() {
+
+        function projectAlreadyExists() {
           const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
-
-          // Error handling for same project name - if same name, do nothing. 
-          if (oldProjectTitle == newProjectTitle) {
-            return;
-          }
-          
-          // Error handling for same project name - if already exist, alert and do nothing
           const allProjects = todoController.allProjects;
+
+          // Loop through all project to see if the project name already exists
           for (let i = 0; i < allProjects.length; i++) {
             if (allProjects[i].projectName == newProjectTitle) {
-              alert(`${newProjectTitle} already exists`);
-              return;
-            } else {
-              // Change mainbar title name and data-title
-              projectTitleContentDiv.textContent = newProjectTitle;
-              projectTitleContentDiv.dataset.title = newProjectTitle;
-              
-              // Refresh the sidebar
-              sidebarController.projectController.projectDisplayReloader();
+              if (newProjectTitle == oldProjectTitle) {
+                return true;
+              } else {
+                alert(`${newProjectTitle} already exists!`);
+              return true;
+              }
             }
           }
+          // Return false if it does not exist
+          return false;
         }
-  
+
         // Change the project title in todoController
         function _handleNewProjectTitleBackend() {
           const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
           const allProjects = todoController.allProjects;
-          
-          // Error handling for same project name - if same name, do nothing.
-          if (oldProjectTitle == newProjectTitle) {
-            return;
-          }
-          
-          // Error handling for same project name - if already exist, do nothing
+
+          // If the code reaches here, means the project does not exist in the database. Update the project name accordingly.
+          console.log("Update new project name in backend");
           for (let i = 0; i < allProjects.length; i++) {
-            if (allProjects[i].projectName == newProjectTitle) {
-              return;
-            } else {
-              for (let i = 0; i < allProjects.length; i++) {
-                if (allProjects[i].projectName == oldProjectTitle) {
-                  allProjects[i].projectName = newProjectTitle;
-                }
-              }
+            if (allProjects[i].projectName == oldProjectTitle) {
+              allProjects[i].projectName = newProjectTitle;
             }
           }
+        }
+
+        // Change the project title
+        function _handleNewProjectTitleDOM() {
+          const newProjectTitle = inputField.value;
+
+          console.log("Change DOM title");
+          projectTitleContentDiv.textContent = newProjectTitle;
+          projectTitleContentDiv.dataset.title = newProjectTitle;
+
+          // Refresh the sidebar once everything is handled
+          sidebarController.projectController.projectDisplayReloader();
         }
       }
     }

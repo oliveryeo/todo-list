@@ -163,7 +163,7 @@ const projectController = (() => {
       displayedProject.remove()
     );
 
-    // Loop through the updated projects
+    // Loop through the updated projects and update new project name and todo count
     const updatedProjects = todoController.allProjects;
     updatedProjects.forEach((project) => {
       const projectName = project.projectName;
@@ -204,6 +204,7 @@ const projectController = (() => {
           // Reload todo checkbox event handler
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
           sidebarController.todoCountLoader.handleDynamicTodoCount();
+          mainbarController.mainbarEventHandler.handleProjectTitleEdit();
         });
       });
     }
