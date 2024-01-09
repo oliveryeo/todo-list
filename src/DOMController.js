@@ -16,7 +16,7 @@ const pageInitializationHandler = (() => {
 
     // Load initial mainbar events
     mainbarController.mainbarDisplayHandler.loadDefaultMainbar();
-    mainbarController.mainbarDisplayHandler.loadMainbar();
+    mainbarController.mainbarDisplayHandler.loadMainbarEvents();
 
     // Load todo events dynamics
     _loadTodoEventDynamics();
@@ -24,7 +24,7 @@ const pageInitializationHandler = (() => {
     function _loadTodoEventDynamics() {
       // Do an initial loading of the event dynamics on page load
       mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-      sidebarController.todoCountLoader.handleDynamicTodoCount();
+      mainbarController.mainbarEventHandler.handleDynamicTodoCount();
       mainbarController.mainbarEventHandler.handleProjectTitleEdit();
       mainbarController.mainbarEventHandler.handleProjectDeletion();
 
@@ -36,7 +36,7 @@ const pageInitializationHandler = (() => {
         tab.addEventListener("click", () => {
           // Reload todo checkbox event handler
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-          sidebarController.todoCountLoader.handleDynamicTodoCount();
+          mainbarController.mainbarEventHandler.handleDynamicTodoCount();
           mainbarController.mainbarEventHandler.handleProjectTitleEdit();
           mainbarController.mainbarEventHandler.handleProjectDeletion();
         });

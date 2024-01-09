@@ -63,24 +63,6 @@ const todoCountLoader = (() => {
     }
   };
 
-  // When a checkbox is clicked, RELOAD all the tasks count in the sidebar
-  const handleDynamicTodoCount = () => {
-    const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
-
-    todoCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('click', () => {
-        const todoButton = checkbox.parentNode;
-        const todoParentProject = todoButton.dataset.parentProject;
-
-        // Reload ALL the tasks count
-        loadAllTasksCount();
-        loadTodayTasksCount();
-        loadWeekTasksCount();
-        loadProjectTasksCount(todoParentProject);
-      })
-    })
-  }
-
   // Helper function to handle DOM loading
   function _modifyCountDisplay(dataTitle, tasksCountNumber) {
     const elementDataTitle = "[" + "data-title=" + '"' + dataTitle + '"' + "]";
@@ -104,8 +86,7 @@ const todoCountLoader = (() => {
     loadAllTasksCount,
     loadTodayTasksCount,
     loadWeekTasksCount,
-    loadProjectTasksCount,
-    handleDynamicTodoCount
+    loadProjectTasksCount
   };
 })();
 
@@ -195,7 +176,7 @@ const projectController = (() => {
         // Sidebar loader
       tabStyler.styleTabs();
         // Mainbar loader
-      mainbarController.mainbarDisplayHandler.loadMainbar();
+      mainbarController.mainbarDisplayHandler.loadMainbarEvents();
 
       // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
       const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");

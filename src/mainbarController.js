@@ -17,8 +17,13 @@ const mainbarDisplayHandler = (() => {
     allTasksButton.classList.add("selected-tab");
   };
 
+  const loadMainbar = (projectTitle) => {
+    const projectTodoArray = todoController.extractTodos(projectTitle);
+    _mainbarUIHandler(projectTitle, projectTodoArray);
+  }
+
   // Whenever a side tab is clicked, load the mainbar display.
-  const loadMainbar = () => {
+  const loadMainbarEvents = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const sidebarTabs = document.querySelectorAll(
       "#home > button, #projects > button"
@@ -112,6 +117,7 @@ const mainbarDisplayHandler = (() => {
   }
 
   return {
+    loadMainbarEvents,
     loadMainbar,
     loadDefaultMainbar
   };
@@ -178,6 +184,24 @@ const mainbarEventHandler = (() => {
     })
   };
   
+  // When a checkbox is clicked, RELOAD all the tasks count in the sidebar
+  const handleDynamicTodoCount = () => {
+    const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
+
+    todoCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        const todoButton = checkbox.parentNode;
+        const todoParentProject = todoButton.dataset.parentProject;
+
+        // Reload ALL the tasks count
+        sidebarController.todoCountLoader.loadAllTasksCount();
+        sidebarController.todoCountLoader.loadTodayTasksCount();
+        sidebarController.todoCountLoader.loadWeekTasksCount();
+        sidebarController.todoCountLoader.loadProjectTasksCount(todoParentProject);
+      })
+    });
+  };
+
   // Handle logic for project title editing
   const handleProjectTitleEdit = () => {
     // Select the edit icon
@@ -271,7 +295,16 @@ const mainbarEventHandler = (() => {
           console.log("Update new project name in backend");
           for (let i = 0; i < allProjects.length; i++) {
             if (allProjects[i].projectName == oldProjectTitle) {
+              // Change project title
               allProjects[i].projectName = newProjectTitle;
+
+              // Change each todo's parent project name
+              const todoArray = todoController.extractTodos(allProjects[i].projectName);
+              console.log(todoArray);
+              todoArray.forEach(todo => {
+                todo.parentProject = newProjectTitle;
+              });
+              console.log(todoArray);
             }
           }
         }
@@ -283,6 +316,11 @@ const mainbarEventHandler = (() => {
           console.log("Change DOM title");
           projectTitleContentDiv.textContent = newProjectTitle;
           projectTitleContentDiv.dataset.title = newProjectTitle;
+
+          // Refresh all the todos on the page AND the event handlers
+          mainbarDisplayHandler.loadMainbar(newProjectTitle);
+          mainbarEventHandler.handleTodoCheckboxEvent();
+          mainbarEventHandler.handleDynamicTodoCount();
 
           // Refresh the sidebar once everything is handled
           sidebarController.projectController.projectDisplayReloader();
@@ -357,6 +395,7 @@ const mainbarEventHandler = (() => {
 
   return {
     handleTodoCheckboxEvent,
+    handleDynamicTodoCount,
     handleProjectTitleEdit,
     handleProjectDeletion
   }
