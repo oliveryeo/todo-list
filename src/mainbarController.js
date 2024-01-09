@@ -10,16 +10,18 @@ const mainbarDisplayHandler = (() => {
   // Set the default intitial mainbar page load to "All tasks"
   const loadDefaultMainbar = () => {
     const allTasksTodoArray = todoController.extractTodos("All tasks");
-    _mainbarUIHandler("All tasks", allTasksTodoArray);
+
+    _mainbarTitleHandler("All tasks");
+    _mainbarTodoHandler(allTasksTodoArray);
 
     // Style the button as "selected"
     const allTasksButton = document.querySelector("button[data-title='All tasks']");
     allTasksButton.classList.add("selected-tab");
   };
 
-  const loadMainbar = (projectTitle) => {
+  const reloadMainbarTodo = (projectTitle) => {
     const projectTodoArray = todoController.extractTodos(projectTitle);
-    _mainbarUIHandler(projectTitle, projectTodoArray);
+    _mainbarTodoHandler(projectTodoArray);
   }
 
   // Whenever a side tab is clicked, load the mainbar display.
@@ -44,13 +46,13 @@ const mainbarDisplayHandler = (() => {
           todoArray = todoController.extractTodos(tabDataTitle);
         }
 
-        _mainbarUIHandler(tabDataTitle, todoArray);
+        _mainbarTitleHandler(tabDataTitle);
+        _mainbarTodoHandler(todoArray);
       });
     });
   };
 
-  // Helper function for DOM loading of project title and todo loading in the mainbar display
-  function _mainbarUIHandler(tabDataTitle, todoArray) {
+  function _mainbarTitleHandler(tabDataTitle) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
     mainPanelTitle.textContent = tabDataTitle;
@@ -76,7 +78,9 @@ const mainbarDisplayHandler = (() => {
       const mainPanelEditorContainer = document.querySelector("#main-panel-title-editor");
       mainPanelEditorContainer.textContent = "";
     }
+  }
 
+  function _mainbarTodoHandler(todoArray) {
     // Select #main-panel-content id:
     const mainPanelContent = document.querySelector("#main-panel-content");
     // Clear out ALL the todos on the page
@@ -118,7 +122,7 @@ const mainbarDisplayHandler = (() => {
 
   return {
     loadMainbarEvents,
-    loadMainbar,
+    reloadMainbarTodo,
     loadDefaultMainbar
   };
 })();
@@ -316,7 +320,7 @@ const mainbarEventHandler = (() => {
           projectTitleContentDiv.dataset.title = newProjectTitle;
 
           // Refresh all the todos on the page AND the event handlers
-          mainbarDisplayHandler.loadMainbar(newProjectTitle);
+          mainbarDisplayHandler.reloadMainbarTodo(newProjectTitle);
           mainbarEventHandler.handleTodoCheckboxEvent();
           mainbarEventHandler.handleDynamicTodoCount();
 
@@ -328,7 +332,7 @@ const mainbarEventHandler = (() => {
   };
 
 
-  // TODO: Handle logic for deleting a project
+  // Handle logic for deleting a project
   const handleProjectDeletion = () => {
     // Run event handler if trash icon exists
     const projectTrashIcon = document.querySelector("#trash-icon");
@@ -345,8 +349,6 @@ const mainbarEventHandler = (() => {
         // Handle backend changes
         _handleProjectDeletionBackend();
         
-          
-
         // Handle DOM changes
         _handleProjectDeletionDOM();
       }
@@ -370,15 +372,8 @@ const mainbarEventHandler = (() => {
 
           // Load mainbar to all tasks
           mainbarDisplayHandler.loadDefaultMainbar();
-
-
       }
-
-      
     }
-    
-    
-    // In DOMController, load this event listener on initialization, and whenever a sidebar is clicked
   }
   
   // TODO: Handle logic for todo information editing
