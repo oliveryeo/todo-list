@@ -184,7 +184,7 @@ const projectController = (() => {
         tab.addEventListener("click", () => {
           // Reload todo checkbox event handler
           mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-          sidebarController.todoCountLoader.handleDynamicTodoCount();
+          mainbarController.mainbarEventHandler.handleDynamicTodoCount();
           mainbarController.mainbarEventHandler.handleProjectTitleEdit();
           mainbarController.mainbarEventHandler.handleProjectDeletion();
         });
