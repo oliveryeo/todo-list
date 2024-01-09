@@ -179,7 +179,7 @@ const mainbarEventHandler = (() => {
     // Select the edit icon
     const projectTitleEditIcon = document.querySelector("#edit-icon");
     
-    // Listen for clicks and create the Input IF the icon exists
+    // If the icon exists, listen for clicks and create the Input 
     if (projectTitleEditIcon) {
       projectTitleEditIcon.addEventListener('click', createProjectTitleEditInput);
 
