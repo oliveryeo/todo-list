@@ -300,11 +300,9 @@ const mainbarEventHandler = (() => {
 
               // Change each todo's parent project name
               const todoArray = todoController.extractTodos(allProjects[i].projectName);
-              console.log(todoArray);
               todoArray.forEach(todo => {
                 todo.parentProject = newProjectTitle;
               });
-              console.log(todoArray);
             }
           }
         }
