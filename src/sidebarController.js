@@ -5,6 +5,9 @@ import mainbarController from "./mainbarController.js";
   Tab styler module pattern 
 */
 const tabStyler = (() => {
+  /*
+    Style the side tabs gray whenever one of the side tabs is clicked.
+  */
   const styleTabs = () => {
     // Select all the tabs in side bar that requires .selected-tab styling when clicked
     const allTabs = document.querySelectorAll(
@@ -31,27 +34,35 @@ const tabStyler = (() => {
   Todo Count loader Module Pattern 
 */
 const todoCountLoader = (() => {
-  // Function to load todo count for all tasks tab
+  /*
+    Function to load todo count for all tasks tab
+  */
   const loadAllTasksCount = () => {
     // Extract count of todos from all projects
     let allTasksCount = todoController.extractTodoCount("All tasks");
     _modifyCountDisplay("All tasks", allTasksCount);
   };
 
-  // Function to load todo count for today tasks tab
+  /*
+    Function to load todo count for today tasks tab
+  */
   const loadTodayTasksCount = () => {
     // Extract count of todos due today
     let todayTasksCount = todoController.extractTodoCount("Today");
     _modifyCountDisplay("Today", todayTasksCount);
   };
 
-  // Function to load todo count for week tasks tab
+  /*
+    Function to load todo count for week tasks tab
+  */ 
   const loadWeekTasksCount = () => {
     let weekTasksCount = todoController.extractTodoCount("Next 7 days");
     _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
 
-  // Function to load task count for a specific project.
+  /*
+    Function to load task count for a specific project.
+  */ 
   const loadProjectTasksCount = (projectName) => {
     // Extract todo array for a specific project → If array exists, then extract count and modify count display
     let projectTodoArray = todoController.extractTodos(projectName);
@@ -63,7 +74,10 @@ const todoCountLoader = (() => {
     }
   };
 
-  // Helper function to handle DOM loading
+  
+  /*
+    Helper function to handle DOM loading
+  */ 
   function _modifyCountDisplay(dataTitle, tasksCountNumber) {
     const elementDataTitle = "[" + "data-title=" + '"' + dataTitle + '"' + "]";
     const selectedElement = document.querySelector(elementDataTitle);
@@ -94,7 +108,9 @@ const todoCountLoader = (() => {
   Project controller Module Pattern responsible for adding new projects
 */
 const projectController = (() => {
-  /* Function to handle UI for new projects */
+  /* 
+    Function to handle UI for new projects (e.g. new input box pop up, DOM and backend logic handling)
+  */
   const loadNewProjectUI = () => {
     // Upon submission of the text input, create a new project via todoController, and update the DOM of the new project
     // Upon clicking the newproject, create a new input box and add class .new-project.input, which will overlap the new project button
@@ -135,7 +151,9 @@ const projectController = (() => {
     }
   };
   
-  /* Function to reload project display - can be used externally */
+  /* 
+    Function to reload project display - can be used externally 
+  */
   function projectDisplayReloader() {
     // Remove all currently displayed projects
     const currentDisplayedProjects =
@@ -171,6 +189,9 @@ const projectController = (() => {
     // Update tab events for the project tabs
     _updateTabEvents();
 
+    /*
+      Helper function to handle logic for reloading sidebar and mainbar events
+    */
     function _updateTabEvents() {
       // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
         // Sidebar loader

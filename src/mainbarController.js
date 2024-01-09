@@ -7,7 +7,9 @@ import { format } from "date-fns";
   and load into main bar view.
 */
 const mainbarDisplayHandler = (() => {
-  // Set the default intitial mainbar page load to "All tasks"
+  /* 
+    Load "All tasks as the default mainbar"
+  */
   const loadDefaultMainbar = () => {
     const allTasksTodoArray = todoController.extractTodos("All tasks");
 
@@ -24,7 +26,10 @@ const mainbarDisplayHandler = (() => {
     _mainbarTodoHandler(projectTodoArray);
   }
 
-  // Whenever a side tab is clicked, load the mainbar display.
+  
+  /* 
+    Add event listeners to side tab to load mainbar display upon clicking
+  */
   const loadMainbarEvents = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const sidebarTabs = document.querySelectorAll(
@@ -52,6 +57,9 @@ const mainbarDisplayHandler = (() => {
     });
   };
 
+  /*
+    Helper function to load mainbar title DOM
+  */ 
   function _mainbarTitleHandler(tabDataTitle) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
@@ -80,6 +88,9 @@ const mainbarDisplayHandler = (() => {
     }
   }
 
+  /*
+    Helper function to load mainbar todo DOM
+  */ 
   function _mainbarTodoHandler(todoArray) {
     // Select #main-panel-content id:
     const mainPanelContent = document.querySelector("#main-panel-content");
@@ -131,7 +142,9 @@ const mainbarDisplayHandler = (() => {
   Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
 */
 const mainbarEventHandler = (() => {
-  // Handles the mainbar DOM changes (e.g. todo strikethrough) and the backend todoController changes (changing the isChecked boolean) when a todo checkbox is checked.
+  /* 
+    Handles the mainbar DOM changes (e.g. todo strikethrough) and the backend todoController changes (changing the isChecked boolean) when a todo checkbox is checked.
+  */
   const handleTodoCheckboxEvent = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -151,7 +164,9 @@ const mainbarEventHandler = (() => {
         _handleCheckboxDOM(isCheckboxChecked);
         _handleCheckboxBackend(isCheckboxChecked, todoArray);
 
-        // Helper function to handle todo DOM changes (e.g. strikethrough)
+        /*
+          Helper function to handle todo DOM changes (e.g. strikethrough)
+        */ 
         function _handleCheckboxDOM(isCheckboxChecked) {
           // Select all the children nodes of the todoButton
           const buttonElements = todoButton.childNodes;
@@ -171,7 +186,9 @@ const mainbarEventHandler = (() => {
           }
         }
 
-        // Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
+        /*
+          Helper function to handle backend logic when a box is checked (e.g. update todos in the project's todoArray)
+        */ 
         function _handleCheckboxBackend(isCheckboxChecked) {
           // Find the associated todo and update the todoIsChecked boolean. Change todo's isChecked status depending if the checkbox is checked.
           todoArray.forEach(todo => {
@@ -188,7 +205,9 @@ const mainbarEventHandler = (() => {
     })
   };
   
-  // When a checkbox is clicked, RELOAD all the tasks count in the sidebar
+  /* 
+    Reload all the tasks count in the sidebar when a checkbox is clicked
+  */
   const handleDynamicTodoCount = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -206,7 +225,9 @@ const mainbarEventHandler = (() => {
     });
   };
 
-  // Handle logic for project title editing
+  /* 
+    Handle logic for project title editing when the edit icon is clicked
+  */
   const handleProjectTitleEdit = () => {
     // Select the edit icon
     const projectTitleEditIcon = document.querySelector("#edit-icon");
@@ -238,7 +259,10 @@ const mainbarEventHandler = (() => {
   
         // Create a condition when the user clicks away from the inputField or the projectTitleEditIcon, the projectTitle and backend is updated immediately. windowEventHandler function have to be defined because the eventListener needs to be removed after the code is run.
         window.addEventListener('click', windowEventHandler);
-  
+        
+        /* 
+          Function to handle inputFieldEvent
+        */
         function inputFieldEventHandler(e) {
           if (e.key == "Enter") {
             // If the project does not exist AND its not the same project name, update DOM and backend.
@@ -253,6 +277,9 @@ const mainbarEventHandler = (() => {
           }
         }
   
+        /* 
+          Function to handle windowEvent
+        */
         function windowEventHandler(e) {
           // If user clicks away from the inputField OR the projectTitleEditIcon, update the inputField
           if (e.target != inputField && e.target != projectTitleEditIcon) {
@@ -269,6 +296,9 @@ const mainbarEventHandler = (() => {
           }
         }
 
+        /* 
+          Function that returns true or false if the project already exists
+        */
         function projectAlreadyExists() {
           const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
@@ -289,7 +319,9 @@ const mainbarEventHandler = (() => {
           return false;
         }
 
-        // Change the project title in todoController
+        /* 
+          Helper Function that change the project title in the backend todoController
+        */
         function _handleNewProjectTitleBackend() {
           const oldProjectTitle = projectTitleContentDiv.dataset.title;
           const newProjectTitle = inputField.value;
@@ -311,7 +343,9 @@ const mainbarEventHandler = (() => {
           }
         }
 
-        // Change the project title
+        /* 
+          Helper function that handles the DOM changes when changing the project title
+        */
         function _handleNewProjectTitleDOM() {
           const newProjectTitle = inputField.value;
 
@@ -331,8 +365,9 @@ const mainbarEventHandler = (() => {
     }
   };
 
-
-  // Handle logic for deleting a project
+  /* 
+    Handle logic for project deletion when the trash icon is clicked
+  */
   const handleProjectDeletion = () => {
     // Run event handler if trash icon exists
     const projectTrashIcon = document.querySelector("#trash-icon");
@@ -341,6 +376,9 @@ const mainbarEventHandler = (() => {
       projectTrashIcon.addEventListener('click', handleProjectDeletion);
     }
 
+    /* 
+      Function that handles logic for project deletion
+    */
     function handleProjectDeletion() {
       // Alert a confirmatory message (yes or no)
       const confirmDelete = confirm("Are you sure you want to delete this project?");
@@ -353,14 +391,19 @@ const mainbarEventHandler = (() => {
         _handleProjectDeletionDOM();
       }
       
-
+        /* 
+          Helper function that handles backend logic for project deletion in todoController
+        */
         function _handleProjectDeletionBackend() {
           const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
           const projectTitle = projectTitleContentDiv.dataset.title;
           // Use a delete project function from todoController
           todoController.deleteProject(projectTitle);
         }
-
+        
+        /* 
+          Helper function that handles DOM logic for project deletion
+        */
         function _handleProjectDeletionDOM() {
           // Reload all the tasks in the sidebar home tab
           sidebarController.todoCountLoader.loadAllTasksCount();
@@ -375,13 +418,16 @@ const mainbarEventHandler = (() => {
       }
     }
   }
-  
-  // TODO: Handle logic for todo information editing
+  /*
+    TODO: Handle logic for todo information editing
+  */
   const handleTodoInfoEdit = () => {
 
   };
 
-  // TODO: Handle logic for deleting a todo
+  /*
+    TODO: Handle logic for deleting a todo
+  */
   const handleTodoDeletionEvent = () => {
 
   }
