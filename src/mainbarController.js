@@ -10,7 +10,7 @@ const mainbarDisplayHandler = (() => {
   /* 
     Load "All tasks as the default mainbar"
   */
-  const loadDefaultMainbar = () => {
+  const loadDefaultMainbarDisplay = () => {
     const allTasksTodoArray = todoController.extractTodos("All tasks");
 
     _mainbarTitleHandler("All tasks");
@@ -25,12 +25,11 @@ const mainbarDisplayHandler = (() => {
     const projectTodoArray = todoController.extractTodos(projectTitle);
     _mainbarTodoHandler(projectTodoArray);
   }
-
   
   /* 
     Add event listeners to side tab to load mainbar display upon clicking
   */
-  const loadMainbarEvents = () => {
+  const loadMainbarDisplayEvents = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const sidebarTabs = document.querySelectorAll(
       "#home > button, #projects > button"
@@ -132,9 +131,9 @@ const mainbarDisplayHandler = (() => {
   }
 
   return {
-    loadMainbarEvents,
+    loadMainbarDisplayEvents,
     reloadMainbarTodo,
-    loadDefaultMainbar
+    loadDefaultMainbarDisplay
   };
 })();
 
@@ -414,15 +413,53 @@ const mainbarEventHandler = (() => {
           sidebarController.projectController.projectDisplayReloader();
 
           // Load mainbar to all tasks
-          mainbarDisplayHandler.loadDefaultMainbar();
+          mainbarDisplayHandler.loadDefaultMainbarDisplay();
       }
     }
   }
+  
   /*
     TODO: Handle logic for todo information editing
   */
   const handleTodoInfoEdit = () => {
+    // Select all todo buttons
+    const todoButtons = document.querySelectorAll("#main-panel-content > button");
 
+    todoButtons.forEach(button => {
+      button.addEventListener("click", handleSingleClick);
+    });
+
+    todoButtons.forEach(button => {
+      button.addEventListener("dblclick", handleDblClick);
+    });
+
+    /* 
+      A function that handles what happens when the button gets clicked
+    */
+    function handleSingleClick() {
+
+    }
+    
+    /*
+      A function that handles what happens if the button gets double clicked
+    */
+    function handleDblClick() {
+
+    }
+
+    /*
+      Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
+    */
+   function _handleInfoEditDOM() {
+
+   }
+
+    /*
+      Helper function to handle backend logic for dialog form submission
+    */
+   function _handleInfoEditBackend() {
+
+   }
   };
 
   /*
@@ -432,11 +469,24 @@ const mainbarEventHandler = (() => {
 
   }
 
+  /*
+    Function that consolidates all the mainbar events that requires reloading frequently
+  */
+  const reloadCommonMainbarEvents = () => {
+    handleTodoCheckboxEvent();
+    handleDynamicTodoCount();
+    handleProjectTitleEdit();
+    handleProjectDeletion();
+    handleTodoInfoEdit();
+  }
+
   return {
     handleTodoCheckboxEvent,
     handleDynamicTodoCount,
     handleProjectTitleEdit,
-    handleProjectDeletion
+    handleProjectDeletion,
+    handleTodoInfoEdit,
+    reloadCommonMainbarEvents
   }
 })();
 

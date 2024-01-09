@@ -18,18 +18,15 @@ const pageInitializationHandler = (() => {
     sidebarController.projectController.loadNewProjectUI();
 
     // Load initial mainbar events
-    mainbarController.mainbarDisplayHandler.loadDefaultMainbar();
-    mainbarController.mainbarDisplayHandler.loadMainbarEvents();
+    mainbarController.mainbarDisplayHandler.loadDefaultMainbarDisplay();
+    mainbarController.mainbarDisplayHandler.loadMainbarDisplayEvents();
 
     // Load todo events dynamics
     _loadTodoEventDynamics();
 
     function _loadTodoEventDynamics() {
       // Do an initial loading of the event dynamics on page load
-      mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-      mainbarController.mainbarEventHandler.handleDynamicTodoCount();
-      mainbarController.mainbarEventHandler.handleProjectTitleEdit();
-      mainbarController.mainbarEventHandler.handleProjectDeletion();
+      mainbarController.mainbarEventHandler.reloadCommonMainbarEvents();
 
       // Do the loading of event dynamics whenever a new side tab is selected
       const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");
@@ -38,10 +35,7 @@ const pageInitializationHandler = (() => {
       sidebarTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           // Reload todo checkbox event handler
-          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-          mainbarController.mainbarEventHandler.handleDynamicTodoCount();
-          mainbarController.mainbarEventHandler.handleProjectTitleEdit();
-          mainbarController.mainbarEventHandler.handleProjectDeletion();
+          mainbarController.mainbarEventHandler.reloadCommonMainbarEvents();
         });
       });
     }

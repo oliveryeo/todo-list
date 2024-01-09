@@ -196,18 +196,16 @@ const projectController = (() => {
       // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
         // Sidebar loader
       tabStyler.styleTabs();
-        // Mainbar loader
-      mainbarController.mainbarDisplayHandler.loadMainbarEvents();
+        // Mainbar loader (click side tab to load mainbar display)
+      mainbarController.mainbarDisplayHandler.loadMainbarDisplayEvents();
 
       // Every time a new side tab is clicked, reload todo-checkbox-event-handler for the mainbar and re-initiate todo count dynamics for sidebar
       const sidebarTabs = document.querySelectorAll("#home > button, #projects > button");
       sidebarTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           // Reload todo checkbox event handler
-          mainbarController.mainbarEventHandler.handleTodoCheckboxEvent();
-          mainbarController.mainbarEventHandler.handleDynamicTodoCount();
-          mainbarController.mainbarEventHandler.handleProjectTitleEdit();
-          mainbarController.mainbarEventHandler.handleProjectDeletion();
+          mainbarController.mainbarEventHandler.reloadCommonMainbarEvents();
+          
         });
       });
     }
