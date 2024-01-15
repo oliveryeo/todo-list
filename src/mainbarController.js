@@ -114,11 +114,20 @@ const mainbarDisplayHandler = (() => {
       // A div containing the todo due date as the content
       const todoDueDateContainer = document.createElement("div");
       todoDueDateContainer.classList.add("todo-due-date");
+      const todoPriority = document.createElement("img");
+      if (todo.priority == "high") {
+        todoPriority.setAttribute("src", "./icons/high-priority.svg");
+      } else if (todo.priority == "medium") {
+        todoPriority.setAttribute("src", "./icons/med-priority.svg");
+      } else {
+        todoPriority.setAttribute("src", "./icons/low-priority.svg");
+      }
       const dueFlagImg = document.createElement("img");
       dueFlagImg.setAttribute("src", "./icons/flag-triangle.svg");
       const todoDueDate = document.createElement("div");
       todoDueDate.textContent = format(todo.dueDate, "dd MMM");
 
+      todoDueDateContainer.appendChild(todoPriority);
       todoDueDateContainer.appendChild(dueFlagImg);
       todoDueDateContainer.appendChild(todoDueDate);
 

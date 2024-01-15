@@ -55,13 +55,13 @@ const projectCreationTestUnit = (() => {
         let title = "Buy a GoPro Hero 11";
         let description = "Lazada have a good sale going on right now!";
         let dueDate = "2024-01-01";
-        let priority = "high";
+        let priority = "medium";
         project.createTodo(title, description, dueDate, priority, project.projectName);
 
         let titleTwo = "Buy GoPro Hero 11 accessories";
         let descriptionTwo = "Aliexpress have good sales on the GoPro Hero accessories!";
         let dueDateTwo = "2024-01-01";
-        let priorityTwo = "high";
+        let priorityTwo = "low";
         project.createTodo(titleTwo, descriptionTwo, dueDateTwo, priorityTwo, project.projectName);
       }
     });
