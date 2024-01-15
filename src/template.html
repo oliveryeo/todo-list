@@ -75,7 +75,20 @@
     </div>
     <dialog open>
       <form action="">
-        
+        <input type="text" placeholder="title">
+        <textarea name="" id="" cols="30" rows="10" placeholder="description"></textarea>
+        <input type="text" placeholder="due date">
+        <input list="priority" placeholder="priority">
+        <datalist id="priority">
+          <option value="high"></option>
+          <option value="medium"></option>
+          <option value="low"></option>
+        </datalist>
+        <input list="parentProject" placeholder="parent project">
+        <datalist id="parentProject">
+          <option value="Project-X"></option>
+          <option value="Project-Y"></option>
+        </datalist>
       </form>
     </dialog>
     <footer>Designed by © Oliver Yeo</footer>
