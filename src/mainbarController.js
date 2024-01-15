@@ -427,25 +427,37 @@ const mainbarEventHandler = (() => {
 
     todoButtons.forEach(button => {
       button.addEventListener("click", handleSingleClick);
+
+      /* 
+        A function that handles what happens when the button gets clicked
+      */
+      function handleSingleClick() {
+        const prevSelectedTodo = document.querySelector("#main-panel-content > button.selected-tab");
+        if (prevSelectedTodo) {
+          prevSelectedTodo.classList.remove("selected-tab");
+        }
+        button.classList.add("selected-tab");
+      }
     });
 
     todoButtons.forEach(button => {
       button.addEventListener("dblclick", handleDblClick);
+
+      /*
+        A function that handles what happens if the button gets double clicked
+      */
+      function handleDblClick() {
+        // Select the dialog
+
+        // "Depopulate" the dialog
+
+        // Fill in the relevant dialog information (forms and their respective classes for styling)
+
+        // Handle what happens if the cancel or submit button is pressed
+      }
     });
-
-    /* 
-      A function that handles what happens when the button gets clicked
-    */
-    function handleSingleClick() {
-
-    }
     
-    /*
-      A function that handles what happens if the button gets double clicked
-    */
-    function handleDblClick() {
 
-    }
 
     /*
       Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
