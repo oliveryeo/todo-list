@@ -74,21 +74,23 @@
       <button id="add-task">add-task placeholder</button>
     </div>
     <dialog open>
-      <form action="">
-        <input type="text" placeholder="title">
-        <textarea name="" id="" cols="30" rows="10" placeholder="description"></textarea>
-        <input type="text" placeholder="due date">
-        <input list="priority" placeholder="priority">
-        <datalist id="priority">
-          <option value="high"></option>
-          <option value="medium"></option>
-          <option value="low"></option>
-        </datalist>
-        <input list="parentProject" placeholder="parent project">
-        <datalist id="parentProject">
-          <option value="Project-X"></option>
-          <option value="Project-Y"></option>
-        </datalist>
+      <form action="" id="todo-edit-form">
+        <input type="text" placeholder="title" id="todo-edit-title">
+        <textarea name="" id="" cols="30" rows="10" placeholder="description" id="todo-edit-description"></textarea>
+        <input type="date" placeholder="due date" id="todo-edit-duedate">
+        <select id="todo-edit-priority">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <select id="parentProject">
+          <option value="Project-X">Project-X</option>
+          <option value="Project-Y">Project-Y</option>
+        </select>
+        <div id="todo-edit-submit-buttons">
+          <button value="cancel">Cancel</button>
+          <button value="submit">Submit</button>
+        </div>
       </form>
     </dialog>
     <footer>Designed by © Oliver Yeo</footer>
