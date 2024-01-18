@@ -455,60 +455,30 @@ const mainbarEventHandler = (() => {
       /*
         A function that handles what happens if the button gets double clicked
       */
-      function handleDblClick(e) {
-        console.log(e);
-
+      function handleDblClick() {
         // Extract the specific todo so that information can be extracted to populate the dialog box
         const todoArray = _extractCorrectTodoArray();
+        console.log(todoArray);
         const extractedTodo = _extractCorrectTodo(todoArray);
         console.log(extractedTodo);
 
-        // Select the dialog
-        const dialogBox = document.querySelector("dialog");
-
-        // Open the dialog 
-        dialogBox.showModal();
-
-        // "Depopulate" the dialog
-        dialogBox.textContent = "";
-
-        // Fill in the relevant html dialog information (forms and their respective classes for styling)
-          // Create the Form for information entry
-        const todoEditForm = document.createElement("form");
-        todoEditForm.setAttribute("id", "todo-edit-title");
-
-          // Create an input (text type) for editing title
-        const todoEditTitle = document.createElement("input");
-        todoEditTitle.setAttribute("type", "text");
-        todoEditTitle.setAttribute("id", "todo-edit-title");
-
-          // Create a textarea for todo description
-
-          // Create an input (date type) for editing due date
-
-          // Create a select for editing priority
-
-          // Create a select for editing the parentProject
-
-          // Create a div for holding the cancel and submit buttons
-
-        // Handle what happens if the cancel or submit button is pressed
-
-        // Close the dialog and "Depopulate" it again
-
+        // Handle DOM changes when the todo is double clicked
+        _handleInfoEditDOM(extractedTodo);
+        _handleInfoEditBackend();
 
         /*
           Helper function to extract the correct project's todoArray
         */
         function _extractCorrectTodoArray() {
           // Select the relevant todo information for project and todo extraction
-          const todoParentProject = e.target.dataset.parentProject;
+          const todoParentProject = button.dataset.parentProject;
           const allProjects = todoController.allProjects;
           
           // Extract the correct parentProject using a loop
           for (let i = 0; i < allProjects.length; i++) {
+            console.log(allProjects[i]);
             if (allProjects[i].projectName == todoParentProject) {
-              // Get the todoArray from the parentProject
+              // Return the extracted todoArray
               return allProjects[i].allTodos;
             }
           }
@@ -518,32 +488,165 @@ const mainbarEventHandler = (() => {
           Helper function to extract the correct todo
         */
         function _extractCorrectTodo(todoArray) {
-          const todoTitle = e.target.dataset.title;
+          const todoTitle = button.dataset.title;
           
           // Extract the specific todo using a loop
           for (let i = 0; i < todoArray.length; i++) {
             if (todoArray[i].title == todoTitle) {
-              // Create a variable to hold the extracted todo
+              // Return the extracted todo
               return todoArray[i];
             }
           }
         }
+
+        /*
+          TODO: Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
+        */
+        function _handleInfoEditDOM(extractedTodo) {
+          // Select the dialog
+          const dialogBox = document.querySelector("dialog");
+
+          // Open the dialog 
+          dialogBox.showModal();
+
+          // "Depopulate" the dialog
+          dialogBox.textContent = "";
+
+          //// Fill in the relevant html dialog information (forms and their respective classes for styling)
+          // Create the Form for information entry
+          const todoEditForm = document.createElement("form");
+          todoEditForm.setAttribute("id", "todo-edit-form");
+
+          // Create an input (text type) for editing title and set default value to todo's title
+          const todoEditTitleLabel = document.createElement("label");
+          todoEditTitleLabel.setAttribute("for", "todo-edit-title");
+          todoEditTitleLabel.textContent = "Title";
+          
+          const todoEditTitle = document.createElement("input");
+          todoEditTitle.setAttribute("type", "text");
+          todoEditTitle.setAttribute("name", "todo-edit-title");
+          todoEditTitle.setAttribute("id", "todo-edit-title");
+          todoEditTitle.setAttribute("placeholder", "title");
+          todoEditTitle.setAttribute("value", extractedTodo.title);
+
+          // Create a textarea for todo description editing and set default value to todo's description
+          const todoEditDescriptionLabel = document.createElement("label");
+          todoEditDescriptionLabel.setAttribute("for", "todo-edit-description");
+          todoEditDescriptionLabel.textContent = "Description";
+          
+          const todoEditDescription = document.createElement("textarea");
+          todoEditDescription.setAttribute("name", "todo-edit-description");
+          todoEditDescription.setAttribute("id", "todo-edit-description");
+          todoEditDescription.setAttribute("placeholder", "description");
+          todoEditDescription.textContent = extractedTodo.description;
+          todoEditDescription.setAttribute("cols", "60");
+          todoEditDescription.setAttribute("rows", "10");
+
+          // Create an input (date type) for editing due date and set default value to todo's due date
+          const todoEditDueDateLabel = document.createElement("label");
+          todoEditDueDateLabel.setAttribute("for", "todo-edit-duedate");
+          todoEditDueDateLabel.textContent = "Due Date";
+
+          const todoEditDueDate = document.createElement("input");
+          todoEditDueDate.setAttribute("type", "date");
+          todoEditDueDate.setAttribute("name", "todo-edit-duedate");
+          todoEditDueDate.setAttribute("id", "todo-edit-duedate");
+          todoEditDueDate.setAttribute("value", format(extractedTodo.dueDate, "yyyy-MM-dd")); // e.g. 2024-01-18
+          console.log(extractedTodo.dueDate);
+
+          // Create a select for editing priority and set options to all three priority levels
+          const todoEditPriorityLabel = document.createElement("label");
+          todoEditPriorityLabel.setAttribute("for", "todo-edit-priority");
+          todoEditPriorityLabel.textContent = "Priority";
+
+          const todoEditPriority = document.createElement("select");
+          todoEditPriority.setAttribute("name", "todo-edit-priority");
+          todoEditPriority.setAttribute("id", "todo-edit-priority");
+
+          const highPriority = document.createElement("option");
+          highPriority.setAttribute("value", "high");
+          highPriority.textContent = "High";
+
+          const medPriority = document.createElement("option");
+          medPriority.setAttribute("value", "medium");
+          medPriority.textContent = "Medium";
+
+          const lowPriority = document.createElement("option");
+          lowPriority.setAttribute("value", "low");
+          lowPriority.textContent = "Low";
+
+          todoEditPriority.appendChild(highPriority);
+          todoEditPriority.appendChild(medPriority);
+          todoEditPriority.appendChild(lowPriority);
+            
+          // Create a select for editing the parentProject and set the options to all the existing projects
+          const todoEditParentProjectLabel = document.createElement("label");
+          todoEditParentProjectLabel.setAttribute("for", "todo-edit-parentproject");
+          todoEditParentProjectLabel.textContent = "Parent Project";
+          
+          const todoEditParentProject = document.createElement("select");
+          todoEditParentProject.setAttribute("name", "todo-edit-parentproject");
+          todoEditParentProject.setAttribute("id", "todo-edit-parentproject");
+          
+          todoController.allProjects.forEach(project => {
+            const projectName = document.createElement("option");
+            projectName.setAttribute("value", project.projectName);
+            projectName.textContent = project.projectName;
+            todoEditParentProject.appendChild(projectName);
+          });
+
+          // Create a div for holding the cancel and submit buttons
+          const buttonContainer = document.createElement("div");
+          buttonContainer.setAttribute("id", "todo-edit-submit-buttons");
+
+          const cancelButton = document.createElement("button");
+          cancelButton.setAttribute("type", "button")
+          cancelButton.setAttribute("value", "cancel");
+          cancelButton.textContent = "Cancel";
+
+          const submitButton = document.createElement("button");
+          submitButton.setAttribute("type", "button")
+          submitButton.setAttribute("value", "submit");
+          submitButton.textContent = "Submit";
+
+          buttonContainer.appendChild(cancelButton);
+          buttonContainer.appendChild(submitButton);
+
+          // Append everything to the form
+          todoEditForm.appendChild(todoEditTitleLabel);
+          todoEditForm.appendChild(todoEditTitle);
+          todoEditForm.appendChild(todoEditDescriptionLabel);
+          todoEditForm.appendChild(todoEditDescription);
+          todoEditForm.appendChild(todoEditDueDateLabel);
+          todoEditForm.appendChild(todoEditDueDate);
+          todoEditForm.appendChild(todoEditPriorityLabel);
+          todoEditForm.appendChild(todoEditPriority);
+          todoEditForm.appendChild(todoEditParentProjectLabel);
+          todoEditForm.appendChild(todoEditParentProject);
+          todoEditForm.appendChild(buttonContainer);
+          dialogBox.appendChild(todoEditForm);
+        }
+    
+        /*
+          TODO: Helper function to handle backend logic for dialog form submission
+        */
+        function _handleInfoEditBackend() {
+          // Handle what happens if the cancel or submit button is pressed
+          const formButtons = document.querySelectorAll("#todo-edit-submit-buttons > button");
+          const dialogBox = document.querySelector("dialog");
+          formButtons.forEach(button => {
+            button.addEventListener("click", (e) => {
+              // Prevent submission from happening
+              e.preventDefault();
+
+              // Close the dialog and "depopulate" it
+              dialogBox.close();
+              dialogBox.textContent = "";
+            })
+          })
+        }
       }
     });
-
-    /*
-      Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
-    */
-    function _handleInfoEditDOM() {
-
-    }
-
-    /*
-      Helper function to handle backend logic for dialog form submission
-    */
-    function _handleInfoEditBackend() {
-
-    }
   };
 
   /*
