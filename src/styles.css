@@ -236,6 +236,23 @@ dialog {
   border: solid;
   border-radius: 10px;
   padding: 10px 20px;
+  font-weight: bold;
+}
+
+#todo-edit-submit-buttons > button:first-child {
+  background-color: red;
+}
+
+#todo-edit-submit-buttons > button:first-child:hover {
+  background-color: rgb(204, 1, 1)
+}
+
+#todo-edit-submit-buttons > button:last-child {
+  background-color: lightgreen;
+}
+
+#todo-edit-submit-buttons > button:last-child:hover {
+  background-color: rgb(120, 197, 120);
 }
 
 /* Footer Styling */
