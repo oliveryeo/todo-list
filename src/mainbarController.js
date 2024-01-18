@@ -455,32 +455,95 @@ const mainbarEventHandler = (() => {
       /*
         A function that handles what happens if the button gets double clicked
       */
-      function handleDblClick() {
+      function handleDblClick(e) {
+        console.log(e);
+
+        // Extract the specific todo so that information can be extracted to populate the dialog box
+        const todoArray = _extractCorrectTodoArray();
+        const extractedTodo = _extractCorrectTodo(todoArray);
+        console.log(extractedTodo);
+
         // Select the dialog
+        const dialogBox = document.querySelector("dialog");
+
+        // Open the dialog 
+        dialogBox.showModal();
 
         // "Depopulate" the dialog
+        dialogBox.textContent = "";
 
-        // Fill in the relevant dialog information (forms and their respective classes for styling)
+        // Fill in the relevant html dialog information (forms and their respective classes for styling)
+          // Create the Form for information entry
+        const todoEditForm = document.createElement("form");
+        todoEditForm.setAttribute("id", "todo-edit-title");
+
+          // Create an input (text type) for editing title
+        const todoEditTitle = document.createElement("input");
+        todoEditTitle.setAttribute("type", "text");
+        todoEditTitle.setAttribute("id", "todo-edit-title");
+
+          // Create a textarea for todo description
+
+          // Create an input (date type) for editing due date
+
+          // Create a select for editing priority
+
+          // Create a select for editing the parentProject
+
+          // Create a div for holding the cancel and submit buttons
 
         // Handle what happens if the cancel or submit button is pressed
+
+        // Close the dialog and "Depopulate" it again
+
+
+        /*
+          Helper function to extract the correct project's todoArray
+        */
+        function _extractCorrectTodoArray() {
+          // Select the relevant todo information for project and todo extraction
+          const todoParentProject = e.target.dataset.parentProject;
+          const allProjects = todoController.allProjects;
+          
+          // Extract the correct parentProject using a loop
+          for (let i = 0; i < allProjects.length; i++) {
+            if (allProjects[i].projectName == todoParentProject) {
+              // Get the todoArray from the parentProject
+              return allProjects[i].allTodos;
+            }
+          }
+        }
+
+        /*
+          Helper function to extract the correct todo
+        */
+        function _extractCorrectTodo(todoArray) {
+          const todoTitle = e.target.dataset.title;
+          
+          // Extract the specific todo using a loop
+          for (let i = 0; i < todoArray.length; i++) {
+            if (todoArray[i].title == todoTitle) {
+              // Create a variable to hold the extracted todo
+              return todoArray[i];
+            }
+          }
+        }
       }
     });
-    
-
 
     /*
       Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
     */
-   function _handleInfoEditDOM() {
+    function _handleInfoEditDOM() {
 
-   }
+    }
 
     /*
       Helper function to handle backend logic for dialog form submission
     */
-   function _handleInfoEditBackend() {
+    function _handleInfoEditBackend() {
 
-   }
+    }
   };
 
   /*

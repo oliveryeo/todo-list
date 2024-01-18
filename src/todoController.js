@@ -118,19 +118,19 @@ const todoController = (() => {
 // Factory function for new todo Projects
 const newProject = (name) => {
   // Takes in the project name and sets it
-  let projectName = name;
+  let _projectName = name;
 
   // An array that stores all the todos related to this project
-  const allTodos = [];
+  const _allTodos = [];
 
   const createTodo = (title, description, dueDate, priority, parentProject) => {
-    allTodos.push(newTodo(title, description, dueDate, priority, parentProject));
+    _allTodos.push(newTodo(title, description, dueDate, priority, parentProject));
   }
 
   const deleteTodo = (todoTitle) => {
-    allTodos.forEach((todo, index) => {
-      if (todoTitle == todo) {
-        allTodos.splice(index, 1);
+    _allTodos.forEach((todo, index) => {
+      if (todoTitle == todo.title) {
+        _allTodos.splice(index, 1);
       }
     });
   };
@@ -138,15 +138,15 @@ const newProject = (name) => {
   return {
     // Project name getter
     get projectName() {
-      return projectName;
+      return _projectName;
     },
     // Project name setter
     set projectName(newName) {
-      projectName = newName;
+      _projectName = newName;
     },
     // Getter for all of the project's todos
     get allTodos() {
-      return allTodos;
+      return _allTodos;
     },
     // Todo creator and deletor
     createTodo,
@@ -156,54 +156,54 @@ const newProject = (name) => {
 
 // Factory function for new Todos
 const newTodo = (title, description, dueDate, priority, parentProject) => {
-  let todoTitle = title;
-  let todoDescription = description;
-  let todoDueDate = new Date(dueDate); // "YYYY-MM-DD"
-  let todoPriority = priority;
-  let todoParentProject = parentProject;
-  let todoIsChecked = false;
+  let _todoTitle = title;
+  let _todoDescription = description;
+  let _todoDueDate = new Date(dueDate); // "YYYY-MM-DD"
+  let _todoPriority = priority;
+  let _todoParentProject = parentProject;
+  let _todoIsChecked = false;
 
   return {
     get title() {
-      return todoTitle;
+      return _todoTitle;
     },
     set title(newTitle) {
-      todoTitle = newTitle;
+      _todoTitle = newTitle;
     },
     
     get description() {
-      return todoDescription;
+      return _todoDescription;
     },
     set description(newDescription) {
-      todoDescription = newDescription;
+      _todoDescription = newDescription;
     },
 
     get dueDate() {
-      return todoDueDate;
+      return _todoDueDate;
     },
     set dueDate(newDueDate) {
-      todoDueDate = newDueDate;
+      _todoDueDate = newDueDate;
     },
 
     get priority() {
-      return todoPriority;
+      return _todoPriority;
     },
     set priority(newPriority) {
-      todoPriority = newPriority;
+      _todoPriority = newPriority;
     },
 
     get parentProject() {
-      return todoParentProject;
+      return _todoParentProject;
     },
     set parentProject(newParentProject) {
-      todoParentProject = newParentProject;
+      _todoParentProject = newParentProject;
     },
 
     get isChecked() {
-      return todoIsChecked;
+      return _todoIsChecked;
     },
     set isChecked(bool) {
-      todoIsChecked = bool;
+      _todoIsChecked = bool;
     }
   };
 };
