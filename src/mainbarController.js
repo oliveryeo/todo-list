@@ -466,8 +466,8 @@ const mainbarEventHandler = (() => {
           // console.log(extractedTodo);
 
           // Handle DOM changes when the todo is double clicked
-          _handleInfoEditDOM(extractedTodo);
-          _handleInfoEditBackend();
+          _handleInfoEditDialogLoad(extractedTodo);
+          _handleInfoEditPostSubmission();
 
           /*
             Helper function to extract the correct project's todoArray
@@ -506,7 +506,7 @@ const mainbarEventHandler = (() => {
         /*
           TODO: Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
         */
-        function _handleInfoEditDOM(extractedTodo) {
+        function _handleInfoEditDialogLoad(extractedTodo) {
           // Select the dialog
           const dialogBox = document.querySelector("dialog");
 
@@ -633,7 +633,7 @@ const mainbarEventHandler = (() => {
         /*
           TODO: Helper function to handle backend logic for dialog form submission
         */
-        function _handleInfoEditBackend() {
+        function _handleInfoEditPostSubmission() {
           // Handle what happens if the cancel or submit button is pressed
           const formButtons = document.querySelectorAll("#todo-edit-submit-buttons > button");
           const dialogBox = document.querySelector("dialog");
