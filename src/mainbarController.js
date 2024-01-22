@@ -440,12 +440,14 @@ const mainbarEventHandler = (() => {
       /* 
         A function that handles what happens when the button gets clicked
       */
-      function handleSingleClick() {
-        const prevSelectedTodo = document.querySelector("#main-panel-content > button.selected-tab");
-        if (prevSelectedTodo) {
-          prevSelectedTodo.classList.remove("selected-tab");
+      function handleSingleClick(e) {
+        if (e.target.computedRole != "checkbox") {
+          const prevSelectedTodo = document.querySelector("#main-panel-content > button.selected-tab");
+          if (prevSelectedTodo) {
+            prevSelectedTodo.classList.remove("selected-tab");
+          }
+          button.classList.add("selected-tab");
         }
-        button.classList.add("selected-tab");
       }
     });
 
@@ -455,31 +457,33 @@ const mainbarEventHandler = (() => {
       /*
         A function that handles what happens if the button gets double clicked
       */
-      function handleDblClick() {
-        // Extract the specific todo so that information can be extracted to populate the dialog box
-        const todoArray = _extractCorrectTodoArray();
-        console.log(todoArray);
-        const extractedTodo = _extractCorrectTodo(todoArray);
-        console.log(extractedTodo);
+      function handleDblClick(e) {
+        if (e.target.computedRole != "checkbox") {
+          // Extract the specific todo so that information can be extracted to populate the dialog box
+          const todoArray = _extractCorrectTodoArray();
+          // console.log(todoArray);
+          const extractedTodo = _extractCorrectTodo(todoArray);
+          // console.log(extractedTodo);
 
-        // Handle DOM changes when the todo is double clicked
-        _handleInfoEditDOM(extractedTodo);
-        _handleInfoEditBackend();
+          // Handle DOM changes when the todo is double clicked
+          _handleInfoEditDOM(extractedTodo);
+          _handleInfoEditBackend();
 
-        /*
-          Helper function to extract the correct project's todoArray
-        */
-        function _extractCorrectTodoArray() {
-          // Select the relevant todo information for project and todo extraction
-          const todoParentProject = button.dataset.parentProject;
-          const allProjects = todoController.allProjects;
-          
-          // Extract the correct parentProject using a loop
-          for (let i = 0; i < allProjects.length; i++) {
-            console.log(allProjects[i]);
-            if (allProjects[i].projectName == todoParentProject) {
-              // Return the extracted todoArray
-              return allProjects[i].allTodos;
+          /*
+            Helper function to extract the correct project's todoArray
+          */
+          function _extractCorrectTodoArray() {
+            // Select the relevant todo information for project and todo extraction
+            const todoParentProject = button.dataset.parentProject;
+            const allProjects = todoController.allProjects;
+            
+            // Extract the correct parentProject using a loop
+            for (let i = 0; i < allProjects.length; i++) {
+              // console.log(allProjects[i]);
+              if (allProjects[i].projectName == todoParentProject) {
+                // Return the extracted todoArray
+                return allProjects[i].allTodos;
+              }
             }
           }
         }
@@ -552,7 +556,6 @@ const mainbarEventHandler = (() => {
           todoEditDueDate.setAttribute("name", "todo-edit-duedate");
           todoEditDueDate.setAttribute("id", "todo-edit-duedate");
           todoEditDueDate.setAttribute("value", format(extractedTodo.dueDate, "yyyy-MM-dd")); // e.g. 2024-01-18
-          console.log(extractedTodo.dueDate);
 
           // Create a select for editing priority and set options to all three priority levels
           const todoEditPriorityLabel = document.createElement("label");
@@ -634,10 +637,33 @@ const mainbarEventHandler = (() => {
           // Handle what happens if the cancel or submit button is pressed
           const formButtons = document.querySelectorAll("#todo-edit-submit-buttons > button");
           const dialogBox = document.querySelector("dialog");
+          
           formButtons.forEach(button => {
             button.addEventListener("click", (e) => {
               // Prevent submission from happening
               e.preventDefault();
+
+              // Extract all the relevant description info
+              const todoTitleInput = document.querySelector("#todo-edit-title");
+              const todoDescriptionTextarea = document.querySelector("#todo-edit-description");
+              const todoDueDateInput = document.querySelector("#todo-edit-duedate");
+              const todoEditPrioritySelect = document.querySelector("#todo-edit-priority");
+              const todoEditParentProjectSelect = document.querySelector("#todo-edit-parentproject");
+
+              
+              const todoTitleValue = todoTitleInput.value;
+              const todoDescriptionValue = todoDescriptionTextarea.value;
+              const todoDueDateValue = todoDueDateInput.value; // Remember to enter this value to new Date() when updating
+              const todoEditPriorityValue = todoEditPrioritySelect.value;
+              const todoEditParentProjectValue = todoEditParentProjectSelect.value;
+
+              // Checking
+              console.log(todoTitleValue);
+              console.log(todoDescriptionValue);
+              console.log(todoDueDateValue);
+              console.log(todoEditPriorityValue);
+              console.log(todoEditParentProjectValue);
+
 
               // Close the dialog and "depopulate" it
               dialogBox.close();
