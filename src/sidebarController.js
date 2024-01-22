@@ -74,7 +74,16 @@ const todoCountLoader = (() => {
     }
   };
 
-  
+  /*
+    function to help reload ALL project tasks count
+  */
+  const reloadProjectTasksCount = () => {
+    const allProjects = todoController.allProjects;
+    allProjects.forEach(project => {
+      loadProjectTasksCount(project.projectName);
+    });
+  };
+
   /*
     Helper function to handle DOM loading
   */ 
@@ -100,7 +109,8 @@ const todoCountLoader = (() => {
     loadAllTasksCount,
     loadTodayTasksCount,
     loadWeekTasksCount,
-    loadProjectTasksCount
+    loadProjectTasksCount,
+    reloadProjectTasksCount
   };
 })();
 

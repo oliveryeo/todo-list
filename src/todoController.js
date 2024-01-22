@@ -19,6 +19,15 @@ const todoController = (() => {
     }
   }
 
+  // Extract a project
+  const extractProject = (name) => {
+    for (let i = 0; i < allProjects.length; i++) {
+      if (allProjects[i].projectName == name) {
+        return allProjects[i];
+      }
+    }
+  }
+
   // Extract todos from All tasks, Today, Next 7 days or a specific project
   const extractTodos = (tabTitle) => {
     if (tabTitle == "All tasks") {
@@ -110,6 +119,7 @@ const todoController = (() => {
     },
     createProject,
     deleteProject,
+    extractProject,
     extractTodos,
     extractTodoCount
   };

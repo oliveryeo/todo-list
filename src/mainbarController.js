@@ -21,8 +21,8 @@ const mainbarDisplayHandler = (() => {
     allTasksButton.classList.add("selected-tab");
   };
 
-  const reloadMainbarTodo = (projectTitle) => {
-    const projectTodoArray = todoController.extractTodos(projectTitle);
+  const reloadMainbarTodo = (tabTitle) => {
+    const projectTodoArray = todoController.extractTodos(tabTitle);
     _mainbarTodoHandler(projectTodoArray);
   }
   
@@ -426,9 +426,13 @@ const mainbarEventHandler = (() => {
       }
     }
   }
+
+  /*
+    Handle sidebar todo refresh
+  */
   
   /*
-    TODO: Handle logic for todo information editing
+    Handle logic for todo information editing
   */
   const handleTodoInfoEdit = () => {
     // Select all todo buttons
@@ -467,25 +471,27 @@ const mainbarEventHandler = (() => {
 
           // Handle DOM changes when the todo is double clicked
           _handleInfoEditDialogLoad(extractedTodo);
-          _handleInfoEditPostSubmission();
+          _handleInfoEditPostSubmission(extractedTodo);
+        }
 
-          /*
-            Helper function to extract the correct project's todoArray
-          */
-          function _extractCorrectTodoArray() {
-            // Select the relevant todo information for project and todo extraction
-            const todoParentProject = button.dataset.parentProject;
-            const allProjects = todoController.allProjects;
-            
-            // Extract the correct parentProject using a loop
-            for (let i = 0; i < allProjects.length; i++) {
-              // console.log(allProjects[i]);
-              if (allProjects[i].projectName == todoParentProject) {
-                // Return the extracted todoArray
-                return allProjects[i].allTodos;
-              }
+        /*
+          Helper function to extract the correct project's todoArray
+        */
+        function _extractCorrectTodoArray() {
+          // Select the relevant todo information for project and todo extraction
+          const todoParentProject = button.dataset.parentProject;
+          const allProjects = todoController.allProjects;
+          
+          // Extract the correct parentProject using a loop
+          for (let i = 0; i < allProjects.length; i++) {
+            // console.log(allProjects[i]);
+            if (allProjects[i].projectName == todoParentProject) {
+              // Return the extracted todoArray
+              return allProjects[i].allTodos;
             }
           }
+          
+          console.log("No todoArray found");
         }
 
         /*
@@ -501,10 +507,12 @@ const mainbarEventHandler = (() => {
               return todoArray[i];
             }
           }
+
+          console.log("No todo found");
         }
 
         /*
-          TODO: Helper function to handle the DOM (click once for grey highlight, double click for info edit, populate and display dialog for editing)
+          Helper function to handle the initial dialog loading
         */
         function _handleInfoEditDialogLoad(extractedTodo) {
           // Select the dialog
@@ -578,6 +586,14 @@ const mainbarEventHandler = (() => {
           lowPriority.setAttribute("value", "low");
           lowPriority.textContent = "Low";
 
+          if (extractedTodo.priority == "high") { // Setting the default select option for priority
+            highPriority.setAttribute("selected", "");
+          } else if (extractedTodo.priority == "medium") {
+            medPriority.setAttribute("selected", "");
+          } else if (extractedTodo.priority == "low") {
+            lowPriority.setAttribute("selected", "");
+          }
+
           todoEditPriority.appendChild(highPriority);
           todoEditPriority.appendChild(medPriority);
           todoEditPriority.appendChild(lowPriority);
@@ -591,10 +607,14 @@ const mainbarEventHandler = (() => {
           todoEditParentProject.setAttribute("name", "todo-edit-parentproject");
           todoEditParentProject.setAttribute("id", "todo-edit-parentproject");
           
-          todoController.allProjects.forEach(project => {
+          todoController.allProjects.forEach(project => { // Loop through each existing project and append to the options
             const projectName = document.createElement("option");
             projectName.setAttribute("value", project.projectName);
             projectName.textContent = project.projectName;
+            if (extractedTodo.parentProject == project.projectName) { // Set the default selection option for parent project
+              projectName.setAttribute("selected", "");
+            }
+
             todoEditParentProject.appendChild(projectName);
           });
 
@@ -631,9 +651,9 @@ const mainbarEventHandler = (() => {
         }
     
         /*
-          TODO: Helper function to handle backend logic for dialog form submission
+          TODO: Helper function to handle backend logic upon dialog form submission
         */
-        function _handleInfoEditPostSubmission() {
+        function _handleInfoEditPostSubmission(extractedTodo) {
           // Handle what happens if the cancel or submit button is pressed
           const formButtons = document.querySelectorAll("#todo-edit-submit-buttons > button");
           const dialogBox = document.querySelector("dialog");
@@ -643,31 +663,74 @@ const mainbarEventHandler = (() => {
               // Prevent submission from happening
               e.preventDefault();
 
-              // Extract all the relevant description info
-              const todoTitleInput = document.querySelector("#todo-edit-title");
-              const todoDescriptionTextarea = document.querySelector("#todo-edit-description");
-              const todoDueDateInput = document.querySelector("#todo-edit-duedate");
-              const todoEditPrioritySelect = document.querySelector("#todo-edit-priority");
-              const todoEditParentProjectSelect = document.querySelector("#todo-edit-parentproject");
+              // Only execute if the button pressed is "submit"
+              if (e.target.innerText == "Submit") {
+                // Extract all the relevant description info
+                const todoTitleInput = document.querySelector("#todo-edit-title");
+                const todoDescriptionTextarea = document.querySelector("#todo-edit-description");
+                const todoDueDateInput = document.querySelector("#todo-edit-duedate");
+                const todoEditPrioritySelect = document.querySelector("#todo-edit-priority");
+                const todoEditParentProjectSelect = document.querySelector("#todo-edit-parentproject");
 
-              
-              const todoTitleValue = todoTitleInput.value;
-              const todoDescriptionValue = todoDescriptionTextarea.value;
-              const todoDueDateValue = todoDueDateInput.value; // Remember to enter this value to new Date() when updating
-              const todoEditPriorityValue = todoEditPrioritySelect.value;
-              const todoEditParentProjectValue = todoEditParentProjectSelect.value;
+                const todoTitleValue = todoTitleInput.value;
+                const todoDescriptionValue = todoDescriptionTextarea.value;
+                const todoDueDateValue = todoDueDateInput.value; // Remember to enter this value to new Date() when updating
+                const todoEditPriorityValue = todoEditPrioritySelect.value;
+                const todoEditParentProjectValue = todoEditParentProjectSelect.value;
 
-              // Checking
-              console.log(todoTitleValue);
-              console.log(todoDescriptionValue);
-              console.log(todoDueDateValue);
-              console.log(todoEditPriorityValue);
-              console.log(todoEditParentProjectValue);
+                // Checking values
+                // console.log(todoTitleValue);
+                // console.log(todoDescriptionValue);
+                // console.log(todoDueDateValue);
+                // console.log(todoEditPriorityValue);
+                // console.log(todoEditParentProjectValue);
+
+                // Update todo information at the backend
+                extractedTodo.title = todoTitleValue;
+                extractedTodo.description = todoDescriptionValue;
+                extractedTodo.dueDate = new Date(todoDueDateValue);
+                extractedTodo.priority = todoEditPriorityValue;
+
+                // Handle what happens if the parentProject changes
+                if (extractedTodo.parentProject != todoEditParentProjectValue) {
+                  const oldProject = todoController.extractProject(extractedTodo.parentProject);
+                  const newProject = todoController.extractProject(todoEditParentProjectValue);
+                  const oldProjectTodoArray = oldProject.allTodos;
+                  const newProjectTodoArray = newProject.allTodos;
+
+                  for (let i = 0; i < oldProjectTodoArray.length; i++) {
+                    if (oldProjectTodoArray[i].title == extractedTodo.title) {
+                      // Push the todo to the new project, then remove it from the old project
+                      newProjectTodoArray.push(oldProjectTodoArray[i]);
+                      oldProjectTodoArray.splice(i, 1);
+
+                      // Update the parentProject for the todo
+                      extractedTodo.parentProject = todoEditParentProjectValue;
+                      break;
+                    }
+                  }
 
 
-              // Close the dialog and "depopulate" it
-              dialogBox.close();
-              dialogBox.textContent = "";
+                }
+                
+                // Close the dialog and "depopulate" it
+                dialogBox.close();
+                dialogBox.textContent = "";
+
+                // Reload mainbar todo display
+                const currentDisplayTitleElement = document.querySelector("#main-panel-title-content");
+                const currentDisplayTitle = currentDisplayTitleElement.dataset.title;
+                mainbarDisplayHandler.reloadMainbarTodo(currentDisplayTitle);
+
+                // Reload sidebar project tasks count
+                sidebarController.todoCountLoader.reloadProjectTasksCount();
+
+                // Reload ALL mainbar events
+                reloadCommonMainbarEvents();
+              } else {
+                dialogBox.close();
+                dialogBox.textContent = "";
+              }
             })
           })
         }
@@ -685,7 +748,7 @@ const mainbarEventHandler = (() => {
   /*
     Function that consolidates all the mainbar events that requires reloading frequently
   */
-  const reloadCommonMainbarEvents = () => {
+  function reloadCommonMainbarEvents() {
     handleTodoCheckboxEvent();
     handleDynamicTodoCount();
     handleProjectTitleEdit();
@@ -694,12 +757,12 @@ const mainbarEventHandler = (() => {
   }
 
   return {
+    reloadCommonMainbarEvents,
     handleTodoCheckboxEvent,
     handleDynamicTodoCount,
     handleProjectTitleEdit,
     handleProjectDeletion,
     handleTodoInfoEdit,
-    reloadCommonMainbarEvents
   }
 })();
 
