@@ -2,14 +2,14 @@ import todoController from "./todoController.js";
 import sidebarController from "./sidebarController.js";
 import { format } from "date-fns";
 
-/* 
-  Module pattern that takes in the sidebar tab title and todo array
-  and load into main bar view.
-*/
+/**
+ * Module pattern that takes in the sidebar tab title and todo array
+ * and load into main bar view.
+ */
 const mainbarDisplayHandler = (() => {
-  /* 
-    Load "All tasks as the default mainbar"
-  */
+  /**
+   * Load "All tasks as the default mainbar"
+   */
   const loadDefaultMainbarDisplay = () => {
     const allTasksTodoArray = todoController.extractTodos("All tasks");
 
@@ -26,9 +26,9 @@ const mainbarDisplayHandler = (() => {
     _mainbarTodoHandler(projectTodoArray);
   }
   
-  /* 
-    Add event listeners to side tab to load mainbar display upon clicking
-  */
+  /**
+   * Add event listeners to side tab to load mainbar display upon clicking
+   */
   const loadMainbarDisplayEvents = () => {
     // Select all tab buttons -> extract title and array -> load mainbar UI
     const sidebarTabs = document.querySelectorAll(
@@ -56,9 +56,9 @@ const mainbarDisplayHandler = (() => {
     });
   };
 
-  /*
-    Helper function to load mainbar title DOM
-  */ 
+  /**
+   * Helper function to load mainbar title DOM
+   */
   function _mainbarTitleHandler(tabDataTitle) {
     // Select .main-panel-title-content class -> change text content to tabTitle AND set the data-title attribute to tabTitle as well
     const mainPanelTitle = document.querySelector("#main-panel-title-content");
@@ -87,9 +87,9 @@ const mainbarDisplayHandler = (() => {
     }
   }
 
-  /*
-    Helper function to load mainbar todo DOM
-  */ 
+  /**
+   * Helper function to load mainbar todo DOM
+   */
   function _mainbarTodoHandler(todoArray) {
     // Select #main-panel-content id:
     const mainPanelContent = document.querySelector("#main-panel-content");
@@ -146,13 +146,13 @@ const mainbarDisplayHandler = (() => {
   };
 })();
 
-/*
-  Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
-*/
+/**
+ * Module Pattern that handles events in mainbar (e.g. title edits, todo edits)
+ */
 const mainbarEventHandler = (() => {
-  /* 
-    Handles the mainbar DOM changes (e.g. todo strikethrough) and the backend todoController changes (changing the isChecked boolean) when a todo checkbox is checked.
-  */
+  /**
+   * Handles the mainbar DOM changes (e.g. todo strikethrough) and the backend todoController changes (changing the isChecked boolean) when a todo checkbox is checked.
+   */
   const handleTodoCheckboxEvent = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -213,9 +213,9 @@ const mainbarEventHandler = (() => {
     })
   };
   
-  /* 
-    Reload all the tasks count in the sidebar when a checkbox is clicked
-  */
+  /**
+   * Reload all the tasks count in the sidebar when a checkbox is clicked
+   */
   const handleDynamicTodoCount = () => {
     const todoCheckboxes = document.querySelectorAll("#main-panel-content > button > input[type='checkbox']");
 
@@ -233,9 +233,9 @@ const mainbarEventHandler = (() => {
     });
   };
 
-  /* 
-    Handle logic for project title editing when the edit icon is clicked
-  */
+  /**
+   * Handle logic for project title editing when the edit icon is clicked
+   */
   const handleProjectTitleEdit = () => {
     // Select the edit icon
     const projectTitleEditIcon = document.querySelector("#edit-icon");
@@ -373,9 +373,9 @@ const mainbarEventHandler = (() => {
     }
   };
 
-  /* 
-    Handle logic for project deletion when the trash icon is clicked
-  */
+  /**
+   * Handle logic for project deletion when the trash icon is clicked
+   */
   const handleProjectDeletion = () => {
     // Run event handler if trash icon exists
     const projectTrashIcon = document.querySelector("#trash-icon");
@@ -426,14 +426,10 @@ const mainbarEventHandler = (() => {
       }
     }
   }
-
-  /*
-    Handle sidebar todo refresh
-  */
   
-  /*
-    Handle logic for todo information editing
-  */
+  /**
+   * Handle logic for todo information editing
+   */
   const handleTodoInfoEdit = () => {
     // Select all todo buttons
     const todoButtons = document.querySelectorAll("#main-panel-content > button");
@@ -738,10 +734,18 @@ const mainbarEventHandler = (() => {
     });
   };
 
-  /*
-    TODO: Handle logic for deleting a todo
-  */
+  /**
+   * TODO: Handle logic for deleting a todo
+   */
   const handleTodoDeletionEvent = () => {
+    // Select all todo buttons on the page
+
+  };
+
+  /**
+   * Handle logic for todo addition
+   */
+  const handleTodoAdditionEvent = () => {
 
   }
 
@@ -754,6 +758,7 @@ const mainbarEventHandler = (() => {
     handleProjectTitleEdit();
     handleProjectDeletion();
     handleTodoInfoEdit();
+    handleTodoDeletionEvent();
   }
 
   return {
@@ -763,6 +768,7 @@ const mainbarEventHandler = (() => {
     handleProjectTitleEdit,
     handleProjectDeletion,
     handleTodoInfoEdit,
+    handleTodoDeletionEvent
   }
 })();
 

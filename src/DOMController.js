@@ -2,13 +2,13 @@ import testUnitModule from "./testUnitModule.js";
 import sidebarController from "./sidebarController.js";
 import mainbarController from "./mainbarController.js";
 
-/* 
-  Module Pattern that handles anything regarding page initialization
-*/
+/**
+ * Module Pattern that handles anything regarding page initialization
+ */
 const pageInitializationHandler = (() => {
-  /* 
-    Load the initial page load events
-  */
+  /**
+   * Load the initial page load events
+   */
   const initializePage = () => {
     // Load initial sidebar events (tab styling, home tab tasks count, new project events)
     sidebarController.tabStyler.styleTabs();
@@ -44,9 +44,9 @@ const pageInitializationHandler = (() => {
   return { initializePage };
 })();
 
-/* 
-  Module Pattern that handles anything with testing
-*/
+/**
+ * Module Pattern that handles anything with testing
+ */
 const testUnitHandler = (() => {
   const addTodoTestUnit = () => {
     // Create Project and Todo
