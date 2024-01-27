@@ -37,7 +37,7 @@ const todoCountLoader = (() => {
   /**
    * Function to load todo count for all tasks tab
    */
-  const loadAllTasksCount = () => {
+  const loadAllTaskCount = () => {
     // Extract count of todos from all projects
     let allTasksCount = todoController.extractTodoCount("All tasks");
     _modifyCountDisplay("All tasks", allTasksCount);
@@ -46,7 +46,7 @@ const todoCountLoader = (() => {
   /**
    * Function to load todo count for today tasks tab
    */
-  const loadTodayTasksCount = () => {
+  const loadTodayTaskCount = () => {
     // Extract count of todos due today
     let todayTasksCount = todoController.extractTodoCount("Today");
     _modifyCountDisplay("Today", todayTasksCount);
@@ -55,7 +55,7 @@ const todoCountLoader = (() => {
   /**
    * Function to load todo count for week tasks tab
    */ 
-  const loadWeekTasksCount = () => {
+  const loadWeekTaskCount = () => {
     let weekTasksCount = todoController.extractTodoCount("Next 7 days");
     _modifyCountDisplay("Next 7 days", weekTasksCount);
   };
@@ -63,7 +63,7 @@ const todoCountLoader = (() => {
   /**
    * Function to load task count for a specific project.
    */
-  const loadProjectTasksCount = (projectName) => {
+  const loadProjectTaskCount = (projectName) => {
     // Extract todo array for a specific project → If array exists, then extract count and modify count display
     let projectTodoArray = todoController.extractTodos(projectName);
     // console.log("Below is the extracted array in sidebar controller");
@@ -77,12 +77,21 @@ const todoCountLoader = (() => {
   /**
    * Function to help reload ALL project tasks count
    */
-  const reloadProjectTasksCount = () => {
+  const reloadAllProjectTaskCount = () => {
     const allProjects = todoController.allProjects;
     allProjects.forEach(project => {
-      loadProjectTasksCount(project.projectName);
+      loadProjectTaskCount(project.projectName);
     });
   };
+
+  /**
+   * Function to reload every tasks count
+   */
+  const reloadEveryTaskCount = () => {
+    loadAllTaskCount();
+    loadWeekTaskCount();
+    reloadAllProjectTaskCount();
+  }
 
   /**
    * Helper function to handle DOM loading
@@ -106,11 +115,12 @@ const todoCountLoader = (() => {
   }
 
   return {
-    loadAllTasksCount,
-    loadTodayTasksCount,
-    loadWeekTasksCount,
-    loadProjectTasksCount,
-    reloadProjectTasksCount
+    loadAllTaskCount,
+    loadTodayTaskCount,
+    loadWeekTaskCount,
+    loadProjectTaskCount,
+    reloadAllProjectTaskCount,
+    reloadEveryTaskCount
   };
 })();
 

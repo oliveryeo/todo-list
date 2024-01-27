@@ -12,9 +12,9 @@ const pageInitializationHandler = (() => {
   const initializePage = () => {
     // Load initial sidebar events (tab styling, home tab tasks count, new project events)
     sidebarController.tabStyler.styleTabs();
-    sidebarController.todoCountLoader.loadAllTasksCount();
-    sidebarController.todoCountLoader.loadTodayTasksCount();
-    sidebarController.todoCountLoader.loadWeekTasksCount();
+    sidebarController.todoCountLoader.loadAllTaskCount();
+    sidebarController.todoCountLoader.loadTodayTaskCount();
+    sidebarController.todoCountLoader.loadWeekTaskCount();
     sidebarController.projectController.loadNewProjectUI();
 
     // Load initial mainbar events
@@ -56,15 +56,15 @@ const testUnitHandler = (() => {
     testUnitModule.projectCreationTestUnit.createProjectYTodo();
 
     // Load task count for each sidebar tab
-    sidebarController.todoCountLoader.loadAllTasksCount();
+    sidebarController.todoCountLoader.loadAllTaskCount();
     console.log("If this is printed, allTasksCount is loaded");
-    sidebarController.todoCountLoader.loadTodayTasksCount();
+    sidebarController.todoCountLoader.loadTodayTaskCount();
     console.log("If this is printed, todayTasksCount is loaded");
-    sidebarController.todoCountLoader.loadWeekTasksCount();
+    sidebarController.todoCountLoader.loadWeekTaskCount();
     console.log("If this is printed, weekTasksCount is loaded");
-    sidebarController.todoCountLoader.loadProjectTasksCount('Project-X');
+    sidebarController.todoCountLoader.loadProjectTaskCount('Project-X');
     console.log("If this is printed, Project-X tasks count is loaded");
-    sidebarController.todoCountLoader.loadProjectTasksCount('Project-Y');
+    sidebarController.todoCountLoader.loadProjectTaskCount('Project-Y');
     console.log("If this is printed, Project-Y tasks count is loaded");
   };
 

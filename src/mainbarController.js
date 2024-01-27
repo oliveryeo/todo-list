@@ -225,10 +225,10 @@ const mainbarEventHandler = (() => {
         const todoParentProject = todoButton.dataset.parentProject;
 
         // Reload ALL the tasks count
-        sidebarController.todoCountLoader.loadAllTasksCount();
-        sidebarController.todoCountLoader.loadTodayTasksCount();
-        sidebarController.todoCountLoader.loadWeekTasksCount();
-        sidebarController.todoCountLoader.loadProjectTasksCount(todoParentProject);
+        sidebarController.todoCountLoader.loadAllTaskCount();
+        sidebarController.todoCountLoader.loadTodayTaskCount();
+        sidebarController.todoCountLoader.loadWeekTaskCount();
+        sidebarController.todoCountLoader.loadProjectTaskCount(todoParentProject);
       })
     });
   };
@@ -414,9 +414,9 @@ const mainbarEventHandler = (() => {
         */
         function _handleProjectDeletionDOM() {
           // Reload all the tasks in the sidebar home tab
-          sidebarController.todoCountLoader.loadAllTasksCount();
-          sidebarController.todoCountLoader.loadTodayTasksCount();
-          sidebarController.todoCountLoader.loadWeekTasksCount();
+          sidebarController.todoCountLoader.loadAllTaskCount();
+          sidebarController.todoCountLoader.loadTodayTaskCount();
+          sidebarController.todoCountLoader.loadWeekTaskCount();
           
           // Reload sidebar project displays
           sidebarController.projectController.projectDisplayReloader();
@@ -434,6 +434,7 @@ const mainbarEventHandler = (() => {
     // Select all todo buttons
     const todoButtons = document.querySelectorAll("#main-panel-content > button");
 
+    // Handle single click events
     todoButtons.forEach(button => {
       button.addEventListener("click", handleSingleClick);
 
@@ -451,6 +452,7 @@ const mainbarEventHandler = (() => {
       }
     });
 
+    // Handle double click events
     todoButtons.forEach(button => {
       button.addEventListener("dblclick", handleDblClick);
 
@@ -503,7 +505,6 @@ const mainbarEventHandler = (() => {
               return todoArray[i];
             }
           }
-
           console.log("No todo found");
         }
 
@@ -647,7 +648,7 @@ const mainbarEventHandler = (() => {
         }
     
         /*
-          TODO: Helper function to handle backend logic upon dialog form submission
+          Helper function to handle backend logic upon dialog form submission
         */
         function _handleInfoEditPostSubmission(extractedTodo) {
           // Handle what happens if the cancel or submit button is pressed
@@ -719,7 +720,7 @@ const mainbarEventHandler = (() => {
                 mainbarDisplayHandler.reloadMainbarTodo(currentDisplayTitle);
 
                 // Reload sidebar project tasks count
-                sidebarController.todoCountLoader.reloadProjectTasksCount();
+                sidebarController.todoCountLoader.reloadAllProjectTaskCount();
 
                 // Reload ALL mainbar events
                 reloadCommonMainbarEvents();
@@ -735,11 +736,54 @@ const mainbarEventHandler = (() => {
   };
 
   /**
-   * TODO: Handle logic for deleting a todo
+   * Handle logic for deleting a todo
    */
   const handleTodoDeletionEvent = () => {
     // Select all todo buttons on the page
+    const todoButtons = document.querySelectorAll("#main-panel-content > button");
 
+    // Add event listener: If press backspace → delete the todo → Update frontend and backend.
+    todoButtons.forEach(button => {
+      button.addEventListener("keyup", handleDeletion);
+
+      function handleDeletion(e) {
+        if (e.key == "Backspace") {
+          console.log("Deleting this todo!");
+          // Delete the todo in the backend and frontend
+          _handleTodoDeletionBackend(button);
+          _handleTodoDeletionDOM(button);
+
+          // Reload all sidebar project count
+          sidebarController.todoCountLoader.reloadEveryTaskCount();
+
+        }
+      }
+
+      /**
+       * Helper function to handle backend changes for todo deletion
+       */
+      function _handleTodoDeletionBackend(button) {
+        // Get the todoArray from the parent project
+        const parentProject = button.dataset.parentProject;
+        const todoArray = todoController.extractTodos(parentProject);
+        const todoTitle = button.dataset.title;
+        
+        // Loop through the array, if the title matches this button, splice it out of the array
+        for (let i = 0; i < todoArray.length; i++) {
+          if (todoArray[i].title == todoTitle) {
+            todoArray.splice(i, 1);
+            return;
+          }
+        }
+      }
+
+      /**
+       * Helper function to handle DOM changes for todo deletion
+       */
+      function _handleTodoDeletionDOM(button) {
+        button.remove();
+      }
+    });
   };
 
   /**
