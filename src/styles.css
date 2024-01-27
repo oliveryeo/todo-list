@@ -205,7 +205,13 @@ button:hover {
 #add-task {
   margin-top: auto;
   margin-left: auto;
+}
+
+#add-task > button {
   border: solid;
+  border-radius: 1.5rem;
+  padding: 5px 12px;
+  font-size: 1.5rem;
 }
 
 /* Dialog Styling */
