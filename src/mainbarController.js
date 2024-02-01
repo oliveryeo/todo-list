@@ -1,6 +1,12 @@
 import todoController from "./todoController.js";
 import sidebarController from "./sidebarController.js";
 import { format } from "date-fns";
+import editIconImg from "./icons/square-edit-outline.svg";
+import trashIconImg from "./icons/trash-can-outline.svg";
+import highPriorityImg from "./icons/high-priority.svg";
+import medPriorityImg from "./icons/med-priority.svg";
+import lowPriorityImg from "./icons/low-priority.svg";
+import deadlineIconImg from "./icons/flag-triangle.svg";
 
 /**
  * Module pattern that takes in the sidebar tab title and todo array
@@ -71,11 +77,11 @@ const mainbarDisplayHandler = (() => {
       mainPanelEditorContainer.textContent = "";
 
       const mainPanelEditIcon = document.createElement("img");
-      mainPanelEditIcon.src = "./icons/square-edit-outline.svg";
+      mainPanelEditIcon.src = editIconImg;
       mainPanelEditIcon.setAttribute("id", "edit-icon");
 
       const mainPanelTrashIcon = document.createElement("img");
-      mainPanelTrashIcon.src = "./icons/trash-can-outline.svg";
+      mainPanelTrashIcon.src = trashIconImg;
       mainPanelTrashIcon.setAttribute("id", "trash-icon");
 
       mainPanelEditorContainer.appendChild(mainPanelEditIcon);
@@ -116,14 +122,14 @@ const mainbarDisplayHandler = (() => {
       todoDueDateContainer.classList.add("todo-due-date");
       const todoPriority = document.createElement("img");
       if (todo.priority == "high") {
-        todoPriority.setAttribute("src", "./icons/high-priority.svg");
+        todoPriority.setAttribute("src", highPriorityImg);
       } else if (todo.priority == "medium") {
-        todoPriority.setAttribute("src", "./icons/med-priority.svg");
+        todoPriority.setAttribute("src", medPriorityImg);
       } else {
-        todoPriority.setAttribute("src", "./icons/low-priority.svg");
+        todoPriority.setAttribute("src", lowPriorityImg);
       }
       const dueFlagImg = document.createElement("img");
-      dueFlagImg.setAttribute("src", "./icons/flag-triangle.svg");
+      dueFlagImg.setAttribute("src", deadlineIconImg);
       const todoDueDate = document.createElement("div");
       todoDueDate.textContent = format(todo.dueDate, "dd MMM");
 
