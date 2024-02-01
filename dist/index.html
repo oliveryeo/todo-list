@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo-List</title>
+<script defer src="main.js"></script></head>
+<body>
+  <div id="container">
+    <div id="sidebar-panel">
+      <div id="home">
+        <button data-title="All tasks">
+          <img src="./icons/tray-full.svg" alt="tray-full icon">
+          <div>All tasks</div>
+        </button>
+        <button data-title="Today">
+          <img src="./icons/weather-sunny.svg" alt="sun icon">
+          <div>Today</div>
+          <div class="count">X</div>
+        </button>
+        <button data-title="Next 7 days">
+          <img src="./icons/calendar-week.svg" alt="calendar week icon">
+          <div>Next 7 days</div>
+          <div class="count">X</div>
+        </button>
+      </div>
+      <div id="projects">
+        <div id="project-header">
+          <img src="./icons/lightbulb-on-outline.svg" alt="sun icon">
+          <div>My Projects</div>
+        </div>
+        <button data-title="Project-X">
+          <div>Project-X</div>
+          <div class="count">X</div>
+        </button>
+        <button data-title="Project-Y">
+          <div>Project-Y</div>
+          <div class="count">X</div>
+        </button>
+      </div>
+      <button id="new-project">
+        <img src="./icons/plus.svg" alt="plus icon">
+        <div>New Project</div>
+        <!-- <input type="text" class="new-project-input"> -->
+      </button>
+    </div>
+    <div id="main-panel">
+      <div id="main-panel-title-container">
+        <div id="main-panel-title-content"></div>
+        <div id="main-panel-title-editor">
+          <!-- <img src="./icons/square-edit-outline.svg" alt="square edit icon" id="edit-icon">
+          <img src="./icons/trash-can-outline.svg" alt="square edit icon" id="trash-icon"> -->
+        </div>
+        <!-- <input class="main-panel-edit-title-input"> -->
+      </div>
+      <div id="main-panel-content">
+        <!-- <button id="Todo 1">
+          <input type="checkbox">
+          <div>Todo 1</div>
+          <div class="todo-due-date">
+            <img src="./icons/flag-triangle.svg" alt="triangle flag">
+            <div>19 Jul</div>
+          </div>
+        </button>
+        <button id="Todo 2">
+          <input type="checkbox">
+          <div>Todo 2</div>
+          <div class="todo-due-date">
+            <img src="./icons/flag-triangle.svg" alt="triangle flag">
+            <div>20 Jul</div>
+          </div>
+        </button> -->
+      </div>
+      <div id="add-task">
+        <button>+</button>
+      </div>
+    </div>
+    <dialog>
+      <!-- <form action="" id="todo-edit-form">
+        <input type="text" id="todo-edit-title" placeholder="title">
+        <textarea name="" id="todo-edit-description" cols="30" rows="10" placeholder="description"></textarea>
+        <input type="date" placeholder="due date" id="todo-edit-duedate">
+        <select id="todo-edit-priority">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <select id="todo-edit-parentproject">
+          <option value="Project-X">Project-X</option>
+          <option value="Project-Y">Project-Y</option>
+        </select>
+        <div id="todo-edit-submit-buttons">
+          <button value="cancel">Cancel</button>
+          <button value="submit">Submit</button>
+        </div>
+      </form> -->
+    </dialog>
+    <footer>Designed by © Oliver Yeo</footer>
+  </div>
+</body>
+</html>
