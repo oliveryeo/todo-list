@@ -89,6 +89,7 @@ const todoCountLoader = (() => {
    */
   const reloadEveryTaskCount = () => {
     loadAllTaskCount();
+    loadTodayTaskCount();
     loadWeekTaskCount();
     reloadAllProjectTaskCount();
   }
