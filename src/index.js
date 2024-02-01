@@ -4,6 +4,7 @@ import allTasksIcon from "./icons/tray-full.svg";
 import todayTasksIcon from "./icons/weather-sunny.svg";
 import weekTasksIcon from "./icons/calendar-week.svg";
 import projectHeaderIcon from "./icons/lightbulb-on-outline.svg";
+import newProjectIcon from "./icons/plus.svg";
 
 // Adds a mock todo into the todoController
 DOMControllerModule.testUnitHandler.addTodoTestUnit();
@@ -12,15 +13,17 @@ DOMControllerModule.testUnitHandler.addTodoTestUnit();
 DOMControllerModule.pageInitializationHandler.initializePage();
 
 // Load static images for webpack in template.html
-const allTasks = document.querySelector("#home > button[data-title='All tasks'] > img");
-allTasks.src = allTasksIcon;
+const allTasksImg = document.querySelector("#home > button[data-title='All tasks'] > img");
+allTasksImg.src = allTasksIcon;
 
-const todayTasks = document.querySelector("#home > button[data-title='Today'] > img");
-todayTasks.src = todayTasksIcon;
+const todayTasksImg = document.querySelector("#home > button[data-title='Today'] > img");
+todayTasksImg.src = todayTasksIcon;
 
-const weekTasks = document.querySelector("#home > button[data-title='Next 7 days'] > img");
-weekTasks.src = weekTasksIcon;
+const weekTasksImg = document.querySelector("#home > button[data-title='Next 7 days'] > img");
+weekTasksImg.src = weekTasksIcon;
 
-const projectHeader = document.querySelector("#project-header > img");
-projectHeader.src = projectHeaderIcon;
+const projectHeaderImg = document.querySelector("#project-header > img");
+projectHeaderImg.src = projectHeaderIcon;
 
+const newProjectImg = document.querySelector("#new-project > img");
+newProjectImg.src = newProjectIcon;
