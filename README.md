@@ -35,3 +35,6 @@ TOP Project on Todo-list
 - This was because whenever a new project was created, the whole "My Projects" section will be wiped out and replaced with the updated list of projects as invoked by the _updateProjectDisplay() helper function. Therefore, the re-initiation of event listeners are required.
 - However, based on the logic of the new project creation, the inputField is created and dissolved on its own, which means that it can't be selected whenever it dynamically pops out. This also means that we can't add an event listener externally to track whenever a new project is created, which also means we can't run the re-initiation of event listeners externally (outside of the loadNewProjectUI() code).
 - Therefore, all the re-initiation of event listeners had to be done INTERNALLY in the loadNewProjectUI()'s createInputField() code, which means that there will be a LOT of dependencies going on in this code between the sidebarController() and mainbarController().
+
+# Things yet to be implemented
+<ins>To implement a localstorage system</ins>
