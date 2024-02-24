@@ -1,3 +1,4 @@
+import localStorage from "./localStorage.js";
 import todoController from "./todoController.js";
 import sidebarController from "./sidebarController.js";
 import { format } from "date-fns";
@@ -778,6 +779,9 @@ const mainbarEventHandler = (() => {
         
         // Loop through the array, if the title matches this button, splice it out of the array
         parentProject.deleteTodo(todoTitle);
+
+        // Remove the todo from localStorage
+        localStorage.deleteTodo(parentProjectName, todoTitle);
       }
 
       /**
@@ -965,6 +969,9 @@ const mainbarEventHandler = (() => {
                                     
                   // Create a new todo with the filled input (title, description, dueDate, priority, parentProject)
                   parentProject.createTodo(todoTitleValue, todoDescriptionValue, todoDueDateValue, todoEditPriorityValue, todoEditParentProjectValue);
+
+                  // Store the todo into localStorage when created
+                  localStorage.storeNewTodo(todoTitleValue, todoDescriptionValue, todoDueDateValue, todoEditPriorityValue, todoEditParentProjectValue);
                 }
               }
               

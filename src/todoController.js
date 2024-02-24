@@ -6,12 +6,16 @@ const todoController = (() => {
   // Array to hold for all todo projects
   const allProjects = [];
 
-  // Create a project
+  /**
+   *  Create a project
+   */ 
   const createProject = (name) => {
     allProjects.push(newProject(name));
   }
 
-  // Delete a project
+  /**
+   * Delete a project
+   */
   const deleteProject = (name) => {
     for (let i = 0; i < allProjects.length; i++) {
       if (allProjects[i].projectName == name) {
@@ -20,7 +24,9 @@ const todoController = (() => {
     }
   }
 
-  // Extract a project
+  /**
+   * Extract a project
+   */
   const extractProject = (name) => {
     for (let i = 0; i < allProjects.length; i++) {
       if (allProjects[i].projectName == name) {
@@ -29,7 +35,9 @@ const todoController = (() => {
     }
   }
 
-  // Extract todos from All tasks, Today, Next 7 days or a specific project
+  /**
+   * Extract todos from All tasks, Today, Next 7 days or a specific project
+   */
   const extractTodos = (tabTitle) => {
     if (tabTitle == "All tasks") {
       return extractAllTodos();
@@ -99,6 +107,9 @@ const todoController = (() => {
   }
   };
 
+  /**
+   * Extract the number of todos that are unchecked
+   */
   const extractTodoCount = (tabTitle) => {
     const todoArray = extractTodos(tabTitle);
     const numberOfTodos = todoArray.length;
@@ -113,6 +124,73 @@ const todoController = (() => {
 
     return numberOfTodos - checkedTodos;
   }
+
+  /**
+   * Load the todos based on localStorage data
+   */
+  const loadTodos = () => {
+    const todoStorage = localStorage.getTodoStorage();
+    createParentProjects();
+    createTodos();
+
+    /**
+     * Create parentProjects
+     */
+    function createParentProjects() {
+      // Create a array of parentProjects:
+      let parentProjectsArray = [];
+
+      for (let i = 0; i < todoStorage.length; i++) {
+        // If parentProjectsArray does not have the parentProject title → Add into the array
+        if (!parentProjectsArray.includes(todoStorage[i][4])) {
+          parentProjectsArray.push(todoStorage[i][4]);
+        }
+      }
+
+      // Create parentProjects
+      for (let i = 0; i < parentProjectsArray.length; i++) {
+        createProject(parentProjectsArray[i]);
+      }
+    }
+    
+    /**
+     * Create todos for the respective parent projects
+     */
+    function createTodos() {
+      // Loop through each parentProject
+      for (let i = 0; i < allProjects.length; i++) {
+        // Loop through each todo and add the todo if the parentProject matches
+        let loopedProject = allProjects[i];
+        for (let j = 0; j < todoStorage.length; j++) {
+          let loopedTodo = todoStorage[j];
+
+          // Check if projectName matches
+          if (loopedProject.projectName == loopedTodo[4]) {
+            console.log(loopedTodo[4]);
+            console.log("Project name matched")
+            // Check if the todo already exists
+            let projectTodos = loopedProject.allTodos;
+
+            // If the projectTodo is empty, add the loopedTodo
+            if (projectTodos.length == 0) {
+              console.log("Empty todolist, adding the todo");
+              loopedProject.createTodo(loopedTodo[0], loopedTodo[1], loopedTodo[2], loopedTodo[3], loopedTodo[4]);
+              continue;
+            }
+
+            // If projectTodo is not empty, check if the todo already exist by comparing the todo title. Note loopedTodo[0] is the todo title
+            for (let k = 0; k < projectTodos.length; k++) {
+              if (projectTodos[k].title != loopedTodo[0]) {
+                loopedProject.createTodo(loopedTodo[0], loopedTodo[1], loopedTodo[2], loopedTodo[3], loopedTodo[4]);
+              }
+            }
+          }
+        }
+      }
+    }
+    
+
+  }
   
   return {
     get allProjects() {
@@ -122,7 +200,8 @@ const todoController = (() => {
     deleteProject,
     extractProject,
     extractTodos,
-    extractTodoCount
+    extractTodoCount,
+    loadTodos
   };
 })();
 
@@ -143,8 +222,6 @@ const newProject = (name) => {
       if (_allTodos[i].title == todoTitle) {
         // Remove the todo from project object
         _allTodos.splice(i, 1);
-        // Remove the todo from localStorage
-        localStorage.deleteTodo(_projectName, todoTitle);
         return;
       }
     }
@@ -177,9 +254,6 @@ const newTodo = (title, description, dueDate, priority, parentProject) => {
   let _todoPriority = priority;
   let _todoParentProject = parentProject;
   let _todoIsChecked = false;
-
-  // Store the todo into localStorage when created
-  localStorage.storeNewTodo(title, description, dueDate, priority, parentProject);
 
   return {
     get title() {

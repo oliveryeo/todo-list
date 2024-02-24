@@ -12,7 +12,6 @@ const storeNewTodo = (title, description, dueDate, priority, parentProject) => {
 
 // Delete todo when deleted in page
 const deleteTodo = (projectName, todoTitle) => {
-  console.log("localstorage test run");
   // Extract todoStorage
   const todoStorage = JSON.parse(window.localStorage.getItem('todoStorage'));
 
@@ -29,8 +28,9 @@ const deleteTodo = (projectName, todoTitle) => {
 }
 
 // Load array of todos upon page opening
-const loadTodos = (todoStorageArray) => {
-
+const getTodoStorage = () => {
+  // Extract todoStorage
+  return JSON.parse(window.localStorage.getItem('todoStorage'));
 };
 
 // Module for localStorage for exportation
@@ -38,7 +38,7 @@ const localStorage = (() => {
   return {
     storeNewTodo,
     deleteTodo,
-    loadTodos
+    getTodoStorage
   }
 })();
 

@@ -1,4 +1,5 @@
 import './styles.css';
+import todoController from './todoController.js';
 import DOMControllerModule from './DOMController.js'; // Since the module pattern is imported, the code in the module will run immediately.
 import allTasksIcon from "./icons/tray-full.svg";
 import todayTasksIcon from "./icons/weather-sunny.svg";
@@ -6,7 +7,7 @@ import weekTasksIcon from "./icons/calendar-week.svg";
 import projectHeaderIcon from "./icons/lightbulb-on-outline.svg";
 import newProjectIcon from "./icons/plus.svg";
 
-// Initiate todo LocalStorage array if does not exist
+// Initiate todo localStorage array if does not exist
 if (localStorage.getItem("todoStorage") == null) {
   // Initialize a todoStorage array, stringify it, then store in localStorage
   const todoStorage = [];
@@ -14,8 +15,11 @@ if (localStorage.getItem("todoStorage") == null) {
   localStorage.setItem("todoStorage", string);
 };
 
+// Load initial todos based on localStorage (have to be loaded AFTER all DOM elements are loaded)
+todoController.loadTodos();
+
 // Adds a mock todo into the todoController
-DOMControllerModule.testUnitHandler.addTodoTestUnit();
+// DOMControllerModule.testUnitHandler.addTodoTestUnit();
 
 // Initialize initial page load
 DOMControllerModule.pageInitializationHandler.initializePage();

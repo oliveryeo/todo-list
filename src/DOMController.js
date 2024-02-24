@@ -16,6 +16,7 @@ const pageInitializationHandler = (() => {
     sidebarController.todoCountLoader.loadTodayTaskCount();
     sidebarController.todoCountLoader.loadWeekTaskCount();
     sidebarController.projectController.loadNewProjectUI();
+    sidebarController.projectController.projectDisplayReloader();
 
     // Load initial mainbar events
     mainbarController.mainbarDisplayHandler.loadDefaultMainbarDisplay();
