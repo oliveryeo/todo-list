@@ -1,4 +1,5 @@
 import { isToday, isThisWeek } from 'date-fns';
+import { storeTodo } from './localStorage';
 
 // todoController module
 const todoController = (() => {
@@ -172,6 +173,9 @@ const newTodo = (title, description, dueDate, priority, parentProject) => {
   let _todoPriority = priority;
   let _todoParentProject = parentProject;
   let _todoIsChecked = false;
+
+  // Store the todo into localStorage when created
+  storeTodo(title, description, dueDate, priority, parentProject);
 
   return {
     get title() {

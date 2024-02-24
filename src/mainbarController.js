@@ -953,7 +953,7 @@ const mainbarEventHandler = (() => {
 
               for (let i = 0; i < allProjects.length; i++) {
                 if (allProjects[i].projectName == parentProjectName) {
-                  // Assign parentProject to a variable
+                  // Assign parentProject object to a variable
                   const parentProject = allProjects[i];
 
                   // Get all the necessary inputs to create a todo
