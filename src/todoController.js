@@ -1,5 +1,5 @@
 import { isToday, isThisWeek } from 'date-fns';
-import { storeTodo } from './localStorage';
+import localStorage from './localStorage';
 
 // todoController module
 const todoController = (() => {
@@ -139,11 +139,15 @@ const newProject = (name) => {
   }
 
   const deleteTodo = (todoTitle) => {
-    _allTodos.forEach((todo, index) => {
-      if (todoTitle == todo.title) {
-        _allTodos.splice(index, 1);
+    for (let i = 0; i < _allTodos.length; i++) {
+      if (_allTodos[i].title == todoTitle) {
+        // Remove the todo from project object
+        _allTodos.splice(i, 1);
+        // Remove the todo from localStorage
+        localStorage.deleteTodo(_projectName, todoTitle);
+        return;
       }
-    });
+    }
   };
 
   return {
@@ -175,7 +179,7 @@ const newTodo = (title, description, dueDate, priority, parentProject) => {
   let _todoIsChecked = false;
 
   // Store the todo into localStorage when created
-  storeTodo(title, description, dueDate, priority, parentProject);
+  localStorage.storeNewTodo(title, description, dueDate, priority, parentProject);
 
   return {
     get title() {

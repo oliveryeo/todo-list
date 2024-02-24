@@ -771,17 +771,13 @@ const mainbarEventHandler = (() => {
        */
       function _handleTodoDeletionBackend(button) {
         // Get the todoArray from the parent project
-        const parentProject = button.dataset.parentProject;
-        const todoArray = todoController.extractTodos(parentProject);
+        const parentProjectName = button.dataset.parentProject;
+        // const todoArray = todoController.extractTodos(parentProject);
+        const parentProject = todoController.extractProject(parentProjectName);
         const todoTitle = button.dataset.title;
         
         // Loop through the array, if the title matches this button, splice it out of the array
-        for (let i = 0; i < todoArray.length; i++) {
-          if (todoArray[i].title == todoTitle) {
-            todoArray.splice(i, 1);
-            return;
-          }
-        }
+        parentProject.deleteTodo(todoTitle);
       }
 
       /**

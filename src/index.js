@@ -6,6 +6,14 @@ import weekTasksIcon from "./icons/calendar-week.svg";
 import projectHeaderIcon from "./icons/lightbulb-on-outline.svg";
 import newProjectIcon from "./icons/plus.svg";
 
+// Initiate todo LocalStorage array if does not exist
+if (localStorage.getItem("todoStorage") == null) {
+  // Initialize a todoStorage array, stringify it, then store in localStorage
+  const todoStorage = [];
+  let string = JSON.stringify(todoStorage);
+  localStorage.setItem("todoStorage", string);
+};
+
 // Adds a mock todo into the todoController
 DOMControllerModule.testUnitHandler.addTodoTestUnit();
 
@@ -27,11 +35,3 @@ projectHeaderImg.src = projectHeaderIcon;
 
 const newProjectImg = document.querySelector("#new-project > img");
 newProjectImg.src = newProjectIcon;
-
-// Initiate todo LocalStorage array if does not exist
-if (localStorage.getItem("todoStorage") === null) {
-  // Initialize a todoStorage array, stringify it, then store in localStorage
-  const todoStorage = [];
-  let string = JSON.stringify(todoStorage);
-  localStorage.setItem("todoStorage", string);
-};
