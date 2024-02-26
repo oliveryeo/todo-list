@@ -412,8 +412,16 @@ const mainbarEventHandler = (() => {
         function _handleProjectDeletionBackend() {
           const projectTitleContentDiv = document.querySelector("#main-panel-title-content");
           const projectTitle = projectTitleContentDiv.dataset.title;
+          
+          // Delete all related todos in the localStorage
+          const projectTodos = todoController.extractTodos(projectTitle);
+          projectTodos.forEach(todo => {
+            localStorage.deleteTodo(projectTitle, todo.title);
+          })
+          
           // Use a delete project function from todoController
           todoController.deleteProject(projectTitle);
+
         }
         
         /* 

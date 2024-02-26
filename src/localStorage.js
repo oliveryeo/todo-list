@@ -1,4 +1,6 @@
-// Store array of todos upon page closure
+/**
+ * Store array of todos upon page closure
+ */
 const storeNewTodo = (title, description, dueDate, priority, parentProject) => {
   // Extract todoStorage from localStorage and add the new todo
   const todoStorage = JSON.parse(window.localStorage.getItem('todoStorage'));
@@ -10,7 +12,9 @@ const storeNewTodo = (title, description, dueDate, priority, parentProject) => {
   window.localStorage.setItem("todoStorage", updatedTodoStorage);
 };
 
-// Delete todo when deleted in page
+/**
+ * Delete todo when deleted in page
+ */
 const deleteTodo = (projectName, todoTitle) => {
   // Extract todoStorage
   const todoStorage = JSON.parse(window.localStorage.getItem('todoStorage'));
@@ -27,7 +31,9 @@ const deleteTodo = (projectName, todoTitle) => {
   window.localStorage.setItem("todoStorage", updatedTodoStorage);
 }
 
-// Load array of todos upon page opening
+/**
+ * Load array of todos upon page opening
+ */
 const getTodoStorage = () => {
   // Extract todoStorage
   return JSON.parse(window.localStorage.getItem('todoStorage'));
