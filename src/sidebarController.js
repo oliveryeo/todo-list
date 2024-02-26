@@ -164,6 +164,10 @@ const projectController = (() => {
           // Refresh displayed projects and side tab events
           projectDisplayReloader();
         }
+
+        if (e.key === "Escape") {
+          inputField.remove();
+        }
       });
 
       newProjectButton.appendChild(inputField);
