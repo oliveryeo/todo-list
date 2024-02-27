@@ -810,6 +810,10 @@ const mainbarEventHandler = (() => {
     addTodoButton.addEventListener("click", handleTodoAddition);
 
     function handleTodoAddition(e) {
+      // Get the current selected project title
+      const projectTitleDiv = document.querySelector("#main-panel-title-content");
+      const projectTitle = projectTitleDiv.textContent;
+
       _handleTodoAdditionDialogLoad();
       _handleTodoAdditionPostSubmission();
       
@@ -902,6 +906,11 @@ const mainbarEventHandler = (() => {
           const projectName = document.createElement("option");
           projectName.setAttribute("value", project.projectName);
           projectName.textContent = project.projectName;
+
+          // If the projectName is the same as the current projectTitle, set it to default
+          if (projectName.textContent == projectTitle) {
+            projectName.setAttribute("selected", "");
+          }
           todoEditParentProject.appendChild(projectName);
         });
 
