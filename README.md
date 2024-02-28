@@ -42,3 +42,8 @@ TOP Project on Todo-list
 
 <ins>Optimization for different screen size</ins>
 - There were feedback on visibility issues for smaller screen sizes. Another improvement can be made such that the web app is compatible with smaller screen sizes and mobile devices.
+
+<ins>Known issue on duplicate event listeners</ins>
+- For static buttons such as "All Tasks", "Today", "Next 7 days", there may be duplicate event listeners everytime a new project is created because a universal function was created to "refresh" the event listeners for dynamic content such as the project display and the mainbar display.
+- This issue was discovered when duplicate alert buttons were shown when clicking the static todo addition button (bottom right of the screen) after clicking the sidebar tabs. This was because whenever a sidebar tab is selected, the same event listener with the same function was stacked on top of the todo addition button event listener stack.
+- To fix this issue in the future, event listeners have to be separated from static content and dynamic content.
