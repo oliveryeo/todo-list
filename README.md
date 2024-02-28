@@ -36,5 +36,9 @@ TOP Project on Todo-list
 - This was because whenever a new project was created, the whole "My Projects" section will be wiped out and replaced with the updated list of projects as invoked by the _updateProjectDisplay() helper function. Therefore, the re-initiation of event listeners are required.
 - However, based on the logic of the new project creation, the inputField is created and dissolved on its own, which means that it can't be selected whenever it dynamically pops out. This also means that we can't add an event listener externally to track whenever a new project is created, which also means we can't run the re-initiation of event listeners externally (outside of the loadNewProjectUI() code).
 - Therefore, all the re-initiation of event listeners had to be done INTERNALLY in the loadNewProjectUI()'s createInputField() code, which means that there will be a LOT of dependencies going on in this code between the sidebarController() and mainbarController().
+
 <ins>Planning of Modules in the project</ins>
 - At this point in time (27 Feb 2024) I have completed the project. However, I felt that many modules were dependent on one another (e.g. mainbarController module required a lot of importation from other modules for it to work seamlessly). One thing I could improve is using a single module to consolidate ALL the other modules to help make the dynamics of the page work.
+
+<ins>Optimization for different screen size</ins>
+- There were feedback on visibility issues for smaller screen sizes. Another improvement can be made such that the web app is compatible with smaller screen sizes and mobile devices.

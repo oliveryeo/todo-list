@@ -167,6 +167,12 @@ const projectController = (() => {
 
         if (e.key === "Escape") {
           inputField.remove();
+
+          // Add back the click event listener to newProjectButton by recursion
+          newProjectButton.addEventListener("click", createInputField);
+
+          // Refresh displayed projects and side tab events
+          projectDisplayReloader();
         }
       });
 
