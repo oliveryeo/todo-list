@@ -807,16 +807,22 @@ const mainbarEventHandler = (() => {
   const handleTodoAdditionEvent = () => {
     // Select the addition button and add a click event listener
     const addTodoButton = document.querySelector("#add-task > button");
+    // Remove event listener and add again to prevent duplicate stacking
+    addTodoButton.removeEventListener("click", handleTodoAddition);
     addTodoButton.addEventListener("click", handleTodoAddition);
 
     function handleTodoAddition(e) {
       // If there is no projects, prompt to create a project
       const allProjects = todoController.allProjects;
       if (allProjects.length == 0) {
+        // Need to remove event listener and add back again to prevent "double pressing" when closing the alert button
+        addTodoButton.removeEventListener("click", handleTodoAddition);
         alert("There are no projects. Please create a project first.");
+        addTodoButton.addEventListener("click", handleTodoAddition)
         return;
       }
 
+      console.log("Dialog bypassed");
       // Get the current selected project title
       const projectTitleDiv = document.querySelector("#main-panel-title-content");
       const projectTitle = projectTitleDiv.textContent;
@@ -1037,7 +1043,6 @@ const mainbarEventHandler = (() => {
     handleProjectDeletion();
     handleTodoInfoEdit();
     handleTodoDeletionEvent();
-    handleTodoAdditionEvent();
   }
 
   return {

@@ -24,6 +24,7 @@ const pageInitializationHandler = (() => {
 
     // Do an initial loading of the event dynamics on page load
     mainbarController.mainbarEventHandler.reloadCommonMainbarEvents();
+    mainbarController.mainbarEventHandler.handleTodoAdditionEvent();
 
     // Load todo events dynamics
     _loadTodoEventDynamics();
