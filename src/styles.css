@@ -218,14 +218,14 @@ button:hover {
 dialog {
   margin-left: auto;
   margin-right: auto;
-  top: 30%;
+  top: 10%;
 }
 
 #todo-edit-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 40px;
+  gap: 5px;
+  padding: 30px;
 }
 
 #todo-edit-title {
