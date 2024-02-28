@@ -810,6 +810,13 @@ const mainbarEventHandler = (() => {
     addTodoButton.addEventListener("click", handleTodoAddition);
 
     function handleTodoAddition(e) {
+      // If there is no projects, prompt to create a project
+      const allProjects = todoController.allProjects;
+      if (allProjects.length == 0) {
+        alert("There are no projects. Please create a project first.");
+        return;
+      }
+
       // Get the current selected project title
       const projectTitleDiv = document.querySelector("#main-panel-title-content");
       const projectTitle = projectTitleDiv.textContent;
