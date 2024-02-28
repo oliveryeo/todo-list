@@ -16,6 +16,7 @@ const tabStyler = (() => {
     allTabs.forEach((item) => {
       // Add or remove .selected-tab class on click for each tab
       item.addEventListener("click", () => {
+        console.log("Test");
         // Remove .selected-tab class from previous selected tab
         const prevSelectedTab = document.querySelector(".selected-tab");
         if (prevSelectedTab) {
@@ -27,7 +28,28 @@ const tabStyler = (() => {
     });
   };
 
-  return { styleTabs };
+  const reStyleProjectTabs = () => {
+    const allTabs = document.querySelectorAll(
+      "#projects > button"
+    );
+    allTabs.forEach((item) => {
+      // Add or remove .selected-tab class on click for each tab
+      item.addEventListener("click", () => {
+        // Remove .selected-tab class from previous selected tab
+        const prevSelectedTab = document.querySelector(".selected-tab");
+        if (prevSelectedTab) {
+          prevSelectedTab.classList.remove("selected-tab");
+        }
+        // Add .selected-tab class to current selected tab
+        item.classList.add("selected-tab");
+      });
+    });
+  };
+
+  return { 
+    styleTabs,
+    reStyleProjectTabs
+   };
 })();
 
 /**
@@ -226,7 +248,7 @@ const projectController = (() => {
     function _updateTabEvents() {
       // Reload all sidebar events AND mainbar events - may be a bad idea to have a dependency here, but no choice → May want to refactor this into DOMController
         // Sidebar loader
-      tabStyler.styleTabs();
+      tabStyler.reStyleProjectTabs();
         // Mainbar loader (click side tab to load mainbar display)
       mainbarController.mainbarDisplayHandler.loadMainbarDisplayEvents();
 
